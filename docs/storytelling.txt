@@ -1,0 +1,470 @@
+TESTE 01 — Ana, 47 anos
+Cadastro inicial
+
+Objetivo principal: reduzir estresse
+Objetivos secundários: melhorar sono e mobilidade
+
+Experiência com Yoga: básica
+
+Área	Experiência
+Āsanas	Básica
+Prāṇāyāma	Básica
+Meditação	Básica
+Yoga Nidra	Nunca praticou
+Filosofia	Introdutória
+Ayurveda	Nunca estudou
+
+Preferências: Hatha Yoga, práticas suaves e meditação.
+
+Disponibilidade habitual: 20–30 min, 4 vezes por semana, geralmente à noite.
+
+1. SEGURANÇA
+
+No onboarding Ana informa:
+
+Hipertensão controlada com acompanhamento médico.
+
+Sem dor atual, sem cirurgia recente, sem glaucoma, sem vertigem e sem restrição de movimento previamente orientada.
+
+O Bloco 1 é acionado.
+
+O LIFE não precisa impedir Ana de praticar Yoga. Em vez disso, determinados conteúdos recebem tratamento conservador na recomendação automática.
+
+Por exemplo:
+
+Śīrṣāsana + retenção respiratória
+
+🔴 Não recomendar automaticamente.
+
+Enquanto:
+
+Hatha suave sem retenções
+
+🟢 candidato.
+
+Já temos o primeiro filtro funcionando.
+
+2. PERFIL AYURVÉDICO
+
+Na avaliação inicial, o questionário produz:
+
+Prakṛti estimada: Vāta-Pitta.
+
+Na avaliação atual aparecem sinais como:
+
+sono irregular;
+inquietação;
+tensão;
+digestão ocasionalmente irregular.
+
+O sistema identifica uma tendência atual tradicionalmente compatível com maior expressão de Vāta, sem transformar isso em diagnóstico.
+
+3. Ana abre o LIFE às 20h15
+
+A Home pergunta:
+
+Como você está hoje?
+
+Sono: ★★☆☆☆
+Energia: ★★☆☆☆
+Estresse: ★★★★★
+Corpo: rígido
+Dor: não
+Digestão: normal
+
+Quanto tempo você tem?
+
+20 minutos
+
+Agora temos informação suficiente.
+
+4. O MOTOR COMEÇA
+
+Primeiro:
+
+SEGURANÇA
+
+A biblioteca possui 1.200 conteúdos, por exemplo.
+
+O filtro retira candidatos incompatíveis com as regras de segurança aplicáveis.
+
+↓
+
+TEMPO
+
+Ana tem 20 minutos.
+
+O sistema elimina sessões incompatíveis com essa janela.
+
+↓
+
+NÍVEL
+
+Ana é iniciante/básica.
+
+Práticas avançadas saem.
+
+↓
+
+Agora começa o ranking.
+
+5. Estado do dia
+
+Ana apresentou:
+
+sono baixo + energia baixa + estresse muito alto + rigidez + noite.
+
+Isso aumenta a pontuação de:
+
+mobilidade suave;
+respiração confortável;
+relaxamento;
+Yoga Nidra.
+
+E reduz:
+
+alta intensidade;
+práticas muito estimulantes;
+sessões tecnicamente exigentes.
+
+6. Objetivos
+
+Principal:
+
+REDUZIR ESTRESSE
+
+Secundários:
+
+sono + mobilidade
+
+Portanto, uma prática contendo:
+
+mobilidade + respiração + relaxamento
+
+recebe excelente compatibilidade.
+
+7. Ayurveda
+
+O estado atual apresenta características interpretadas, dentro do modelo tradicional, como maior expressão de Vāta.
+
+Isso dá um pequeno bônus para práticas:
+
+regulares;
+estáveis;
+ritmadas;
+menos abruptas.
+
+Observe que o Ayurveda está refinando a escolha.
+
+Não comandando o algoritmo.
+
+8. Preferência
+
+Ana gosta de Hatha.
+
+Entre duas práticas igualmente adequadas:
+
+Hatha Yoga
+
+ganha alguns pontos.
+
+9. O LIFE encontra três candidatos
+A — Hatha suave + respiração
+
+20 min
+
+Estado: excelente
+Objetivo: excelente
+Nível: adequado
+Ayurveda: compatível
+Preferência: alta
+
+Score interno: 91
+
+B — Yoga Nidra
+
+18 min
+
+Estado: excelente
+Objetivo: excelente
+Experiência: nova modalidade
+Preferência: neutra
+
+Score: 84
+
+C — Vinyāsa
+
+20 min
+
+Estado: baixo
+Objetivo: moderado
+Preferência: moderada
+Demanda física: alta
+
+Score: 48
+
+Resultado:
+
+PRÁTICA HOJE
+
+Desacelerar — Hatha Yoga
+
+Mobilidade + respiração + relaxamento
+20 minutos
+
+Iniciar prática
+
+E abaixo:
+
+Prefere não se movimentar hoje?
+
+Experimente Yoga Nidra — 18 min
+
+Muito bom.
+
+O algoritmo recomenda, mas preserva escolha.
+
+10. “Por que esta prática?”
+
+Ana toca.
+
+O LIFE responde:
+
+Você relatou estresse elevado, energia baixa e alguma rigidez corporal.
+
+Como seu objetivo principal é reduzir estresse e você dispõe de 20 minutos, priorizamos uma prática de intensidade moderada a baixa, com mobilidade progressiva, respiração confortável e relaxamento.
+
+Depois:
+
+Seu perfil e preferências também foram considerados.
+
+Isso torna o algoritmo explicável.
+
+11. APRENDA HOJE
+
+Agora o sistema olha para a prática escolhida.
+
+Ela envolve respiração e relaxamento.
+
+Ana é iniciante em fisiologia.
+
+Então:
+
+Aprenda hoje
+
+Respiração e sistema nervoso
+
+Por que modificar voluntariamente a respiração pode alterar nossa experiência fisiológica?
+
+Marcos Crozetta
+
+Fisiologia · Introdutório · 7 min
+
+Aqui temos:
+
+FAZER → ENTENDER.
+12. AYURVEDA HOJE
+
+O sistema considera:
+
+Vāta-Pitta constitucional;
+
+sinais atuais;
+
+sono;
+
+estresse;
+
+horário.
+
+E entrega uma orientação, não dez:
+
+Ayurveda hoje
+
+Uma orientação para seu dia
+
+Hoje, priorize regularidade e uma noite menos estimulante. Uma refeição simples e um ritmo mais tranquilo podem ser boas escolhas para este momento.
+
+Entenda por quê
+
+Perfeito para a tela que já desenhamos.
+
+13. COZINHA HOJE
+
+O sistema sabe:
+
+horário: noite;
+
+digestão: normal;
+
+estado atual;
+
+preferências alimentares previamente cadastradas.
+
+Ele encontra:
+
+Para você hoje
+
+Arroz, lentilhas e legumes cozidos
+
+25 min · Fácil
+
+Por que esta receita?
+
+Ao abrir:
+
+Nutrição & fisiologia
+
+Proteína vegetal
+Fibras
+Carboidratos
+Micronutrientes
+
+Visão ayurvédica
+
+Preparação quente e cozida, com possíveis adaptações de ingredientes e especiarias segundo o contexto individual.
+
+Temos as duas linguagens separadas.
+
+14. Ana realiza a prática
+
+Depois dos 20 minutos:
+
+Como foi?
+
+○ Muito leve
+● Na medida
+○ Intensa
+
+❤️ Gostei
+
+Como você está agora?
+
+● Melhor
+○ Igual
+○ Pior
+
+O LIFE registra:
+
+concluiu = sim
+
+duração = 20
+
+intensidade percebida = adequada
+
+gostou = sim
+
+estado posterior = melhor
+
+Mas não diz:
+
+“Hatha reduziu o estresse da Ana.”
+
+Registra apenas a associação observada.
+
+15. Três semanas depois...
+
+O LIFE observa:
+
+12 práticas recomendadas
+
+10 concluídas.
+
+Das práticas de 20 min:
+92% conclusão.
+
+Das práticas de 30 min:
+60%.
+
+Yoga Nidra foi oferecido quatro vezes.
+
+Ana escolheu duas e gostou das duas.
+
+E frequentemente pratica às 20h–21h.
+
+Então o sistema começa, lentamente, a aumentar a prioridade de:
+
+20 minutos + noite + Hatha/Yoga Nidra.
+
+16. Mas não cria uma bolha
+
+Em determinado dia aparece:
+
+Explore algo novo
+
+Introdução à Meditação
+
+Profa. Lerrita
+10 min
+
+Porque mantivemos o fator descoberta.
+
+Ana continua expandindo seu repertório.
+
+17. Depois de 30 dias
+
+Na área EU:
+
+Sua jornada
+
+16 práticas
+
+5h48 de prática
+
+8 conteúdos estudados
+
+3 receitas salvas
+
+Regularidade média: 3,7 dias/semana
+
+E:
+
+Sua jornada está tomando forma
+
+Você tem concluído com maior frequência práticas entre 15 e 25 minutos.
+
+Práticas suaves aparecem com frequência na sua rotina noturna.
+
+Você começou a explorar Yoga Nidra.
+
+Seu objetivo principal continua sendo reduzir estresse?
+
+Sim | Quero ajustar
+
+O teste revelou uma lacuna importante
+
+O motor funcionou muito bem, mas apareceu algo que ainda não havíamos formalizado suficientemente:
+
+CONTEXTO TEMPORAL
+
+Não basta saber que são 20h15.
+
+Precisamos eventualmente saber coisas como:
+
+Acabou de comer?
+
+Vai dormir em breve?
+
+Treinou hoje?
+
+Já praticou Yoga hoje?
+
+Não colocaria essas perguntas no check-in padrão porque ficaria cansativo.
+
+Mas algumas podem surgir contextualmente.
+
+Por exemplo:
+
+Você comeu uma refeição principal nas últimas 2 horas?
+
+Sim / Não
+
+Somente quando isso for relevante para a prática que está sendo considerada.
+
+Isso sugere uma nova característica técnica:
+
+PERGUNTAS ADAPTATIVAS
+
+O LIFE pergunta somente quando a resposta realmente muda a decisão.
+
+Isso vale para segurança, Ayurveda, prática e cozinha.
