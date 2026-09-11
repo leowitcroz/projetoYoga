@@ -1,0 +1,27 @@
+{
+  "name": "@life/motor",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Motor de personalização LIFE: função pura, sem framework, banco ou HTTP.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@life/shared": "*"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.2"
+  }
+}

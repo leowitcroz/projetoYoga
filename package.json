@@ -1,0 +1,41 @@
+{
+  "name": "life",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/shared",
+    "packages/motor",
+    "apps/api",
+    "apps/app",
+    "apps/admin"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "postinstall": "npm run build:packages",
+    "build:packages": "npm run build -w @life/shared && npm run build -w @life/motor",
+    "build": "npm run build:packages && npm run build -w @life/api && npm run build -w @life/app && npm run build -w @life/admin",
+    "dev:api": "npm run start:dev -w @life/api",
+    "dev:app": "npm run dev -w @life/app",
+    "dev:admin": "npm run dev -w @life/admin",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.10.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.11.0",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.6",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.70.0",
+    "vue-eslint-parser": "^10.3.0"
+  }
+}

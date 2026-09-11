@@ -1,0 +1,30 @@
+{
+  "name": "@life/admin",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Painel LIFE para professores, professores master e admin.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@life/shared": "*",
+    "@primeuix/themes": "^3.0.0",
+    "primevue": "^5.0.1",
+    "vue": "^3.5.42"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "@vue/test-utils": "^2.5.0",
+    "@vue/tsconfig": "^0.9.1",
+    "jsdom": "^30.0.1",
+    "vite": "^8.3.0",
+    "vitest": "^4.1.2",
+    "vue-tsc": "^3.3.11"
+  }
+}

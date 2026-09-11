@@ -1,0 +1,24 @@
+{
+  "name": "@life/shared",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Tipos, enums e DTOs compartilhados entre app, painel, API e motor.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.2"
+  }
+}

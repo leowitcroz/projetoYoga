@@ -13,6 +13,16 @@ Registro das decisões tomadas. Atualize sempre que algo mudar.
 | Vídeo e áudio | Serviço de streaming externo (Bunny, Mux ou Cloudflare), a definir |
 | Áudio com tela bloqueada | Plugin do Capacitor; decidido seguir sem prova de conceito prévia |
 
+## Fundação técnica (Fase 0, 11/09/2026)
+
+- **TypeScript 6.0** em todo o monorepo. O TypeScript 7 já existe, mas o typescript-eslint ainda só suporta até o 6.0.
+- **NestJS 12 em ESM** e **Vitest** em todos os projetos (o Nest 12 já vem com Vitest).
+- **Prisma 7**, com o cliente gerado em `apps/api/src/generated/prisma`.
+- **Um linter só:** ESLint (flat config na raiz) para TypeScript e Vue, no lugar do oxlint que o Nest traz.
+- **Portas locais:** API 3100, app 5173, painel 5174, banco 5433. As portas 3000, 3333 e 5432 já são usadas por outros projetos neste PC.
+- **App ID do Capacitor:** `com.life.app`, **provisório**. Confirmar antes de gerar o projeto Android (F4.4), porque não dá para mudar depois de publicar na loja.
+- **npm 11** obrigatório (o npm 10.5.1 global deste PC quebra o `npm install`).
+
 ## Produto (10/09/2026)
 
 - **Idioma:** somente português.

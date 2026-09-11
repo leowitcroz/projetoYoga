@@ -1,6 +1,6 @@
 # LIFE 1.0 — Plano de Desenvolvimento (SDD)
 
-**Versão do documento:** 1.1 · **Data:** 10/09/2026
+**Versão do documento:** 1.2 · **Data:** 10/09/2026
 **Fontes:** Documento Mestre Motor LIFE 1.0 · Matriz Técnica 1.1 · Storytelling (Ana e Júlia) · telas de referência · [decisoes.md](decisoes.md)
 
 ---
@@ -113,17 +113,17 @@ projetoYoga/
 
 | Camada | Escolha | Observação |
 |---|---|---|
-| Linguagem | TypeScript em tudo | |
+| Linguagem | TypeScript 6.0 em tudo | O typescript-eslint ainda não suporta o TypeScript 7 |
 | App | Vue 3 (`<script setup>`), Ionic Vue, Capacitor, Pinia, Vue Router | |
 | Painel | Vue 3, PrimeVue, Pinia | |
-| API | NestJS, Prisma, PostgreSQL 16 | Prisma gera tipos a partir do schema |
+| API | NestJS 12 (ESM), Prisma 7, PostgreSQL 16 | Prisma gera o cliente em `apps/api/src/generated/prisma`; API na porta 3100 |
 | Autenticação | JWT (access curto + refresh), senha com argon2 | |
 | Motor | `packages/motor`, função pura | Recebe dados + configuração e devolve o resultado |
-| Testes | Vitest (motor, shared, app, admin) · Jest (api, padrão do Nest) | |
+| Testes | Vitest em todos os projetos | O Nest 12 já vem com Vitest |
 | Áudio em segundo plano | Plugin Capacitor (a escolher na Fase 4) | |
 | Lembretes | `@capacitor/local-notifications` | |
 | Vídeo/áudio (hospedagem) | Serviço de streaming, a escolher na Fase 3 | Bunny, Mux ou Cloudflare Stream |
-| Banco local | PostgreSQL via Docker **ou** banco gratuito na nuvem (Neon) | Decidir na Fase 0 |
+| Banco local | PostgreSQL 16 via Docker (`docker-compose.yml`), porta 5433 | Decidido na Fase 0 |
 | CI | GitHub Actions: lint + testes a cada push | |
 
 ### 4.3 Princípios de arquitetura
@@ -337,7 +337,7 @@ Pipeline conforme a aba 08 da Matriz.
 
 | Fase | Entrega principal | Depende de | Pode rodar junto com | Status |
 |---|---|---|---|---|
-| **0 · Fundação** | Monorepo, ferramentas, CI, apps vazios rodando | — | — | Não iniciada |
+| **0 · Fundação** | Monorepo, ferramentas, CI, apps vazios rodando | — | — | Em andamento |
 | **1 · Motor** | Motor LIFE completo e testado, sem telas | 0 | — | Não iniciada |
 | **2 · API base** | Conta, perfil, check-in, recomendação e eventos via API | 1 | — | Não iniciada |
 | **3 · Painel** | Professores catalogam, master aprova, admin ajusta pesos | 2 | 4 | Não iniciada |
@@ -350,25 +350,25 @@ Pipeline conforme a aba 08 da Matriz.
 
 ### Fase 0 · Fundação
 
-**Status:** Não iniciada
+**Status:** Em andamento (falta a CI verde no GitHub: F0.11)
 
 **Objetivo:** deixar o repositório pronto para desenvolver, com todas as partes criadas, rodando e verificadas automaticamente a cada push.
 
 **Tarefas**
 
-- [ ] **F0.1** Monorepo com npm workspaces: `package.json` raiz, `apps/*`, `packages/*`, `.nvmrc` com Node 24.
-- [ ] **F0.2** TypeScript base (`tsconfig.base.json`) compartilhado por todos os projetos.
-- [ ] **F0.3** ESLint + Prettier + EditorConfig com a mesma configuração para todos.
-- [ ] **F0.4** Scripts na raiz: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run dev:api`, `npm run dev:app`, `npm run dev:admin`.
-- [ ] **F0.5** `packages/shared` vazio, exportando um tipo de exemplo e com Vitest configurado.
-- [ ] **F0.6** `packages/motor` vazio, importando de `shared`, com Vitest configurado.
-- [ ] **F0.7** `apps/api` criado com Nest CLI + Prisma, com rota `GET /health` respondendo `{ status: "ok" }`.
-- [ ] **F0.8** `apps/app` criado com o starter de abas do Ionic Vue: 5 abas vazias (Hoje, Praticar, Aprender, Ayurveda, Eu).
-- [ ] **F0.9** `apps/admin` criado com Vite + Vue 3 + PrimeVue, com uma tela vazia.
-- [ ] **F0.10** Banco de dados: decidir entre Docker e Neon; criar `docker-compose.yml` (se Docker) e `.env.example` em cada app.
+- [x] **F0.1** Monorepo com npm workspaces: `package.json` raiz, `apps/*`, `packages/*`, `.nvmrc` com Node 24.
+- [x] **F0.2** TypeScript base (`tsconfig.base.json`) compartilhado por todos os projetos.
+- [x] **F0.3** ESLint + Prettier + EditorConfig com a mesma configuração para todos.
+- [x] **F0.4** Scripts na raiz: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run dev:api`, `npm run dev:app`, `npm run dev:admin`.
+- [x] **F0.5** `packages/shared` vazio, exportando um tipo de exemplo e com Vitest configurado.
+- [x] **F0.6** `packages/motor` vazio, importando de `shared`, com Vitest configurado.
+- [x] **F0.7** `apps/api` criado com Nest CLI + Prisma, com rota `GET /health` respondendo `{ status: "ok" }`.
+- [x] **F0.8** `apps/app` criado com o starter de abas do Ionic Vue: 5 abas vazias (Hoje, Praticar, Aprender, Ayurveda, Eu).
+- [x] **F0.9** `apps/admin` criado com Vite + Vue 3 + PrimeVue, com uma tela vazia.
+- [x] **F0.10** Banco de dados: decidir entre Docker e Neon; criar `docker-compose.yml` (se Docker) e `.env.example` em cada app.
 - [ ] **F0.11** GitHub Actions: instalar, lint, typecheck, testes e build a cada push e PR.
-- [ ] **F0.12** Fluxo de trabalho: a partir da Fase 1, cada tarefa em uma branch (`feat/F1.3-filtro-seguranca`) com PR para `main`; `main` sempre verde.
-- [ ] **F0.13** README atualizado com "como rodar" no Windows.
+- [x] **F0.12** Fluxo de trabalho: a partir da Fase 1, cada tarefa em uma branch (`feat/F1.3-filtro-seguranca`) com PR para `main`; `main` sempre verde.
+- [x] **F0.13** README atualizado com "como rodar" no Windows.
 
 **Entregáveis:** repositório com as 5 partes criadas; CI verde; README com instruções.
 
@@ -753,3 +753,4 @@ Toda ideia nova entra aqui antes de virar código.
 |---|---|---|
 | 1.0 | 10/09/2026 | Primeira versão |
 | 1.1 | 10/09/2026 | Fases detalhadas com tarefas (F0.1 a F7.14), dependências, entregáveis e critérios de saída; novo requisito MOT-20 (aprendizado); nova pendência P-07; EU-02 movido para a Fase 6; módulos Aprender e Ayurveda renomeados para EDU e AYV |
+| 1.2 | 11/09/2026 | Fase 0: TypeScript 6.0 (limite do typescript-eslint), Vitest também na API (Nest 12), NestJS 12 em ESM e Prisma 7; banco local decidido (Docker, porta 5433); API na porta 3100 |

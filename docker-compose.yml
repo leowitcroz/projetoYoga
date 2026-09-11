@@ -1,0 +1,21 @@
+# Banco de dados local para desenvolvimento.
+# Subir: npm run db:up · Parar: npm run db:down
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: life
+      POSTGRES_PASSWORD: life
+      POSTGRES_DB: life
+    ports:
+      - '5433:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U life -d life']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db-data:
