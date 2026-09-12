@@ -87,7 +87,7 @@ function entrar() {
 }
 
 .logo {
-  width: min(56%, 210px);
+  width: 140px;
   height: auto;
 }
 
@@ -108,10 +108,10 @@ function entrar() {
 .chamada {
   margin: 0;
   font-family: var(--life-serif);
-  font-size: clamp(1.5rem, 6.2vw, 1.95rem);
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: bold;
   line-height: 1.32;
-  color: #14304f;
+  color: #1d4b5b;
 }
 
 .acoes {
@@ -124,11 +124,11 @@ function entrar() {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 10px;
   width: 100%;
   max-width: 22rem;
-  padding: 17px 24px;
-  font-size: 1.12rem;
+  padding: 15px 22px;
+  font-size: 18px;
   color: #fff;
   background: rgba(47, 110, 148, 0.72);
   backdrop-filter: blur(6px);
@@ -148,7 +148,7 @@ function entrar() {
 
 .entrar {
   margin: 16px 0 0;
-  font-size: 0.98rem;
+  font-size: 13px;
   color: #fff;
   text-shadow: 0 1px 6px rgba(10, 26, 45, 0.45);
 }

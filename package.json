@@ -10,7 +10,7 @@
     "apps/admin"
   ],
   "engines": {
-    "node": ">=24"
+    "node": ">=22"
   },
   "scripts": {
     "postinstall": "npm run build:packages",

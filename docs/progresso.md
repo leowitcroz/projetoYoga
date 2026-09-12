@@ -30,6 +30,9 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ### 12/09/2026
 
+- **Protótipo preparado para a Vercel** (`vercel.json`): build do app no monorepo e rotas do Vue tratadas. Serve para testar no celular pelo navegador, sem gerar o app.
+- Tela inicial igual à referência: sem os véus brancos, foto com mais brilho e textos de baixo em branco.
+
 - Fundo da tela de objetivos virou **uma imagem única** montada a partir da referência (paisagem + degradê + folhas), no lugar das camadas em CSS que geravam emenda e mancha branca.
 
 - Tela de objetivos acertada com o cliente: fundo em degradê da foto (moça à esquerda) para o branco, arte com zoom out e rodapé da lótus visível na tela.
