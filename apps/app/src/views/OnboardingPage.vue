@@ -2,6 +2,7 @@
   <ion-page>
     <ion-content :fullscreen="true" class="tela">
       <div class="fundo" aria-hidden="true"></div>
+      <div class="arte-topo" aria-hidden="true"></div>
       <div class="folhas" aria-hidden="true"></div>
 
       <div class="layout">
@@ -147,7 +148,20 @@ function continuar() {
       rgba(255, 255, 255, 0.92) 44%,
       #fff 55%
     ),
-    url('@/assets/arte-lateral.jpg') left bottom / auto 64% no-repeat;
+    url('@/assets/arte-mulher.jpg') left bottom / auto 66% no-repeat;
+}
+
+.arte-topo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 52%;
+  max-width: 24rem;
+  height: 38%;
+  background: url('@/assets/arte-folhas-topo.jpg') top left / 100% 100% no-repeat;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
 }
 
 .folhas {
