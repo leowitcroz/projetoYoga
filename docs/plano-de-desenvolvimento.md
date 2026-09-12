@@ -1,6 +1,6 @@
 # LIFE 1.0 — Plano de Desenvolvimento (SDD)
 
-**Versão do documento:** 1.3 · **Data:** 10/09/2026
+**Versão do documento:** 1.4 · **Data:** 10/09/2026
 **Fontes:** Documento Mestre Motor LIFE 1.0 · Matriz Técnica 1.1 · Storytelling (Ana e Júlia) · telas de referência · [decisoes.md](decisoes.md)
 
 ---
@@ -743,7 +743,7 @@ Toda ideia nova entra aqui antes de virar código.
 
 | Data | Pedido | Impacto | Decisão |
 |---|---|---|---|
-| — | — | — | — |
+| 11/09/2026 | Antecipar a tela de **login** (visual, com as imagens da marca) da Fase 4 para agora, para mostrar ao cliente | Baixo. A tela é só visual: validação no próprio aparelho, sem API. Na Fase 2 ela é ligada ao AUTH-03 e na Fase 4 recebe o tema completo | **Aprovado** por Leonardo. Feito em `apps/app/src/views/LoginPage.vue` |
 
 ---
 
@@ -754,4 +754,5 @@ Toda ideia nova entra aqui antes de virar código.
 | 1.0 | 10/09/2026 | Primeira versão |
 | 1.1 | 10/09/2026 | Fases detalhadas com tarefas (F0.1 a F7.14), dependências, entregáveis e critérios de saída; novo requisito MOT-20 (aprendizado); nova pendência P-07; EU-02 movido para a Fase 6; módulos Aprender e Ayurveda renomeados para EDU e AYV |
 | 1.2 | 11/09/2026 | Fase 0: TypeScript 6.0 (limite do typescript-eslint), Vitest também na API (Nest 12), NestJS 12 em ESM e Prisma 7; banco local decidido (Docker, porta 5433); API na porta 3100 |
+| 1.4 | 11/09/2026 | Registrado o pedido de mudança: tela de login antecipada como protótipo visual (seção 12) |
 | 1.3 | 11/09/2026 | Correção: são 6 áreas permanentes (a Cozinha é aba, conforme o Documento Mestre seção 2 e a tela 14), não 5; mapa das telas em [fluxo-bloco-1.md](fluxo-bloco-1.md) |

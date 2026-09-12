@@ -6,7 +6,8 @@ import TabsPage from '../views/TabsPage.vue';
 const placeholder = () => import('@/views/PlaceholderPage.vue');
 
 const routes: RouteRecordRaw[] = [
-  { path: '/', redirect: '/tabs/hoje' },
+  { path: '/', redirect: '/login' },
+  { path: '/login', component: () => import('@/views/LoginPage.vue') },
   {
     path: '/tabs/',
     component: TabsPage,
