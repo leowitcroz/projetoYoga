@@ -74,7 +74,7 @@ import iconeSono from '@/assets/icones/sono.png';
 // Tela do cadastro. Só aparece na primeira vez que a pessoa entra.
 const router = useRouter();
 const passo = 1;
-const total = 6;
+const total = 14;
 const rotuloPasso = computed(() => 'Passo ' + passo + ' de ' + total);
 
 const objetivos = [
@@ -175,15 +175,15 @@ function continuar() {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 4px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .ponto {
-  width: 7px;
-  height: 7px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: #cddbe6;
 }
