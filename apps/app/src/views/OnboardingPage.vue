@@ -323,8 +323,10 @@ function continuar() {
   background: #0f2540;
 }
 
+/* Empurra o rodapé para o fim da tela, não logo abaixo do botão. */
 .rodape {
-  margin-top: 14px;
+  margin-top: auto;
+  padding-top: 14px;
 }
 
 .fios {
