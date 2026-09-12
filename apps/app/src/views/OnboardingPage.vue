@@ -160,7 +160,7 @@ function continuar() {
 .topo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 5px;
 }
 
 .pular {
