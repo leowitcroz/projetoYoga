@@ -226,17 +226,27 @@ function continuar() {
   color: #46617d;
 }
 
+/* A lista cresce para ocupar a tela: em telas altas os cartões ficam um pouco
+   mais altos, até um limite, em vez de abrir vãos entre eles. */
 .opcoes {
   margin: 0;
   padding: 0;
   list-style: none;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
+.opcoes li {
+  flex: 1 1 auto;
+  max-height: 52px;
+  display: flex;
+}
+
 .opcao {
   position: relative;
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 9px;
