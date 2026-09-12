@@ -11,6 +11,7 @@ const routes: RouteRecordRaw[] = [
   { path: '/onboarding', component: () => import('@/views/OnboardingPage.vue') },
   { path: '/onboarding/relacao', component: () => import('@/views/RelacaoYogaPage.vue') },
   { path: '/onboarding/saude', component: () => import('@/views/SaudePage.vue') },
+  { path: '/onboarding/ayurveda', component: () => import('@/views/AyurvedaPage.vue') },
   { path: '/criar-conta', component: () => import('@/views/CriarContaPage.vue') },
   { path: '/checkin', component: () => import('@/views/DailyCheckinPage.vue') },
   {

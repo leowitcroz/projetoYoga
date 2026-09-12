@@ -103,9 +103,8 @@ function pular() {
   router.push('/tabs/praticar');
 }
 
-// Protótipo: no fim das perguntas vem a criação da conta.
 function continuar() {
-  router.push('/criar-conta');
+  router.push('/onboarding/ayurveda');
 }
 </script>
 

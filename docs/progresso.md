@@ -30,6 +30,8 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ### 12/09/2026
 
+- **Passo 4 do cadastro** ("Conheça seu perfil ayurvédico"): constituição (Vata, Pitta, Kapha) e estado atual, com fundo próprio montado a partir da referência (foto das especiarias, logo e frase, sem a barra do celular nem a seta).
+
 - **Passo 3 do cadastro** ("Saúde e bem-estar"): 10 condições com chave liga/desliga, aviso de que não substitui avaliação médica, e os 11 ícones recortados da referência.
 - **Corrigido com o cliente:** o cadastro tem **6 passos** (antes estava 14). O check-in diário também tem 6 perguntas, mas são coisas separadas.
 
