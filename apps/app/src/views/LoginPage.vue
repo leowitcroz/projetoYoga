@@ -93,7 +93,8 @@ function entrar() {
   if (temErro(erros.value)) return;
 
   // Protótipo: a autenticação de verdade (AUTH-03) entra na Fase 2.
-  router.push('/tabs/hoje');
+  // Depois do login começa o fluxo diário: objetivo do dia -> check-in -> recomendação.
+  router.push('/dia');
 }
 </script>
 

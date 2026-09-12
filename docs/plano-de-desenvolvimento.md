@@ -1,6 +1,6 @@
 # LIFE 1.0 — Plano de Desenvolvimento (SDD)
 
-**Versão do documento:** 1.5 · **Data:** 10/09/2026
+**Versão do documento:** 1.6 · **Data:** 10/09/2026
 **Fontes:** Documento Mestre Motor LIFE 1.0 · Matriz Técnica 1.1 · Storytelling (Ana e Júlia) · telas de referência · [decisoes.md](decisoes.md)
 
 ---
@@ -42,7 +42,7 @@ Validar o valor da personalização: mostrar que recomendar a prática certa par
 
 - Cadastro e login com e-mail e senha.
 - Onboarding estruturado (6 blocos) com consentimento separado para dados de saúde.
-- Check-in diário rápido.
+- **Objetivo do dia** ("o que você quer trabalhar hoje?") + check-in diário rápido, todos os dias.
 - **Motor LIFE** por regras e pesos configuráveis: segurança, filtros, ranking, modificadores, explicação.
 - Motor de Jornada básico: objetivo estratégico, meta semanal, progressão por trilha, dia de recuperação, descoberta.
 - Perguntas adaptativas simples (CTX-001 a CTX-005) e Home dinâmica.
@@ -203,6 +203,8 @@ projetoYoga/
 | CHK-03 | Dor reabre a segurança | Dor = sim → pergunta local e intensidade (0–10) → motor reaplica o Bloco 1 (`SEG-R05`, `CTX-002`) |
 | CHK-04 | Editar o check-in | Pode refazer no mesmo dia; a recomendação é recalculada |
 | CHK-05 | Rapidez | Check-in completo sem dor em até 7 toques |
+| CHK-06 | Objetivo do dia | Toda vez que a pessoa entra no dia, o app pergunta "o que você quer trabalhar hoje?" com a mesma lista de objetivos, **pré-marcada** com os objetivos do perfil; ela confirma ou muda |
+| CHK-07 | Pular o dia | Em qualquer das duas perguntas, "Pular" leva à biblioteca (aba Praticar), onde a pessoa escolhe a própria aula. Sem check-in, a Home não recomenda |
 
 ### MOT — Motor LIFE (`packages/motor`)
 
@@ -215,7 +217,7 @@ Pipeline conforme a aba 08 da Matriz.
 | MOT-03 | Filtro de tempo | Duração ≤ tempo disponível (não oferecer 32 min para 30 min) |
 | MOT-04 | Filtro de nível e pré-requisitos | Por área de experiência (PER-003) |
 | MOT-05 | Estado funcional | Classifica em recuperação, tensão, ativação, disponibilidade ou desaceleração (Documento Mestre, seção 5) |
-| MOT-06 | Score base 0–100 | Pesos: estado 30, objetivo principal 25, secundários 10, perfil 10, Ayurveda 10, preferências 10, histórico 5 (lidos da `EngineConfig`) |
+| MOT-06 | Score base 0–100 | Pesos: estado 30, objetivo principal 25, secundários 10, perfil 10, Ayurveda 10, preferências 10, histórico 5 (lidos da `EngineConfig`). **Os 35% de objetivo usam o objetivo do dia (CHK-06)**; o objetivo do perfil continua governando a jornada (MOT-19) |
 | MOT-07 | Modificadores | Continuidade +10; repetição ontem −15; últimos 3 dias −8; descoberta em 10–15% das sugestões secundárias; horário (EST-010/011) |
 | MOT-08 | Saída Prática Hoje | Principal + alternativa de natureza diferente |
 | MOT-09 | Explicação | Texto gerado por template a partir dos critérios de maior peso; linguagem da seção 9 |
@@ -743,7 +745,7 @@ Toda ideia nova entra aqui antes de virar código.
 
 | Data | Pedido | Impacto | Decisão |
 |---|---|---|---|
-| 11/09/2026 | Perguntar **"o que você busca?" todos os dias**, e não só no onboarding | Alto. Hoje o plano separa objetivo estratégico (PER-010, revisto a cada 30–45 dias) de decisão tática do dia (PER-011, o check-in). Perguntar objetivo todo dia muda o Bloco 3 e o ranking do motor | **Em aberto.** Aguardando o cliente confirmar: é objetivo do dia (tático) ou substitui o objetivo de médio prazo? |
+| 11/09/2026 | Perguntar **"o que você busca?" todos os dias**, e não só no onboarding | Alto: muda o Bloco 3 e o ranking do motor | **Aprovado** pelo cliente em 11/09. É o **objetivo do dia** (tático, PER-011): entra no lugar do objetivo no ranking daquele dia. O objetivo do perfil (PER-010) continua valendo para a jornada, a progressão e a meta semanal. Vira CHK-06 e CHK-07 |
 | 11/09/2026 | Antecipar a tela de **login** (visual, com as imagens da marca) da Fase 4 para agora, para mostrar ao cliente | Baixo. A tela é só visual: validação no próprio aparelho, sem API. Na Fase 2 ela é ligada ao AUTH-03 e na Fase 4 recebe o tema completo | **Aprovado** por Leonardo. Feito em `apps/app/src/views/LoginPage.vue` |
 | 11/09/2026 | Antecipar as telas de **boas-vindas**, **onboarding (passo 2)** e **check-in diário** como protótipo visual | Baixo, mesma lógica do login: sem API | **Aprovado** por Leonardo. `WelcomePage`, `OnboardingPage` e `DailyCheckinPage` |
 
@@ -756,6 +758,7 @@ Toda ideia nova entra aqui antes de virar código.
 | 1.0 | 10/09/2026 | Primeira versão |
 | 1.1 | 10/09/2026 | Fases detalhadas com tarefas (F0.1 a F7.14), dependências, entregáveis e critérios de saída; novo requisito MOT-20 (aprendizado); nova pendência P-07; EU-02 movido para a Fase 6; módulos Aprender e Ayurveda renomeados para EDU e AYV |
 | 1.2 | 11/09/2026 | Fase 0: TypeScript 6.0 (limite do typescript-eslint), Vitest também na API (Nest 12), NestJS 12 em ESM e Prisma 7; banco local decidido (Docker, porta 5433); API na porta 3100 |
+| 1.6 | 11/09/2026 | Objetivo do dia perguntado todo dia (CHK-06 e CHK-07); MOT-06 passa a usar o objetivo do dia no ranking |
 | 1.5 | 11/09/2026 | Telas de boas-vindas, onboarding e check-in antecipadas como protótipo; registrada a dúvida sobre perguntar o objetivo todo dia (seção 12) |
 | 1.4 | 11/09/2026 | Registrado o pedido de mudança: tela de login antecipada como protótipo visual (seção 12) |
 | 1.3 | 11/09/2026 | Correção: são 6 áreas permanentes (a Cozinha é aba, conforme o Documento Mestre seção 2 e a tela 14), não 5; mapa das telas em [fluxo-bloco-1.md](fluxo-bloco-1.md) |

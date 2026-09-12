@@ -26,6 +26,7 @@ Registro das decisões tomadas. Atualize sempre que algo mudar.
 ## Produto (10/09/2026)
 
 - **Idioma:** somente português.
+- **Uso diário (11/09/2026):** todo dia o app pergunta **"o que você quer trabalhar hoje?"** e **"como você está hoje?"**, e então recomenda a aula. As duas perguntas podem ser puladas: quem pular vai para a biblioteca e escolhe a própria aula. O objetivo do dia é tático; o objetivo do perfil continua valendo para a jornada.
 - **Monetização:** ainda fora do escopo. Modelo futuro: mensalidade para ter acesso.
 - **Login:** e-mail e senha no início. Futuro: Google e Facebook.
 - **Offline:** não é necessário por enquanto.

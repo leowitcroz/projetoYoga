@@ -266,7 +266,7 @@ function voltar() {
 }
 
 function pular() {
-  concluirCheckin();
+  router.push('/tabs/praticar');
 }
 
 function concluirCheckin() {

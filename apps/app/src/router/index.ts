@@ -9,6 +9,12 @@ const routes: RouteRecordRaw[] = [
   { path: '/', component: () => import('@/views/WelcomePage.vue') },
   { path: '/login', component: () => import('@/views/LoginPage.vue') },
   { path: '/onboarding', component: () => import('@/views/OnboardingPage.vue') },
+  // Mesma tela no uso diário: objetivo do dia, sem os passos do cadastro.
+  {
+    path: '/dia',
+    component: () => import('@/views/OnboardingPage.vue'),
+    props: { diario: true },
+  },
   { path: '/checkin', component: () => import('@/views/DailyCheckinPage.vue') },
   {
     path: '/tabs/',
