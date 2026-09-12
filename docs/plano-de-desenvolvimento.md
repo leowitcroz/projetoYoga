@@ -1,6 +1,6 @@
 # LIFE 1.0 — Plano de Desenvolvimento (SDD)
 
-**Versão do documento:** 1.2 · **Data:** 10/09/2026
+**Versão do documento:** 1.3 · **Data:** 10/09/2026
 **Fontes:** Documento Mestre Motor LIFE 1.0 · Matriz Técnica 1.1 · Storytelling (Ana e Júlia) · telas de referência · [decisoes.md](decisoes.md)
 
 ---
@@ -46,7 +46,7 @@ Validar o valor da personalização: mostrar que recomendar a prática certa par
 - **Motor LIFE** por regras e pesos configuráveis: segurança, filtros, ranking, modificadores, explicação.
 - Motor de Jornada básico: objetivo estratégico, meta semanal, progressão por trilha, dia de recuperação, descoberta.
 - Perguntas adaptativas simples (CTX-001 a CTX-005) e Home dinâmica.
-- As 5 áreas do app: **Hoje, Praticar, Aprender, Ayurveda, Eu**, com a **Cozinha** acessível pela Home e pelo menu.
+- As 6 áreas permanentes do app: **Hoje, Praticar, Aprender, Ayurveda, Cozinha, Eu** (Documento Mestre, seção 2).
 - Player de vídeo e áudio, com **áudio tocando com a tela bloqueada**.
 - Feedback pós-prática e histórico de uso.
 - Aprendizado gradual do sistema (APR-001 a APR-008).
@@ -363,7 +363,7 @@ Pipeline conforme a aba 08 da Matriz.
 - [x] **F0.5** `packages/shared` vazio, exportando um tipo de exemplo e com Vitest configurado.
 - [x] **F0.6** `packages/motor` vazio, importando de `shared`, com Vitest configurado.
 - [x] **F0.7** `apps/api` criado com Nest CLI + Prisma, com rota `GET /health` respondendo `{ status: "ok" }`.
-- [x] **F0.8** `apps/app` criado com o starter de abas do Ionic Vue: 5 abas vazias (Hoje, Praticar, Aprender, Ayurveda, Eu).
+- [x] **F0.8** `apps/app` criado com o starter de abas do Ionic Vue: 6 abas vazias (Hoje, Praticar, Aprender, Ayurveda, Cozinha, Eu).
 - [x] **F0.9** `apps/admin` criado com Vite + Vue 3 + PrimeVue, com uma tela vazia.
 - [x] **F0.10** Banco de dados: decidir entre Docker e Neon; criar `docker-compose.yml` (se Docker) e `.env.example` em cada app.
 - [ ] **F0.11** GitHub Actions: instalar, lint, typecheck, testes e build a cada push e PR.
@@ -754,3 +754,4 @@ Toda ideia nova entra aqui antes de virar código.
 | 1.0 | 10/09/2026 | Primeira versão |
 | 1.1 | 10/09/2026 | Fases detalhadas com tarefas (F0.1 a F7.14), dependências, entregáveis e critérios de saída; novo requisito MOT-20 (aprendizado); nova pendência P-07; EU-02 movido para a Fase 6; módulos Aprender e Ayurveda renomeados para EDU e AYV |
 | 1.2 | 11/09/2026 | Fase 0: TypeScript 6.0 (limite do typescript-eslint), Vitest também na API (Nest 12), NestJS 12 em ESM e Prisma 7; banco local decidido (Docker, porta 5433); API na porta 3100 |
+| 1.3 | 11/09/2026 | Correção: são 6 áreas permanentes (a Cozinha é aba, conforme o Documento Mestre seção 2 e a tela 14), não 5; mapa das telas em [fluxo-bloco-1.md](fluxo-bloco-1.md) |

@@ -33,6 +33,7 @@ import {
   homeOutline,
   leafOutline,
   personOutline,
+  restaurantOutline,
 } from 'ionicons/icons';
 
 const tabs = [
@@ -40,6 +41,7 @@ const tabs = [
   { path: 'praticar', label: 'Praticar', icon: flowerOutline },
   { path: 'aprender', label: 'Aprender', icon: bookOutline },
   { path: 'ayurveda', label: 'Ayurveda', icon: leafOutline },
+  { path: 'cozinha', label: 'Cozinha', icon: restaurantOutline },
   { path: 'eu', label: 'Eu', icon: personOutline },
 ];
 </script>
