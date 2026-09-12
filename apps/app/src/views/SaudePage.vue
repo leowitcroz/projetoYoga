@@ -129,7 +129,7 @@ function continuar() {
 
 .lateral {
   flex: none;
-  width: 34%;
+  width: 38%;
   max-width: 22rem;
 }
 
@@ -139,8 +139,8 @@ function continuar() {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: calc(14px + var(--ion-safe-area-top, 0px)) 18px
-    calc(16px + var(--ion-safe-area-bottom, 0px)) 14px;
+  padding: calc(14px + var(--ion-safe-area-top, 0px)) 16px
+    calc(16px + var(--ion-safe-area-bottom, 0px)) 20px;
 }
 
 .topo {
@@ -240,8 +240,8 @@ function continuar() {
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 6px 10px;
+  gap: 7px;
+  padding: 6px 9px;
   background: rgba(255, 255, 255, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.85);
   border-radius: 16px;
@@ -254,8 +254,8 @@ function continuar() {
 }
 
 .icone {
-  width: 19px;
-  height: 19px;
+  width: 17px;
+  height: 17px;
   object-fit: contain;
   flex: none;
 }
@@ -264,7 +264,7 @@ function continuar() {
   flex: 1;
   min-width: 0;
   font-family: var(--life-serif);
-  font-size: 0.7rem;
+  font-size: 0.64rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -279,8 +279,8 @@ function continuar() {
 
 .chave {
   flex: none;
-  width: 34px;
-  height: 19px;
+  width: 30px;
+  height: 17px;
   display: flex;
   align-items: center;
   padding: 2px;
@@ -290,8 +290,8 @@ function continuar() {
 }
 
 .bolinha {
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 1px 3px rgba(20, 48, 79, 0.3);
@@ -303,7 +303,7 @@ function continuar() {
 }
 
 .condicao.marcada .bolinha {
-  transform: translateX(15px);
+  transform: translateX(13px);
 }
 
 .marca-real:focus-visible ~ .chave {
