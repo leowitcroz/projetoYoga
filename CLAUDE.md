@@ -5,12 +5,13 @@ App de Yoga, Ayurveda, Ciência e Filosofia (celular + web) com motor de recomen
 ## Antes de qualquer tarefa
 
 1. Leia [docs/plano-de-desenvolvimento.md](docs/plano-de-desenvolvimento.md). Ele é a especificação (SDD) e define o escopo.
-2. Consulte [docs/decisoes.md](docs/decisoes.md) para decisões já tomadas.
+2. Leia [docs/progresso.md](docs/progresso.md) para saber onde o projeto parou.
+3. Consulte [docs/decisoes.md](docs/decisoes.md) para decisões já tomadas.
 
 ## Regras de escopo
 
 - **Trabalhe só na fase atual** (veja o Status na seção 7.2 do plano). Não adiante tarefas de fases futuras.
-- Ao terminar uma tarefa, marque `[x]` nela no plano.
+- Ao terminar uma tarefa, marque `[x]` nela no plano e acrescente uma linha em [docs/progresso.md](docs/progresso.md).
 - **Só implemente o que está no plano.** Se o pedido não estiver lá, diga isso e proponha registrar na seção 12 (Pedidos de mudança) antes de programar.
 - Para mudar um comportamento, atualize primeiro o plano (nova versão no Changelog) e depois o código.
 - Commits citam o ID do requisito: `feat(CHK-03): ...`, `fix(MOT-01): ...`.
