@@ -89,7 +89,7 @@ import iconePranayama from '@/assets/icones/praticas/pranayama.png';
 // Passo 2 do cadastro. Só aparece na primeira vez que a pessoa entra.
 const router = useRouter();
 const passo = 2;
-const total = 14;
+const total = 6;
 const rotuloPasso = computed(() => 'Passo ' + passo + ' de ' + total);
 
 const niveis = [
@@ -122,9 +122,8 @@ function pular() {
   router.push('/tabs/praticar');
 }
 
-// Protótipo: no fim das perguntas vem a criação da conta.
 function continuar() {
-  router.push('/criar-conta');
+  router.push('/onboarding/saude');
 }
 </script>
 
@@ -192,15 +191,15 @@ function continuar() {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 7px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .ponto {
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #cddbe6;
 }

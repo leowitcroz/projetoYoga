@@ -22,26 +22,29 @@
 
           <p class="passo-texto">Passo {{ passo }} de {{ total }}</p>
 
-          <h1 class="titulo">O que você busca?</h1>
-          <p class="subtitulo">Você pode escolher mais de uma opção.</p>
+          <h1 class="titulo">Saúde e bem-estar</h1>
+          <p class="subtitulo">
+            Para sua segurança, nos conte sobre alguma condição que devemos considerar.
+          </p>
 
-          <ul class="opcoes">
-            <li v-for="opcao in objetivos" :key="opcao.id">
-              <label class="opcao" :class="{ marcada: selecionados.includes(opcao.id) }">
-                <img :src="opcao.icone" alt="" class="icone" />
-                <span class="nome">{{ opcao.nome }}</span>
-                <input
-                  v-model="selecionados"
-                  type="checkbox"
-                  :value="opcao.id"
-                  class="caixa-real"
-                />
-                <span class="caixa" aria-hidden="true">
-                  <ion-icon :icon="checkmarkOutline" />
-                </span>
+          <ul class="condicoes">
+            <li v-for="condicao in condicoes" :key="condicao.id">
+              <label class="condicao" :class="{ marcada: marcadas.includes(condicao.id) }">
+                <img :src="condicao.icone" alt="" class="icone" />
+                <span class="nome">{{ condicao.nome }}</span>
+                <input v-model="marcadas" type="checkbox" :value="condicao.id" class="marca-real" />
+                <span class="chave" aria-hidden="true"><span class="bolinha"></span></span>
               </label>
             </li>
           </ul>
+
+          <p class="aviso">
+            <img :src="iconeInfo" alt="" class="icone-aviso" />
+            <span>
+              Essas informações nos ajudam a recomendar práticas mais seguras e adequadas. Não
+              substituem avaliação médica.
+            </span>
+          </p>
 
           <button type="button" class="continuar" @click="continuar">
             Continuar
@@ -55,45 +58,41 @@
 
 <script setup lang="ts">
 import { IonContent, IonIcon, IonPage } from '@ionic/vue';
-import { arrowForwardOutline, checkmarkOutline, chevronBackOutline } from 'ionicons/icons';
+import { arrowForwardOutline, chevronBackOutline } from 'ionicons/icons';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import iconeAyurveda from '@/assets/icones/ayurveda.png';
-import iconeDisposicao from '@/assets/icones/disposicao.png';
-import iconeEstresse from '@/assets/icones/estresse.png';
-import iconeFilosofia from '@/assets/icones/filosofia.png';
-import iconeFlexibilidade from '@/assets/icones/flexibilidade.png';
-import iconeForca from '@/assets/icones/forca.png';
-import iconeFormacao from '@/assets/icones/formacao.png';
-import iconeMeditacao from '@/assets/icones/meditacao.png';
-import iconeMobilidade from '@/assets/icones/mobilidade.png';
-import iconePratica from '@/assets/icones/pratica.png';
-import iconeRespiracao from '@/assets/icones/respiracao.png';
-import iconeSono from '@/assets/icones/sono.png';
+import iconeAnsiedade from '@/assets/icones/saude/ansiedade.png';
+import iconeArticulares from '@/assets/icones/saude/articulares.png';
+import iconeCardiacas from '@/assets/icones/saude/cardiacas.png';
+import iconeDiabetes from '@/assets/icones/saude/diabetes.png';
+import iconeGastrointestinais from '@/assets/icones/saude/gastrointestinais.png';
+import iconeGestacao from '@/assets/icones/saude/gestacao.png';
+import iconeGlaucoma from '@/assets/icones/saude/glaucoma.png';
+import iconeHipertensao from '@/assets/icones/saude/hipertensao.png';
+import iconeInfo from '@/assets/icones/saude/info.png';
+import iconeOutras from '@/assets/icones/saude/outras.png';
+import iconeRespiratorios from '@/assets/icones/saude/respiratorios.png';
 
-// Tela do cadastro. Só aparece na primeira vez que a pessoa entra.
+// Passo 3 do cadastro. Só aparece na primeira vez que a pessoa entra.
 const router = useRouter();
-const passo = 1;
+const passo = 3;
 const total = 6;
 const rotuloPasso = computed(() => 'Passo ' + passo + ' de ' + total);
 
-const objetivos = [
-  { id: 'mobilidade', nome: 'Melhorar mobilidade', icone: iconeMobilidade },
-  { id: 'flexibilidade', nome: 'Flexibilidade', icone: iconeFlexibilidade },
-  { id: 'forca', nome: 'Força', icone: iconeForca },
-  { id: 'estresse', nome: 'Reduzir estresse', icone: iconeEstresse },
-  { id: 'sono', nome: 'Dormir melhor', icone: iconeSono },
-  { id: 'respiracao', nome: 'Respirar melhor', icone: iconeRespiracao },
-  { id: 'meditacao', nome: 'Meditar', icone: iconeMeditacao },
-  { id: 'disposicao', nome: 'Melhorar disposição', icone: iconeDisposicao },
-  { id: 'ayurveda', nome: 'Conhecer Ayurveda', icone: iconeAyurveda },
-  { id: 'filosofia', nome: 'Estudar filosofia do Yoga', icone: iconeFilosofia },
-  { id: 'pratica', nome: 'Aprofundar minha prática', icone: iconePratica },
-  { id: 'formacao', nome: 'Formação profissional', icone: iconeFormacao },
+const condicoes = [
+  { id: 'cardiacas', nome: 'Condições cardíacas', icone: iconeCardiacas },
+  { id: 'respiratorios', nome: 'Problemas respiratórios', icone: iconeRespiratorios },
+  { id: 'diabetes', nome: 'Diabetes', icone: iconeDiabetes },
+  { id: 'hipertensao', nome: 'Hipertensão', icone: iconeHipertensao },
+  { id: 'articulares', nome: 'Problemas articulares', icone: iconeArticulares },
+  { id: 'gastrointestinais', nome: 'Problemas gastrointestinais', icone: iconeGastrointestinais },
+  { id: 'ansiedade', nome: 'Ansiedade / depressão', icone: iconeAnsiedade },
+  { id: 'glaucoma', nome: 'Glaucoma', icone: iconeGlaucoma },
+  { id: 'gestacao', nome: 'Gestação', icone: iconeGestacao },
+  { id: 'outras', nome: 'Outras condições', icone: iconeOutras },
 ];
 
-// Protótipo: começa com as mesmas marcações da tela de referência.
-const selecionados = ref<string[]>(['forca', 'estresse', 'sono']);
+const marcadas = ref<string[]>([]);
 
 function voltar() {
   router.back();
@@ -104,8 +103,9 @@ function pular() {
   router.push('/tabs/praticar');
 }
 
+// Protótipo: no fim das perguntas vem a criação da conta.
 function continuar() {
-  router.push('/onboarding/relacao');
+  router.push('/criar-conta');
 }
 </script>
 
@@ -114,8 +114,7 @@ function continuar() {
   --background: #fff;
 }
 
-/* Fundo pronto (arte do cliente): traz a paisagem, a logo, a frase e as folhas.
-   A tela desenha por cima só o que é interativo. */
+/* Mesmo fundo dos outros passos: só o lado direito muda. */
 .fundo {
   position: fixed;
   inset: 0;
@@ -134,24 +133,12 @@ function continuar() {
   max-width: 22rem;
 }
 
-.voltar {
-  display: flex;
-  padding: 6px;
-  background: none;
-  border: 0;
-  color: #14304f;
-  font-size: 1.35rem;
-  cursor: pointer;
-}
-
 .painel {
   box-sizing: border-box;
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  /* Margem à direita é padding, não margin: margin somaria à largura e empurraria
-     o conteúdo para fora da tela. */
   padding: calc(14px + var(--ion-safe-area-top, 0px)) 18px
     calc(16px + var(--ion-safe-area-bottom, 0px)) 14px;
 }
@@ -160,6 +147,16 @@ function continuar() {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.voltar {
+  display: flex;
+  padding: 6px;
+  background: none;
+  border: 0;
+  color: #14304f;
+  font-size: 1.35rem;
+  cursor: pointer;
 }
 
 .pular {
@@ -205,21 +202,22 @@ function continuar() {
   margin: 6px 0 0;
   font-family: var(--life-serif);
   font-size: clamp(1.35rem, 5.8vw, 2.1rem);
-  font-weight: 500;
-  line-height: 1.1;
+  font-weight: 600;
+  line-height: 1.15;
   color: #14304f;
 }
 
 .subtitulo {
   margin: 6px 0 12px;
   font-family: var(--life-serif);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
   color: #46617d;
 }
 
-/* A lista cresce para ocupar a tela: em telas altas os cartões ficam um pouco
-   mais altos, até um limite, em vez de abrir vãos entre eles. */
-.opcoes {
+/* --- Lista de condições, com chave liga/desliga --- */
+
+.condicoes {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -229,13 +227,13 @@ function continuar() {
   gap: 5px;
 }
 
-.opcoes li {
+.condicoes li {
   flex: 1 1 auto;
-  max-height: 52px;
+  max-height: 64px;
   display: flex;
 }
 
-.opcao {
+.condicao {
   position: relative;
   flex: 1;
   display: flex;
@@ -249,7 +247,7 @@ function continuar() {
   cursor: pointer;
 }
 
-.opcao.marcada {
+.condicao.marcada {
   background: rgba(255, 255, 255, 0.95);
 }
 
@@ -271,35 +269,65 @@ function continuar() {
   color: #14304f;
 }
 
-.caixa-real {
+.marca-real {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
 
-.caixa {
+.chave {
   flex: none;
-  width: 18px;
-  height: 18px;
+  width: 34px;
+  height: 19px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border: 1.5px solid #c3d2de;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.75);
-  color: transparent;
-  font-size: 1rem;
+  padding: 2px;
+  border-radius: 999px;
+  background: #d4dfe8;
+  transition: background 0.15s ease;
 }
 
-.opcao.marcada .caixa {
+.bolinha {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(20, 48, 79, 0.3);
+  transition: transform 0.15s ease;
+}
+
+.condicao.marcada .chave {
   background: #14304f;
-  border-color: #14304f;
-  color: #fff;
 }
 
-.caixa-real:focus-visible + .caixa {
+.condicao.marcada .bolinha {
+  transform: translateX(15px);
+}
+
+.marca-real:focus-visible ~ .chave {
   outline: 2px solid #2f7ea6;
   outline-offset: 2px;
+}
+
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 10px 0 0;
+  padding: 9px 11px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 14px;
+  font-size: 0.66rem;
+  line-height: 1.45;
+  color: #46617d;
+}
+
+.icone-aviso {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  object-fit: contain;
 }
 
 .continuar {
@@ -309,7 +337,7 @@ function continuar() {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 12px;
+  padding: 13px;
   font-family: var(--life-serif);
   font-size: 0.95rem;
   font-weight: 500;
@@ -324,51 +352,33 @@ function continuar() {
   background: #0f2540;
 }
 
-/* Empurra o rodapé para o fim da tela, não logo abaixo do botão. */
-
 @media (min-width: 40rem) {
-  .lateral {
-    padding: 40px 32px 0;
-  }
-
-  .lateral-assinatura {
-    font-size: 0.72rem;
-  }
-
-  .fio {
-    margin: 28px 0;
-  }
-
-  .lateral-frase {
-    font-size: 1.45rem;
-  }
-
   .painel {
     padding: 40px 48px;
   }
 
   .pular,
-  .subtitulo {
-    font-size: 1rem;
-  }
-
+  .subtitulo,
   .nome {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
   .passo-texto {
     font-size: 0.68rem;
   }
 
-  .icone,
-  .caixa {
-    width: 24px;
-    height: 24px;
+  .icone {
+    width: 26px;
+    height: 26px;
   }
 
-  .opcao {
+  .condicao {
     gap: 16px;
     padding: 12px 16px;
+  }
+
+  .aviso {
+    font-size: 0.8rem;
   }
 
   .continuar {

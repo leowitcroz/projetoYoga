@@ -30,6 +30,9 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ### 12/09/2026
 
+- **Passo 3 do cadastro** ("Saúde e bem-estar"): 10 condições com chave liga/desliga, aviso de que não substitui avaliação médica, e os 11 ícones recortados da referência.
+- **Corrigido com o cliente:** o cadastro tem **6 passos** (antes estava 14). O check-in diário também tem 6 perguntas, mas são coisas separadas.
+
 - **Passo 2 do cadastro** ("Qual sua relação com o Yoga?"): lista de experiência com escolha única e grade de práticas conhecidas, com os 11 ícones recortados da referência. Mesmo fundo do passo 1, sem rodapé.
 
 - **Protótipo preparado para a Vercel** (`vercel.json`): build do app no monorepo e rotas do Vue tratadas. Serve para testar no celular pelo navegador, sem gerar o app.
