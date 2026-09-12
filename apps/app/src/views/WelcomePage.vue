@@ -2,8 +2,6 @@
   <ion-page>
     <ion-content :fullscreen="true" class="tela">
       <div class="fundo" aria-hidden="true"></div>
-      <div class="veu-topo" aria-hidden="true"></div>
-      <div class="veu-base" aria-hidden="true"></div>
 
       <div class="conteudo">
         <header class="marca">
@@ -65,20 +63,7 @@ function entrar() {
   position: fixed;
   inset: 0;
   background: url('@/assets/backgroundLogin.jpg') center / cover no-repeat;
-}
-
-.veu-topo {
-  position: fixed;
-  inset: 0 0 auto 0;
-  height: 46%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 100%);
-}
-
-.veu-base {
-  position: fixed;
-  inset: auto 0 0 0;
-  height: 46%;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0) 100%);
+  filter: brightness(1.08) saturate(1.12) contrast(1.02);
 }
 
 .conteudo {
@@ -164,7 +149,8 @@ function entrar() {
 .entrar {
   margin: 16px 0 0;
   font-size: 0.98rem;
-  color: #1c4066;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(10, 26, 45, 0.45);
 }
 
 .link {
@@ -172,9 +158,10 @@ function entrar() {
   background: none;
   border: 0;
   font-size: inherit;
-  color: #14304f;
+  color: #fff;
   font-weight: 600;
   text-decoration: underline;
+  text-shadow: 0 1px 6px rgba(10, 26, 45, 0.45);
   cursor: pointer;
 }
 
@@ -190,12 +177,14 @@ function entrar() {
 
 .linha {
   height: 1px;
-  background: rgba(20, 48, 79, 0.25);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .lotus {
   width: 30px;
   height: auto;
+  filter: brightness(0) invert(1) drop-shadow(0 1px 4px rgba(10, 26, 45, 0.4));
+  opacity: 0.92;
 }
 
 .lema {
@@ -205,6 +194,7 @@ function entrar() {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   line-height: 1.7;
-  color: #2a4b6e;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 6px rgba(10, 26, 45, 0.45);
 }
 </style>
