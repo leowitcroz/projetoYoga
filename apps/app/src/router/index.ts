@@ -8,6 +8,8 @@ const placeholder = () => import('@/views/PlaceholderPage.vue');
 const routes: RouteRecordRaw[] = [
   { path: '/', component: () => import('@/views/WelcomePage.vue') },
   { path: '/login', component: () => import('@/views/LoginPage.vue') },
+  { path: '/onboarding', component: () => import('@/views/OnboardingPage.vue') },
+  { path: '/checkin', component: () => import('@/views/DailyCheckinPage.vue') },
   {
     path: '/tabs/',
     component: TabsPage,

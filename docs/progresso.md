@@ -16,6 +16,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 | De quem | O quê | Trava o quê |
 |---|---|---|
+| Cliente | "O que você busca?" vai ser perguntado **todo dia**? Se sim, é o objetivo do dia (tático) ou substitui o objetivo de médio prazo? Muda o Bloco 3 do motor | Fase 1 |
 | Cliente | A pergunta sobre **dor** entra no check-in (tela 8)? Sem ela o motor não protege quem está com dor | Fases 1 e 4 |
 | Cliente | **Humor** fica ou sai do check-in? Se ficar, como influencia a aula | Fases 1 e 4 |
 | Cliente | Quem desenha as telas que faltam: **cadastro, player e feedback** | Fase 4 |
@@ -29,6 +30,9 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ## Linha do tempo
 
 ### 11/09/2026
+
+- **Tela "O que você busca?"** refeita igual à referência, com os **12 ícones recortados da imagem** do cliente (PNG transparente em `src/assets/icones/`), logo e coluna da marca em telas largas.
+- Telas de **onboarding** e **check-in diário** criadas por Leonardo e ajustadas (tipos e lint).
 
 - **Tela de boas-vindas** como página inicial, no estilo da tela 1 de referência. "Entrar" leva ao login. `ad0214f`
 - Descoberto que `logo.jpg` e `lotus.jpg` eram **PNG com transparência**: renomeados, recortados e sem gambiarra de mistura de cor.
