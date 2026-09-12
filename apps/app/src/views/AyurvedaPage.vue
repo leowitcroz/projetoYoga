@@ -170,7 +170,7 @@ function continuar() {
 .fundo {
   position: fixed;
   inset: 0;
-  background: url('@/assets/fundo-ayurveda.jpg') left center / cover no-repeat;
+  background: url('@/assets/fundo-ayurveda.png') left center / cover no-repeat;
 }
 
 .layout {
@@ -181,7 +181,7 @@ function continuar() {
 
 .lateral {
   flex: none;
-  width: 43%;
+  width: 47%;
   max-width: 22rem;
 }
 
@@ -284,8 +284,8 @@ function continuar() {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 8px 9px;
+  gap: 8px;
+  padding: 7px 8px;
   background: rgba(255, 255, 255, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.85);
   border-radius: 16px;
@@ -301,8 +301,8 @@ function continuar() {
 
 .selo {
   flex: none;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -310,22 +310,22 @@ function continuar() {
 }
 
 .selo img {
-  width: 22px;
-  height: 22px;
+  width: 21px;
+  height: 21px;
   object-fit: contain;
 }
 
-/* Cada dosha tem a sua cor de selo, como na referência. */
+/* O selo acompanha a cor do ícone: verde no Vata e no Kapha, laranja no Pitta. */
 .dosha.vata .selo {
-  background: #e7eef1;
+  background: #e6f1ec;
 }
 
 .dosha.pitta .selo {
-  background: #fbe8db;
+  background: #fce7db;
 }
 
 .dosha.kapha .selo {
-  background: #e4efe3;
+  background: #e3eee4;
 }
 
 .texto {
@@ -338,13 +338,13 @@ function continuar() {
 
 .nome {
   font-family: var(--life-serif);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 600;
   color: #14304f;
 }
 
 .descricao {
-  font-size: 0.58rem;
+  font-size: 0.55rem;
   line-height: 1.35;
   color: #5c7086;
 }
@@ -425,7 +425,7 @@ function continuar() {
 
 @media (min-width: 40rem) {
   .lateral {
-    width: 40%;
+    width: 42%;
   }
 
   .painel {
@@ -460,8 +460,8 @@ function continuar() {
   }
 
   .selo img {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
   }
 
   .estado .icone {
