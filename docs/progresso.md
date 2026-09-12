@@ -30,6 +30,8 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ### 11/09/2026
 
+- Tela de objetivos ajustada ao pedido do cliente: **Passo 1 de 6** e a **coluna da arte com a logo aparece também no celular**, como na imagem de referência.
+
 - **Tela de criar conta** no fim das perguntas: nome completo, e-mail, telefone, senha e aceite da política. Decidido com o cliente: a conta é criada depois de responder, não antes.
 
 - **Esclarecido com o cliente:** o onboarding (objetivo, relação com o Yoga, saúde, Ayurveda, preferências) é **só na criação da conta**. O que se repete todo dia é o **check-in** ("como você está hoje?") que leva à recomendação da aula. Quem pular escolhe a aula na biblioteca. Plano 1.7, CHK-06 e CHK-07.

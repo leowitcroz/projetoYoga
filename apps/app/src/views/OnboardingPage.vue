@@ -3,10 +3,13 @@
     <ion-content :fullscreen="true" class="tela">
       <div class="layout">
         <!-- Coluna da marca: aparece em telas largas, como no material de referência -->
-        <aside class="lateral" aria-hidden="true">
-          <div class="lateral-fundo"></div>
+        <aside class="lateral">
+          <div class="lateral-fundo" aria-hidden="true"></div>
+          <button type="button" class="voltar" aria-label="Voltar" @click="voltar">
+            <ion-icon :icon="chevronBackOutline" />
+          </button>
           <div class="lateral-conteudo">
-            <img :src="logo" alt="" class="lateral-logo" />
+            <img :src="logo" alt="LIFE" class="lateral-logo" />
             <p class="lateral-assinatura">Yoga · Ayurveda · Ciência · Filosofia</p>
             <span class="fio"></span>
             <p class="lateral-frase">
@@ -17,10 +20,6 @@
 
         <section class="painel">
           <header class="topo">
-            <button type="button" class="voltar" aria-label="Voltar" @click="voltar">
-              <ion-icon :icon="chevronBackOutline" />
-            </button>
-
             <ol class="passos" :aria-label="rotuloPasso">
               <li v-for="i in total" :key="i" class="ponto" :class="{ feito: i <= passo }"></li>
             </ol>
@@ -90,8 +89,8 @@ import iconeSono from '@/assets/icones/sono.png';
 
 // Tela do cadastro (passo 2 de 7). Só aparece na primeira vez que a pessoa entra.
 const router = useRouter();
-const passo = 2;
-const total = 7;
+const passo = 1;
+const total = 6;
 const rotuloPasso = computed(() => 'Passo ' + passo + ' de ' + total);
 
 const objetivos = [
@@ -140,9 +139,9 @@ function continuar() {
 /* --- Coluna da marca (telas largas) --- */
 
 .lateral {
-  display: none;
   position: relative;
-  width: 38%;
+  flex: none;
+  width: 40%;
   max-width: 25rem;
   overflow: hidden;
 }
@@ -162,34 +161,48 @@ function continuar() {
 
 .lateral-conteudo {
   position: relative;
-  padding: 40px 32px;
+  padding: calc(46px + var(--ion-safe-area-top, 0px)) 12px 0 16px;
 }
 
 .lateral-logo {
-  width: 132px;
+  width: min(78%, 132px);
   height: auto;
 }
 
 .lateral-assinatura {
-  margin: 8px 0 0;
-  font-size: 0.72rem;
+  margin: 2px 0 0;
+  font-size: 0.52rem;
   color: #1c4066;
 }
 
 .fio {
   display: block;
-  width: 46px;
+  width: 34px;
   height: 1px;
-  margin: 28px 0;
+  margin: 22px 0;
   background: rgba(20, 48, 79, 0.4);
 }
 
 .lateral-frase {
   margin: 0;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 1.45rem;
-  line-height: 1.45;
+  font-size: 0.95rem;
+  line-height: 1.5;
   color: #14304f;
+}
+
+.voltar {
+  position: absolute;
+  top: calc(8px + var(--ion-safe-area-top, 0px));
+  left: 6px;
+  z-index: 1;
+  display: flex;
+  padding: 6px;
+  background: none;
+  border: 0;
+  color: #14304f;
+  font-size: 1.35rem;
+  cursor: pointer;
 }
 
 /* --- Painel das perguntas --- */
@@ -200,8 +213,8 @@ function continuar() {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: calc(18px + var(--ion-safe-area-top, 0px)) 20px
-    calc(20px + var(--ion-safe-area-bottom, 0px));
+  padding: calc(14px + var(--ion-safe-area-top, 0px)) 14px
+    calc(16px + var(--ion-safe-area-bottom, 0px));
   background: linear-gradient(180deg, #f7fbfd 0%, #eaf2f8 100%);
 }
 
@@ -211,23 +224,13 @@ function continuar() {
   gap: 12px;
 }
 
-.voltar,
 .pular {
   padding: 6px;
   background: none;
   border: 0;
   color: #2f6e94;
+  font-size: 0.82rem;
   cursor: pointer;
-}
-
-.voltar {
-  font-size: 1.35rem;
-  display: flex;
-  color: #14304f;
-}
-
-.pular {
-  font-size: 0.95rem;
 }
 
 .passos {
@@ -235,15 +238,15 @@ function continuar() {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 7px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .ponto {
-  width: 9px;
-  height: 9px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #cddbe6;
 }
@@ -253,25 +256,25 @@ function continuar() {
 }
 
 .passo-texto {
-  margin: 14px 0 0;
-  font-size: 0.68rem;
-  letter-spacing: 0.22em;
+  margin: 12px 0 0;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #6b8299;
 }
 
 .titulo {
-  margin: 10px 0 0;
+  margin: 6px 0 0;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(1.8rem, 7vw, 2.3rem);
+  font-size: clamp(1.25rem, 5.4vw, 2.1rem);
   font-weight: 500;
   line-height: 1.1;
   color: #14304f;
 }
 
 .subtitulo {
-  margin: 8px 0 18px;
-  font-size: 1rem;
+  margin: 6px 0 14px;
+  font-size: 0.78rem;
   color: #4d627a;
 }
 
@@ -281,15 +284,15 @@ function continuar() {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 6px;
 }
 
 .opcao {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 12px 16px;
+  gap: 10px;
+  padding: 8px 10px;
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(20, 48, 79, 0.06);
   border-radius: 16px;
@@ -302,8 +305,8 @@ function continuar() {
 }
 
 .icone {
-  width: 26px;
-  height: 26px;
+  width: 21px;
+  height: 21px;
   object-fit: contain;
   flex: none;
 }
@@ -311,7 +314,7 @@ function continuar() {
 .nome {
   flex: 1;
   min-width: 0;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: #14304f;
 }
 
@@ -323,8 +326,8 @@ function continuar() {
 
 .caixa {
   flex: none;
-  width: 26px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -347,14 +350,14 @@ function continuar() {
 }
 
 .continuar {
-  margin: 20px 0 0;
+  margin: 14px 0 0;
   width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 16px;
-  font-size: 1.05rem;
+  gap: 10px;
+  padding: 13px;
+  font-size: 0.92rem;
   font-weight: 600;
   color: #fff;
   background: #14304f;
@@ -368,7 +371,7 @@ function continuar() {
 }
 
 .rodape {
-  margin-top: 22px;
+  margin-top: 16px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -382,28 +385,70 @@ function continuar() {
 }
 
 .lotus {
-  width: 26px;
+  width: 20px;
   height: auto;
 }
 
 .lema {
   grid-column: 1 / -1;
-  margin: 8px 0 0;
+  margin: 6px 0 0;
   text-align: center;
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
+  font-size: 0.48rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   line-height: 1.7;
   color: #4d627a;
 }
 
-@media (min-width: 56rem) {
-  .lateral {
-    display: block;
+@media (min-width: 40rem) {
+  .lateral-conteudo {
+    padding: 40px 32px 0;
+  }
+
+  .lateral-assinatura {
+    font-size: 0.72rem;
+  }
+
+  .fio {
+    margin: 28px 0;
+  }
+
+  .lateral-frase {
+    font-size: 1.45rem;
   }
 
   .painel {
     padding: 40px 48px;
+  }
+
+  .pular,
+  .subtitulo,
+  .nome {
+    font-size: 1rem;
+  }
+
+  .passo-texto {
+    font-size: 0.68rem;
+  }
+
+  .icone,
+  .caixa {
+    width: 26px;
+    height: 26px;
+  }
+
+  .opcao {
+    gap: 16px;
+    padding: 12px 16px;
+  }
+
+  .continuar {
+    font-size: 1.05rem;
+    padding: 16px;
+  }
+
+  .lema {
+    font-size: 0.62rem;
   }
 
   .opcoes,
