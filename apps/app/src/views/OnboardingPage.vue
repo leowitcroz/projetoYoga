@@ -47,15 +47,6 @@
             Continuar
             <ion-icon :icon="arrowForwardOutline" aria-hidden="true" />
           </button>
-
-          <footer class="rodape">
-            <div class="fios">
-              <span class="linha"></span>
-              <img :src="lotus" alt="" class="lotus" />
-              <span class="linha"></span>
-            </div>
-            <p class="lema">Prática · Conhecimento · Equilíbrio<br />para a vida</p>
-          </footer>
         </section>
       </div>
     </ion-content>
@@ -67,7 +58,6 @@ import { IonContent, IonIcon, IonPage } from '@ionic/vue';
 import { arrowForwardOutline, checkmarkOutline, chevronBackOutline } from 'ionicons/icons';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import lotus from '@/assets/lotus.png';
 import iconeAyurveda from '@/assets/icones/ayurveda.png';
 import iconeDisposicao from '@/assets/icones/disposicao.png';
 import iconeEstresse from '@/assets/icones/estresse.png';
@@ -126,7 +116,7 @@ function continuar() {
 }
 
 /* Fundo pronto (arte do cliente): traz a paisagem, a logo, a frase e as folhas.
-   A tela desenha por cima só o que é interativo, mais o rodapé da marca. */
+   A tela desenha por cima só o que é interativo. */
 .fundo {
   position: fixed;
   inset: 0;
@@ -334,38 +324,6 @@ function continuar() {
 }
 
 /* Empurra o rodapé para o fim da tela, não logo abaixo do botão. */
-.rodape {
-  margin-top: auto;
-  padding-top: 14px;
-}
-
-.fios {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.linha {
-  flex: 1;
-  height: 1px;
-  background: rgba(20, 48, 79, 0.18);
-}
-
-.lotus {
-  width: 20px;
-  height: auto;
-  flex: none;
-}
-
-.lema {
-  margin: 6px 0 0;
-  text-align: center;
-  font-size: 0.48rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  line-height: 1.7;
-  color: #4d627a;
-}
 
 @media (min-width: 40rem) {
   .lateral {
@@ -405,10 +363,6 @@ function continuar() {
   .caixa {
     width: 24px;
     height: 24px;
-  }
-
-  .lema {
-    font-size: 0.62rem;
   }
 
   .opcao {
