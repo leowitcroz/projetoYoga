@@ -1,22 +1,22 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true" class="tela">
+      <div class="fundo" aria-hidden="true"></div>
+      <div class="folhas" aria-hidden="true"></div>
+
       <div class="layout">
-        <!-- Coluna da marca: aparece em telas largas, como no material de referência -->
+        <!-- Coluna da marca, sobre a foto -->
         <aside class="lateral">
-          <div class="lateral-fundo" aria-hidden="true"></div>
-          <div class="lateral-arte" aria-hidden="true"></div>
           <button type="button" class="voltar" aria-label="Voltar" @click="voltar">
             <ion-icon :icon="chevronBackOutline" />
           </button>
-          <div class="lateral-conteudo">
-            <img :src="logo" alt="LIFE" class="lateral-logo" />
-            <p class="lateral-assinatura">Yoga · Ayurveda · Ciência · Filosofia</p>
-            <span class="fio"></span>
-            <p class="lateral-frase">
-              Uma vida<br />mais consciente,<br />dentro e fora<br />do tapete.
-            </p>
-          </div>
+
+          <img :src="logo" alt="LIFE" class="lateral-logo" />
+          <p class="lateral-assinatura">Yoga · Ayurveda · Ciência · Filosofia</p>
+          <span class="fio"></span>
+          <p class="lateral-frase">
+            Uma vida<br />mais consciente,<br />dentro e fora<br />do tapete.
+          </p>
         </aside>
 
         <section class="painel">
@@ -57,9 +57,11 @@
           </button>
 
           <footer class="rodape">
-            <span class="linha"></span>
-            <img :src="lotus" alt="" class="lotus" />
-            <span class="linha"></span>
+            <div class="fios">
+              <span class="linha"></span>
+              <img :src="lotus" alt="" class="lotus" />
+              <span class="linha"></span>
+            </div>
             <p class="lema">Prática · Conhecimento · Equilíbrio<br />para a vida</p>
           </footer>
         </section>
@@ -88,7 +90,7 @@ import iconePratica from '@/assets/icones/pratica.png';
 import iconeRespiracao from '@/assets/icones/respiracao.png';
 import iconeSono from '@/assets/icones/sono.png';
 
-// Tela do cadastro (passo 2 de 7). Só aparece na primeira vez que a pessoa entra.
+// Tela do cadastro. Só aparece na primeira vez que a pessoa entra.
 const router = useRouter();
 const passo = 1;
 const total = 6;
@@ -121,7 +123,7 @@ function pular() {
   router.push('/tabs/praticar');
 }
 
-// Protótipo: só o passo 2 existe. No fim das perguntas vem a criação da conta.
+// Protótipo: só o passo 1 existe. No fim das perguntas vem a criação da conta.
 function continuar() {
   router.push('/criar-conta');
 }
@@ -129,72 +131,76 @@ function continuar() {
 
 <style scoped>
 .tela {
-  --background: #eef4f8;
+  --background: #fff;
+}
+
+/* Uma foto só: a moça à esquerda, virando branco à direita. */
+.fundo {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.06) 18%,
+      rgba(255, 255, 255, 0.45) 32%,
+      rgba(255, 255, 255, 0.92) 44%,
+      #fff 55%
+    ),
+    url('@/assets/arte-lateral.jpg') left bottom / auto 100% no-repeat;
+}
+
+.folhas {
+  position: fixed;
+  right: -10px;
+  bottom: -8px;
+  width: 38%;
+  max-width: 190px;
+  aspect-ratio: 130 / 220;
+  background: url('@/assets/folhas.jpg') bottom right / contain no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.85;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(140% 120% at 100% 100%, #000 52%, transparent 82%);
+  mask-image: radial-gradient(140% 120% at 100% 100%, #000 52%, transparent 82%);
 }
 
 .layout {
+  position: relative;
   display: flex;
   min-height: 100%;
 }
 
-/* --- Coluna da marca (telas largas) --- */
-
 .lateral {
   position: relative;
   flex: none;
-  width: 42%;
-  max-width: 25rem;
-  overflow: hidden;
+  box-sizing: border-box;
+  width: 40%;
+  max-width: 22rem;
+  padding: calc(46px + var(--ion-safe-area-top, 0px)) 10px 0 16px;
 }
 
-.lateral-fundo {
+.voltar {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, #f6fafd 0%, #e9f1f7 100%);
-}
-
-/* A arte (folhas + foto) vem da própria referência, encostada embaixo.
-   A máscara dissolve o topo dela no fundo claro, sem emenda reta. */
-.lateral-arte {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  aspect-ratio: 356 / 960;
-  background: url('@/assets/arte-lateral.jpg') bottom center / 100% auto no-repeat;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 20%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 20%);
-}
-
-/* Borda direita: a foto se dissolve na área branca do painel, sem corte reto. */
-.lateral::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(247, 251, 253, 0) 66%,
-    rgba(247, 251, 253, 0.6) 87%,
-    #f7fbfd 100%
-  );
-}
-
-.lateral-conteudo {
-  position: relative;
-  z-index: 1;
-  padding: calc(46px + var(--ion-safe-area-top, 0px)) 12px 0 16px;
+  top: calc(8px + var(--ion-safe-area-top, 0px));
+  left: 6px;
+  display: flex;
+  padding: 6px;
+  background: none;
+  border: 0;
+  color: #14304f;
+  font-size: 1.35rem;
+  cursor: pointer;
 }
 
 .lateral-logo {
-  width: min(78%, 132px);
+  width: min(80%, 132px);
   height: auto;
 }
 
 .lateral-assinatura {
   margin: 2px 0 0;
   font-size: 0.52rem;
-  letter-spacing: 0.01em;
   color: #14304f;
 }
 
@@ -202,7 +208,7 @@ function continuar() {
   display: block;
   width: 34px;
   height: 1px;
-  margin: 22px 0;
+  margin: 20px 0;
   background: rgba(20, 48, 79, 0.4);
 }
 
@@ -215,22 +221,6 @@ function continuar() {
   color: #123a5f;
 }
 
-.voltar {
-  position: absolute;
-  top: calc(8px + var(--ion-safe-area-top, 0px));
-  left: 6px;
-  z-index: 2;
-  display: flex;
-  padding: 6px;
-  background: none;
-  border: 0;
-  color: #14304f;
-  font-size: 1.35rem;
-  cursor: pointer;
-}
-
-/* --- Painel das perguntas --- */
-
 .painel {
   box-sizing: border-box;
   flex: 1;
@@ -239,7 +229,6 @@ function continuar() {
   flex-direction: column;
   padding: calc(14px + var(--ion-safe-area-top, 0px)) 14px
     calc(16px + var(--ion-safe-area-bottom, 0px));
-  background: linear-gradient(180deg, #f7fbfd 0%, #eef5fa 100%);
 }
 
 .topo {
@@ -290,7 +279,7 @@ function continuar() {
 .titulo {
   margin: 6px 0 0;
   font-family: var(--life-serif);
-  font-size: clamp(1.25rem, 5.4vw, 2.1rem);
+  font-size: clamp(1.35rem, 5.8vw, 2.1rem);
   font-weight: 500;
   line-height: 1.1;
   color: #14304f;
@@ -298,8 +287,9 @@ function continuar() {
 
 .subtitulo {
   margin: 6px 0 14px;
-  font-size: 0.78rem;
-  color: #4d627a;
+  font-family: var(--life-serif);
+  font-size: 0.8rem;
+  color: #46617d;
 }
 
 .opcoes {
@@ -308,29 +298,29 @@ function continuar() {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .opcao {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(20, 48, 79, 0.06);
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.85);
   border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(20, 48, 79, 0.05);
+  box-shadow: 0 3px 12px rgba(20, 48, 79, 0.07);
   cursor: pointer;
 }
 
 .opcao.marcada {
-  border-color: rgba(20, 48, 79, 0.18);
+  background: rgba(255, 255, 255, 0.95);
 }
 
 .icone {
-  width: 21px;
-  height: 21px;
+  width: 23px;
+  height: 23px;
   object-fit: contain;
   flex: none;
 }
@@ -338,7 +328,8 @@ function continuar() {
 .nome {
   flex: 1;
   min-width: 0;
-  font-size: 0.8rem;
+  font-family: var(--life-serif);
+  font-size: 0.88rem;
   color: #14304f;
 }
 
@@ -350,14 +341,14 @@ function continuar() {
 
 .caixa {
   flex: none;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1.5px solid #c3d2de;
   border-radius: 8px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.75);
   color: transparent;
   font-size: 1rem;
 }
@@ -381,8 +372,9 @@ function continuar() {
   justify-content: center;
   gap: 10px;
   padding: 13px;
-  font-size: 0.92rem;
-  font-weight: 600;
+  font-family: var(--life-serif);
+  font-size: 0.95rem;
+  font-weight: 500;
   color: #fff;
   background: #14304f;
   border: 0;
@@ -395,15 +387,17 @@ function continuar() {
 }
 
 .rodape {
-  margin-top: 16px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  margin-top: 18px;
+}
+
+.fios {
+  display: flex;
   align-items: center;
   gap: 12px;
-  min-width: 0;
 }
 
 .linha {
+  flex: 1;
   height: 1px;
   background: rgba(20, 48, 79, 0.18);
 }
@@ -411,10 +405,10 @@ function continuar() {
 .lotus {
   width: 20px;
   height: auto;
+  flex: none;
 }
 
 .lema {
-  grid-column: 1 / -1;
   margin: 6px 0 0;
   text-align: center;
   font-size: 0.48rem;
@@ -425,7 +419,7 @@ function continuar() {
 }
 
 @media (min-width: 40rem) {
-  .lateral-conteudo {
+  .lateral {
     padding: 40px 32px 0;
   }
 
@@ -475,13 +469,8 @@ function continuar() {
     font-size: 0.62rem;
   }
 
-  .opcoes,
-  .continuar,
-  .rodape,
-  .titulo,
-  .subtitulo,
-  .passo-texto {
-    max-width: 34rem;
+  .folhas {
+    max-width: 240px;
   }
 }
 </style>
