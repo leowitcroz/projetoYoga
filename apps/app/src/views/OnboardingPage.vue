@@ -4,22 +4,15 @@
       <div class="fundo" aria-hidden="true"></div>
 
       <div class="layout">
-        <!-- Coluna da marca, sobre a foto -->
-        <aside class="lateral">
-          <button type="button" class="voltar" aria-label="Voltar" @click="voltar">
-            <ion-icon :icon="chevronBackOutline" />
-          </button>
-
-          <img :src="logo" alt="LIFE" class="lateral-logo" />
-          <p class="lateral-assinatura">Yoga · Ayurveda · Ciência · Filosofia</p>
-          <span class="fio"></span>
-          <p class="lateral-frase">
-            Uma vida<br />mais consciente,<br />dentro e fora<br />do tapete.
-          </p>
-        </aside>
+        <!-- Espaço da paisagem, sem conteúdo -->
+        <div class="lateral" aria-hidden="true"></div>
 
         <section class="painel">
           <header class="topo">
+            <button type="button" class="voltar" aria-label="Voltar" @click="voltar">
+              <ion-icon :icon="chevronBackOutline" />
+            </button>
+
             <ol class="passos" :aria-label="rotuloPasso">
               <li v-for="i in total" :key="i" class="ponto" :class="{ feito: i <= passo }"></li>
             </ol>
@@ -74,7 +67,6 @@ import { IonContent, IonIcon, IonPage } from '@ionic/vue';
 import { arrowForwardOutline, checkmarkOutline, chevronBackOutline } from 'ionicons/icons';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import logo from '@/assets/logo.png';
 import lotus from '@/assets/lotus.png';
 import iconeAyurveda from '@/assets/icones/ayurveda.png';
 import iconeDisposicao from '@/assets/icones/disposicao.png';
@@ -133,8 +125,8 @@ function continuar() {
   --background: #fff;
 }
 
-/* Fundo pronto, montado a partir da referência: paisagem à esquerda,
-   degradê para o branco e folhas no rodapé, tudo numa imagem só. */
+/* Fundo pronto (arte do cliente): traz a paisagem, a logo, a frase e as folhas.
+   A tela desenha por cima só o que é interativo, mais o rodapé da marca. */
 .fundo {
   position: fixed;
   inset: 0;
@@ -148,18 +140,12 @@ function continuar() {
 }
 
 .lateral {
-  position: relative;
   flex: none;
-  box-sizing: border-box;
   width: 40%;
   max-width: 22rem;
-  padding: calc(46px + var(--ion-safe-area-top, 0px)) 10px 0 16px;
 }
 
 .voltar {
-  position: absolute;
-  top: calc(8px + var(--ion-safe-area-top, 0px));
-  left: 6px;
   display: flex;
   padding: 6px;
   background: none;
@@ -167,34 +153,6 @@ function continuar() {
   color: #14304f;
   font-size: 1.35rem;
   cursor: pointer;
-}
-
-.lateral-logo {
-  width: min(80%, 132px);
-  height: auto;
-}
-
-.lateral-assinatura {
-  margin: 2px 0 0;
-  font-size: 0.52rem;
-  color: #14304f;
-}
-
-.fio {
-  display: block;
-  width: 34px;
-  height: 1px;
-  margin: 20px 0;
-  background: rgba(20, 48, 79, 0.4);
-}
-
-.lateral-frase {
-  margin: 0;
-  font-family: var(--life-serif);
-  font-size: 0.98rem;
-  font-weight: 500;
-  line-height: 1.45;
-  color: #123a5f;
 }
 
 .painel {
@@ -274,15 +232,15 @@ function continuar() {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 
 .opcao {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 7px 12px;
+  gap: 9px;
+  padding: 6px 10px;
   background: rgba(255, 255, 255, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.85);
   border-radius: 16px;
@@ -295,8 +253,8 @@ function continuar() {
 }
 
 .icone {
-  width: 23px;
-  height: 23px;
+  width: 19px;
+  height: 19px;
   object-fit: contain;
   flex: none;
 }
@@ -305,7 +263,10 @@ function continuar() {
   flex: 1;
   min-width: 0;
   font-family: var(--life-serif);
-  font-size: 0.88rem;
+  font-size: 0.74rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: #14304f;
 }
 
@@ -317,8 +278,8 @@ function continuar() {
 
 .caixa {
   flex: none;
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -363,7 +324,7 @@ function continuar() {
 }
 
 .rodape {
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
 .fios {
@@ -416,9 +377,12 @@ function continuar() {
   }
 
   .pular,
-  .subtitulo,
-  .nome {
+  .subtitulo {
     font-size: 1rem;
+  }
+
+  .nome {
+    font-size: 0.95rem;
   }
 
   .passo-texto {
@@ -427,8 +391,12 @@ function continuar() {
 
   .icone,
   .caixa {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .lema {
+    font-size: 0.62rem;
   }
 
   .opcao {
@@ -439,10 +407,6 @@ function continuar() {
   .continuar {
     font-size: 1.05rem;
     padding: 16px;
-  }
-
-  .lema {
-    font-size: 0.62rem;
   }
 }
 </style>
