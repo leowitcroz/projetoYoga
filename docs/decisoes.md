@@ -37,7 +37,7 @@ Registro das decisões tomadas. Atualize sempre que algo mudar.
 
 - **Fonte dos títulos:** Playfair Display (Google Fonts), que é a serifada das telas de referência. Hoje carrega pela internet; antes de publicar nas lojas precisa ser embutida no app, para funcionar sem conexão.
 - **Cores:** azul-marinho `#14304f` (texto e botões), azul `#2f7ea6` (links), verde `#3c6a4c` (ações dentro do app).
-- **Arte lateral:** recortada da tela de referência (`src/assets/arte-lateral.jpg`), com a foto dissolvendo no branco por máscara, sem corte reto.
+- **Fundo das telas de perguntas:** uma imagem pronta (`src/assets/fundo-perguntas.jpg`), montada a partir da referência: paisagem à esquerda, degradê para o branco e folhas no rodapé, tudo numa imagem só. Antes eram três camadas em CSS, o que criava emendas e manchas.
 
 ## Conteúdo e catálogo
 

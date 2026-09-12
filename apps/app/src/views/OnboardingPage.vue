@@ -1,9 +1,7 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true" class="tela">
-      <div class="arte" aria-hidden="true"></div>
       <div class="fundo" aria-hidden="true"></div>
-      <div class="folhas" aria-hidden="true"></div>
 
       <div class="layout">
         <!-- Coluna da marca, sobre a foto -->
@@ -135,44 +133,12 @@ function continuar() {
   --background: #fff;
 }
 
-/* Faixa contínua da foto: o céu em cima, a moça embaixo. */
-.arte {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 46%;
-  max-width: 24rem;
-  background: url('@/assets/arte-coluna.jpg') center bottom / cover no-repeat;
-}
-
-/* Véu que leva a foto para o branco à direita. */
+/* Fundo pronto, montado a partir da referência: paisagem à esquerda,
+   degradê para o branco e folhas no rodapé, tudo numa imagem só. */
 .fundo {
   position: fixed;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.06) 18%,
-    rgba(255, 255, 255, 0.45) 32%,
-    rgba(255, 255, 255, 0.92) 44%,
-    #fff 55%
-  );
-}
-
-.folhas {
-  position: fixed;
-  right: -10px;
-  bottom: -8px;
-  width: 38%;
-  max-width: 190px;
-  aspect-ratio: 130 / 220;
-  background: url('@/assets/folhas.jpg') bottom right / contain no-repeat;
-  mix-blend-mode: multiply;
-  opacity: 0.85;
-  pointer-events: none;
-  -webkit-mask-image: radial-gradient(140% 120% at 100% 100%, #000 52%, transparent 82%);
-  mask-image: radial-gradient(140% 120% at 100% 100%, #000 52%, transparent 82%);
+  background: url('@/assets/fundo-perguntas.jpg') left center / cover no-repeat;
 }
 
 .layout {
@@ -477,10 +443,6 @@ function continuar() {
 
   .lema {
     font-size: 0.62rem;
-  }
-
-  .folhas {
-    max-width: 240px;
   }
 }
 </style>
