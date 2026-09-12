@@ -28,6 +28,10 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ## Linha do tempo
 
+### 12/09/2026
+
+- Tela de objetivos acertada com o cliente: fundo em degradê da foto (moça à esquerda) para o branco, arte com zoom out e rodapé da lótus visível na tela.
+
 ### 11/09/2026
 
 - Acabamento da tela de objetivos: arte lateral recortada da referência (folhas + foto, em resolução melhor), fonte serifada **Playfair Display** nos títulos e frases, e degradê dissolvendo a foto na área branca.

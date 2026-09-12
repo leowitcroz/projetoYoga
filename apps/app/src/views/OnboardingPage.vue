@@ -147,7 +147,7 @@ function continuar() {
       rgba(255, 255, 255, 0.92) 44%,
       #fff 55%
     ),
-    url('@/assets/arte-lateral.jpg') left bottom / auto 100% no-repeat;
+    url('@/assets/arte-lateral.jpg') left bottom / auto 64% no-repeat;
 }
 
 .folhas {
@@ -286,7 +286,7 @@ function continuar() {
 }
 
 .subtitulo {
-  margin: 6px 0 14px;
+  margin: 6px 0 12px;
   font-family: var(--life-serif);
   font-size: 0.8rem;
   color: #46617d;
@@ -298,7 +298,7 @@ function continuar() {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .opcao {
@@ -306,7 +306,7 @@ function continuar() {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 12px;
+  padding: 7px 12px;
   background: rgba(255, 255, 255, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.85);
   border-radius: 16px;
@@ -365,13 +365,13 @@ function continuar() {
 }
 
 .continuar {
-  margin: 14px 0 0;
+  margin: 12px 0 0;
   width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 13px;
+  padding: 12px;
   font-family: var(--life-serif);
   font-size: 0.95rem;
   font-weight: 500;
@@ -387,7 +387,7 @@ function continuar() {
 }
 
 .rodape {
-  margin-top: 18px;
+  margin-top: 12px;
 }
 
 .fios {
