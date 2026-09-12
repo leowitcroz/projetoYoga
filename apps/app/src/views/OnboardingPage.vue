@@ -146,7 +146,7 @@ function continuar() {
 }
 
 .painel {
-  margin-left: 5px;
+  margin-right: 7px;
   box-sizing: border-box;
   flex: 1;
   min-width: 0;
