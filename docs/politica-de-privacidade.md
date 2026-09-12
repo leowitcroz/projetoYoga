@@ -35,7 +35,7 @@ O responsável pelo tratamento dos seus dados pessoais (o **controlador**, nos t
 
 | Categoria | Exemplos | Quando |
 |---|---|---|
-| Cadastro | nome, e-mail, senha | Ao criar a conta |
+| Cadastro | nome completo, e-mail, telefone, senha | Ao criar a conta, no fim do questionário inicial |
 | Perfil | faixa etária, objetivos, experiência por área (Āsanas, Prāṇāyāma, Meditação etc.), preferências de prática e de estudo, horários e frequência desejada | Onboarding e área Eu |
 | **Saúde e segurança** *(dado sensível)* | condições relevantes (cardiovasculares, respiratórias, articulares, oculares, neurológicas, gestação e fase gestacional), orientações profissionais prévias, dor ou desconforto (local e intensidade) | Onboarding e check-in diário |
 | **Estado do dia** *(dado sensível)* | sono, energia, estresse, como o corpo está, digestão, tempo disponível | Check-in diário |

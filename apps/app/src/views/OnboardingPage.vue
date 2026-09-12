@@ -121,8 +121,9 @@ function pular() {
   router.push('/tabs/praticar');
 }
 
+// Protótipo: só o passo 2 existe. No fim das perguntas vem a criação da conta.
 function continuar() {
-  router.push('/checkin');
+  router.push('/criar-conta');
 }
 </script>
 

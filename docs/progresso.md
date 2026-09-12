@@ -18,7 +18,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 |---|---|---|
 | Cliente | A pergunta sobre **dor** entra no check-in (tela 8)? Sem ela o motor não protege quem está com dor | Fases 1 e 4 |
 | Cliente | **Humor** fica ou sai do check-in? Se ficar, como influencia a aula | Fases 1 e 4 |
-| Cliente | Quem desenha as telas que faltam: **cadastro, player e feedback** | Fase 4 |
+| Cliente | Quem desenha as telas que faltam: **player e feedback** (o cadastro já foi feito) | Fase 4 |
 | Cliente | **Idade mínima** do app (P-01) | Fase 7 |
 | Cliente | Lista de **sinais de alerta** e limites de persistência (P-02) | Fase 7 |
 | Leonardo | Confirmar o **App ID** (`com.life.app` é provisório) | Fase 4 |
@@ -29,6 +29,8 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ## Linha do tempo
 
 ### 11/09/2026
+
+- **Tela de criar conta** no fim das perguntas: nome completo, e-mail, telefone, senha e aceite da política. Decidido com o cliente: a conta é criada depois de responder, não antes.
 
 - **Esclarecido com o cliente:** o onboarding (objetivo, relação com o Yoga, saúde, Ayurveda, preferências) é **só na criação da conta**. O que se repete todo dia é o **check-in** ("como você está hoje?") que leva à recomendação da aula. Quem pular escolhe a aula na biblioteca. Plano 1.7, CHK-06 e CHK-07.
 - Fluxo do protótipo: **"Começar"** (sem conta) → perguntas iniciais → check-in; **"Entrar"** (com conta) → login → check-in → Hoje. O cadastro completo fica em `/onboarding`.

@@ -1,6 +1,6 @@
 # LIFE 1.0 — Plano de Desenvolvimento (SDD)
 
-**Versão do documento:** 1.7 · **Data:** 10/09/2026
+**Versão do documento:** 1.8 · **Data:** 10/09/2026
 **Fontes:** Documento Mestre Motor LIFE 1.0 · Matriz Técnica 1.1 · Storytelling (Ana e Júlia) · telas de referência · [decisoes.md](decisoes.md)
 
 ---
@@ -140,7 +140,7 @@ projetoYoga/
 
 | Entidade | Conteúdo principal |
 |---|---|
-| `User` | e-mail, hash da senha, nome, data de nascimento, papel, status |
+| `User` | nome completo, e-mail, telefone, hash da senha, papel, status (data de nascimento depende de P-01) |
 | `Consent` | tipo (política, saúde, marketing), versão da política, aceito em, revogado em |
 | `Profile` | objetivo principal, até 2 secundários, experiência por área, preferências de prática e estudo, formato, disponibilidade, frequência desejada, horário habitual, alergias e restrições alimentares |
 | `HealthProfile` 🔒 | condições (cardiovascular, respiratória, ocular, vertigem, gestação e fase, neurológica, articular, outra), orientações profissionais prévias |
@@ -173,7 +173,7 @@ projetoYoga/
 
 | ID | Requisito | Critérios de aceite |
 |---|---|---|
-| AUTH-01 | Cadastro com nome, e-mail, senha e data de nascimento | Senha com mínimo de 8 caracteres; e-mail único; senha salva apenas como hash argon2; aceite da política registrado em `Consent` |
+| AUTH-01 | Cadastro com **nome completo, e-mail, telefone e senha** | Acontece **no fim do onboarding** (depois das perguntas), na tela "Seu perfil está pronto!"; senha com mínimo de 8 caracteres; e-mail único; senha salva apenas como hash argon2; telefone com DDD; aceite da política registrado em `Consent`. Data de nascimento depende de P-01 |
 | AUTH-02 | Verificação de e-mail | Link com validade de 24 h; conta não verificada não acessa o app |
 | AUTH-03 | Login e sessão | Token de acesso de 15 min + refresh de 30 dias; logout invalida o refresh |
 | AUTH-04 | Recuperação de senha | Link por e-mail com validade de 1 h; resposta igual para e-mail existente ou não |
@@ -758,6 +758,7 @@ Toda ideia nova entra aqui antes de virar código.
 | 1.0 | 10/09/2026 | Primeira versão |
 | 1.1 | 10/09/2026 | Fases detalhadas com tarefas (F0.1 a F7.14), dependências, entregáveis e critérios de saída; novo requisito MOT-20 (aprendizado); nova pendência P-07; EU-02 movido para a Fase 6; módulos Aprender e Ayurveda renomeados para EDU e AYV |
 | 1.2 | 11/09/2026 | Fase 0: TypeScript 6.0 (limite do typescript-eslint), Vitest também na API (Nest 12), NestJS 12 em ESM e Prisma 7; banco local decidido (Docker, porta 5433); API na porta 3100 |
+| 1.8 | 11/09/2026 | Cadastro no fim do onboarding, com nome completo, e-mail, telefone e senha (AUTH-01) |
 | 1.7 | 11/09/2026 | Esclarecido pelo cliente: onboarding só na criação da conta; diário é só o check-in. CHK-06 reescrito e MOT-06 volta ao objetivo do perfil |
 | 1.6 | 11/09/2026 | Objetivo do dia perguntado todo dia (CHK-06 e CHK-07); MOT-06 passa a usar o objetivo do dia no ranking |
 | 1.5 | 11/09/2026 | Telas de boas-vindas, onboarding e check-in antecipadas como protótipo; registrada a dúvida sobre perguntar o objetivo todo dia (seção 12) |

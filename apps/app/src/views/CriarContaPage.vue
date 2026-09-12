@@ -10,10 +10,22 @@
             <p class="assinatura">Yoga · Ayurveda · Ciência · Filosofia</p>
           </header>
 
-          <h1 class="titulo">Bem-vindo de volta.</h1>
-          <p class="subtitulo">Entre para continuar sua jornada.</p>
+          <h1 class="titulo">Seu perfil está pronto!</h1>
+          <p class="subtitulo">Crie sua conta para guardar suas respostas e começar a praticar.</p>
 
-          <form class="formulario" novalidate @submit.prevent="entrar">
+          <form class="formulario" novalidate @submit.prevent="criar">
+            <label class="campo">
+              <span class="rotulo">Nome completo</span>
+              <input
+                v-model="nome"
+                type="text"
+                autocomplete="name"
+                placeholder="Como você se chama"
+                :class="{ invalido: erros.nome }"
+              />
+              <span v-if="erros.nome" class="erro">{{ erros.nome }}</span>
+            </label>
+
             <label class="campo">
               <span class="rotulo">E-mail</span>
               <input
@@ -28,13 +40,27 @@
             </label>
 
             <label class="campo">
+              <span class="rotulo">Telefone</span>
+              <input
+                :value="telefone"
+                type="tel"
+                inputmode="tel"
+                autocomplete="tel"
+                placeholder="(11) 91234-5678"
+                :class="{ invalido: erros.telefone }"
+                @input="digitarTelefone"
+              />
+              <span v-if="erros.telefone" class="erro">{{ erros.telefone }}</span>
+            </label>
+
+            <label class="campo">
               <span class="rotulo">Senha</span>
               <span class="senha">
                 <input
                   v-model="senha"
                   :type="mostrarSenha ? 'text' : 'password'"
-                  autocomplete="current-password"
-                  placeholder="Sua senha"
+                  autocomplete="new-password"
+                  placeholder="Pelo menos 8 caracteres"
                   :class="{ invalido: erros.senha }"
                 />
                 <button
@@ -49,17 +75,27 @@
               <span v-if="erros.senha" class="erro">{{ erros.senha }}</span>
             </label>
 
-            <button type="button" class="link esqueci">Esqueci minha senha</button>
+            <label class="aceite">
+              <input v-model="aceite" type="checkbox" class="caixa-real" />
+              <span class="caixa" aria-hidden="true">
+                <ion-icon :icon="checkmarkOutline" />
+              </span>
+              <span class="aceite-texto">
+                Li e aceito a
+                <a href="#" @click.prevent>política de privacidade</a>.
+              </span>
+            </label>
+            <span v-if="erros.aceite" class="erro erro-aceite">{{ erros.aceite }}</span>
 
-            <button type="submit" class="botao">Entrar</button>
+            <button type="submit" class="botao">Criar conta</button>
           </form>
 
-          <p class="criar">
-            Ainda não tem conta?
-            <button type="button" class="link" @click="criarConta">Criar conta</button>
+          <p class="entrar">
+            Já tem uma conta?
+            <button type="button" class="link" @click="irParaLogin">Entrar</button>
           </p>
 
-          <p class="aviso">Protótipo visual. O login de verdade é ligado à API na Fase 2.</p>
+          <p class="aviso">Protótipo visual. A conta de verdade é criada na Fase 2.</p>
 
           <footer class="rodape">
             <span class="linha"></span>
@@ -75,31 +111,36 @@
 
 <script setup lang="ts">
 import { IonContent, IonIcon, IonPage } from '@ionic/vue';
-import { eyeOffOutline, eyeOutline } from 'ionicons/icons';
+import { checkmarkOutline, eyeOffOutline, eyeOutline } from 'ionicons/icons';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import logo from '@/assets/logo.png';
 import lotus from '@/assets/lotus.png';
-import { temErro, validarLogin, type ErrosLogin } from '@/utils/validacao';
+import { formatarTelefone, temErro, validarCadastro, type ErrosCadastro } from '@/utils/validacao';
 
 const router = useRouter();
+const nome = ref('');
 const email = ref('');
+const telefone = ref('');
 const senha = ref('');
+const aceite = ref(false);
 const mostrarSenha = ref(false);
-const erros = ref<ErrosLogin>({});
+const erros = ref<ErrosCadastro>({});
 
-function criarConta() {
-  router.push('/onboarding');
+function digitarTelefone(evento: Event) {
+  telefone.value = formatarTelefone((evento.target as HTMLInputElement).value);
 }
 
-function entrar() {
-  erros.value = validarLogin(email.value, senha.value);
+function criar() {
+  erros.value = validarCadastro(nome.value, email.value, telefone.value, senha.value, aceite.value);
   if (temErro(erros.value)) return;
 
-  // Protótipo: a autenticação de verdade (AUTH-03) entra na Fase 2.
-  // Quem já tem conta cai direto no check-in do dia -> recomendação.
-  // O cadastro (/onboarding) só acontece na primeira vez.
+  // Protótipo: a criação de conta de verdade (AUTH-01) entra na Fase 2.
   router.push('/checkin');
+}
+
+function irParaLogin() {
+  router.push('/login');
 }
 </script>
 
@@ -133,11 +174,11 @@ function entrar() {
   min-width: 0;
   max-width: min(26rem, 100%);
   overflow-wrap: anywhere;
-  background: rgba(255, 255, 255, 0.86);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(20, 48, 79, 0.08);
   border-radius: 28px;
-  padding: 28px 24px 20px;
+  padding: 26px 24px 20px;
   box-shadow: 0 18px 50px rgba(20, 48, 79, 0.16);
 }
 
@@ -145,25 +186,25 @@ function entrar() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .logo {
-  width: 104px;
+  width: 92px;
   height: auto;
 }
 
 .assinatura {
   margin: 0;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   letter-spacing: 0.06em;
   color: #4d627a;
 }
 
 .titulo {
-  margin: 22px 0 4px;
+  margin: 18px 0 4px;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   font-weight: 500;
   line-height: 1.15;
   color: #14304f;
@@ -171,7 +212,7 @@ function entrar() {
 }
 
 .subtitulo {
-  margin: 0 0 22px;
+  margin: 0 0 20px;
   font-size: 0.95rem;
   color: #4d627a;
   text-align: center;
@@ -180,7 +221,7 @@ function entrar() {
 .formulario {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 13px;
 }
 
 .campo {
@@ -197,7 +238,10 @@ function entrar() {
   color: #4d627a;
 }
 
-input {
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+input[type='password'] {
   width: 100%;
   box-sizing: border-box;
   font-size: 1rem;
@@ -250,30 +294,68 @@ input.invalido {
   color: #b3261e;
 }
 
-.link {
-  padding: 0;
-  background: none;
-  border: 0;
-  color: #2f7ea6;
-  font-size: 0.88rem;
-  font-weight: 600;
+.erro-aceite {
+  margin-top: -6px;
+}
+
+.aceite {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 4px;
   cursor: pointer;
 }
 
-.esqueci {
-  align-self: flex-end;
-  margin-top: -4px;
+.caixa-real {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.caixa {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #c3d2de;
+  border-radius: 6px;
+  background: #fff;
+  color: transparent;
+  font-size: 0.9rem;
+}
+
+.aceite:has(.caixa-real:checked) .caixa {
+  background: #14304f;
+  border-color: #14304f;
+  color: #fff;
+}
+
+.caixa-real:focus-visible + .caixa {
+  outline: 2px solid #2f7ea6;
+  outline-offset: 2px;
+}
+
+.aceite-texto {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: #4d627a;
+}
+
+.aceite-texto a {
+  color: #2f7ea6;
+  font-weight: 600;
 }
 
 .botao {
-  margin-top: 6px;
+  margin-top: 8px;
   width: 100%;
   padding: 15px;
   background: #14304f;
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
   border: 0;
   border-radius: 999px;
   cursor: pointer;
@@ -283,11 +365,21 @@ input.invalido {
   background: #0f2540;
 }
 
-.criar {
-  margin: 18px 0 0;
+.entrar {
+  margin: 16px 0 0;
   text-align: center;
   font-size: 0.9rem;
   color: #4d627a;
+}
+
+.link {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: #2f7ea6;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .aviso {
@@ -298,12 +390,12 @@ input.invalido {
 }
 
 .rodape {
-  margin-top: 20px;
-  min-width: 0;
+  margin-top: 18px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 10px;
+  min-width: 0;
 }
 
 .linha {
@@ -312,7 +404,7 @@ input.invalido {
 }
 
 .lotus {
-  width: 34px;
+  width: 30px;
   height: auto;
 }
 

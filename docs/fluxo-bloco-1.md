@@ -28,7 +28,7 @@ Mapa das 15 telas de `midias de flow/` e a sequência do primeiro momento do app
 
 ```
 [1] Boas-vindas
-       ├── "Começar" (não tem conta)  → cadastro + perguntas iniciais
+       ├── "Começar" (não tem conta)  → perguntas iniciais → criar conta
        └── "Entrar" (já tem conta)    → login → check-in do dia
 
 [1] Boas-vindas → Começar
@@ -59,7 +59,7 @@ Atalho a qualquer momento:
 
 ## Telas que ainda faltam desenhar
 
-1. **Cadastro e login** (e-mail e senha, recuperação de senha).
+1. ~~Cadastro~~ **feito**: tela "Seu perfil está pronto!" com nome completo, e-mail, telefone e senha, no fim das perguntas. Falta a recuperação de senha.
 2. **Player da prática** (vídeo/áudio, com o áudio seguindo de tela bloqueada).
 3. **Feedback pós-prática** (como foi, gostei, como você está agora).
 
