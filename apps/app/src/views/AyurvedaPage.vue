@@ -169,7 +169,7 @@ function continuar() {
 /* Fundo próprio deste passo: foto das especiarias, logo e frase. */
 .fundo {
   position: fixed;
-  inset: 0;
+  inset: 0 0 0 -7%;
   background: url('@/assets/fundo-ayurveda.png') left center / cover no-repeat;
 }
 
@@ -181,7 +181,7 @@ function continuar() {
 
 .lateral {
   flex: none;
-  width: 47%;
+  width: 41%;
   max-width: 22rem;
 }
 
@@ -338,13 +338,13 @@ function continuar() {
 
 .nome {
   font-family: var(--life-serif);
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: #14304f;
 }
 
 .descricao {
-  font-size: 0.55rem;
+  font-size: 0.52rem;
   line-height: 1.35;
   color: #5c7086;
 }
@@ -425,7 +425,7 @@ function continuar() {
 
 @media (min-width: 40rem) {
   .lateral {
-    width: 42%;
+    width: 40%;
   }
 
   .painel {
