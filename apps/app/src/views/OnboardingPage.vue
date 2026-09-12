@@ -1,8 +1,8 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true" class="tela">
+      <div class="arte" aria-hidden="true"></div>
       <div class="fundo" aria-hidden="true"></div>
-      <div class="arte-topo" aria-hidden="true"></div>
       <div class="folhas" aria-hidden="true"></div>
 
       <div class="layout">
@@ -135,33 +135,29 @@ function continuar() {
   --background: #fff;
 }
 
-/* Uma foto só: a moça à esquerda, virando branco à direita. */
+/* Faixa contínua da foto: o céu em cima, a moça embaixo. */
+.arte {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 46%;
+  max-width: 24rem;
+  background: url('@/assets/arte-coluna.jpg') center bottom / cover no-repeat;
+}
+
+/* Véu que leva a foto para o branco à direita. */
 .fundo {
   position: fixed;
   inset: 0;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.06) 18%,
-      rgba(255, 255, 255, 0.45) 32%,
-      rgba(255, 255, 255, 0.92) 44%,
-      #fff 55%
-    ),
-    url('@/assets/arte-mulher.jpg') left bottom / auto 66% no-repeat;
-}
-
-.arte-topo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 52%;
-  max-width: 24rem;
-  height: 38%;
-  background: url('@/assets/arte-folhas-topo.jpg') top left / 100% 100% no-repeat;
-  pointer-events: none;
-  -webkit-mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.06) 18%,
+    rgba(255, 255, 255, 0.45) 32%,
+    rgba(255, 255, 255, 0.92) 44%,
+    #fff 55%
+  );
 }
 
 .folhas {
