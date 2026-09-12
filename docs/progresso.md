@@ -30,6 +30,8 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ### 12/09/2026
 
+- **Passo 2 do cadastro** ("Qual sua relação com o Yoga?"): lista de experiência com escolha única e grade de práticas conhecidas, com os 11 ícones recortados da referência. Mesmo fundo do passo 1, sem rodapé.
+
 - **Protótipo preparado para a Vercel** (`vercel.json`): build do app no monorepo e rotas do Vue tratadas. Serve para testar no celular pelo navegador, sem gerar o app.
 - Tela inicial igual à referência: sem os véus brancos, foto com mais brilho e textos de baixo em branco.
 
