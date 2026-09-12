@@ -78,8 +78,8 @@ import { IonContent, IonIcon, IonPage } from '@ionic/vue';
 import { eyeOffOutline, eyeOutline } from 'ionicons/icons';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import logo from '@/assets/logo.jpg';
-import lotus from '@/assets/lotus.jpg';
+import logo from '@/assets/logo.png';
+import lotus from '@/assets/lotus.png';
 import { temErro, validarLogin, type ErrosLogin } from '@/utils/validacao';
 
 const router = useRouter();
@@ -143,10 +143,8 @@ function entrar() {
 }
 
 .logo {
-  width: 118px;
+  width: 104px;
   height: auto;
-  /* A logo é JPG com fundo branco: o multiply apaga o branco sobre o painel claro. */
-  mix-blend-mode: multiply;
 }
 
 .assinatura {
@@ -310,7 +308,6 @@ input.invalido {
 .lotus {
   width: 34px;
   height: auto;
-  mix-blend-mode: multiply;
 }
 
 .lema {
