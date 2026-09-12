@@ -1,2 +1,7 @@
+:root {
+  /* Fonte serifada da marca, usada nos títulos e frases. */
+  --life-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+}
+
 /* For information on how to create your own theme, please refer to:
 http://ionicframework.com/docs/theming/ */

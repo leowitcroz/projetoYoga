@@ -122,7 +122,7 @@ function entrar() {
 
 .chamada {
   margin: 0;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: var(--life-serif);
   font-size: clamp(1.5rem, 6.2vw, 1.95rem);
   font-weight: 500;
   line-height: 1.32;

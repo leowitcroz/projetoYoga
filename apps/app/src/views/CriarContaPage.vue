@@ -203,7 +203,7 @@ function irParaLogin() {
 
 .titulo {
   margin: 18px 0 4px;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: var(--life-serif);
   font-size: 1.6rem;
   font-weight: 500;
   line-height: 1.15;

@@ -5,6 +5,7 @@
         <!-- Coluna da marca: aparece em telas largas, como no material de referência -->
         <aside class="lateral">
           <div class="lateral-fundo" aria-hidden="true"></div>
+          <div class="lateral-arte" aria-hidden="true"></div>
           <button type="button" class="voltar" aria-label="Voltar" @click="voltar">
             <ion-icon :icon="chevronBackOutline" />
           </button>
@@ -141,7 +142,7 @@ function continuar() {
 .lateral {
   position: relative;
   flex: none;
-  width: 40%;
+  width: 42%;
   max-width: 25rem;
   overflow: hidden;
 }
@@ -149,18 +150,39 @@ function continuar() {
 .lateral-fundo {
   position: absolute;
   inset: 0;
-  background: url('@/assets/backgroundLogin.jpg') center / cover no-repeat;
+  background: linear-gradient(180deg, #f6fafd 0%, #e9f1f7 100%);
 }
 
-.lateral-fundo::after {
+/* A arte (folhas + foto) vem da própria referência, encostada embaixo.
+   A máscara dissolve o topo dela no fundo claro, sem emenda reta. */
+.lateral-arte {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  aspect-ratio: 356 / 960;
+  background: url('@/assets/arte-lateral.jpg') bottom center / 100% auto no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 20%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 20%);
+}
+
+/* Borda direita: a foto se dissolve na área branca do painel, sem corte reto. */
+.lateral::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.3) 62%);
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(247, 251, 253, 0) 66%,
+    rgba(247, 251, 253, 0.6) 87%,
+    #f7fbfd 100%
+  );
 }
 
 .lateral-conteudo {
   position: relative;
+  z-index: 1;
   padding: calc(46px + var(--ion-safe-area-top, 0px)) 12px 0 16px;
 }
 
@@ -172,7 +194,8 @@ function continuar() {
 .lateral-assinatura {
   margin: 2px 0 0;
   font-size: 0.52rem;
-  color: #1c4066;
+  letter-spacing: 0.01em;
+  color: #14304f;
 }
 
 .fio {
@@ -185,17 +208,18 @@ function continuar() {
 
 .lateral-frase {
   margin: 0;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: #14304f;
+  font-family: var(--life-serif);
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #123a5f;
 }
 
 .voltar {
   position: absolute;
   top: calc(8px + var(--ion-safe-area-top, 0px));
   left: 6px;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   padding: 6px;
   background: none;
@@ -215,7 +239,7 @@ function continuar() {
   flex-direction: column;
   padding: calc(14px + var(--ion-safe-area-top, 0px)) 14px
     calc(16px + var(--ion-safe-area-bottom, 0px));
-  background: linear-gradient(180deg, #f7fbfd 0%, #eaf2f8 100%);
+  background: linear-gradient(180deg, #f7fbfd 0%, #eef5fa 100%);
 }
 
 .topo {
@@ -265,7 +289,7 @@ function continuar() {
 
 .titulo {
   margin: 6px 0 0;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: var(--life-serif);
   font-size: clamp(1.25rem, 5.4vw, 2.1rem);
   font-weight: 500;
   line-height: 1.1;

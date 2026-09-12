@@ -162,7 +162,7 @@ function entrar() {
 
 .titulo {
   margin: 22px 0 4px;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: var(--life-serif);
   font-size: 1.7rem;
   font-weight: 500;
   line-height: 1.15;

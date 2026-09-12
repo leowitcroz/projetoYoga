@@ -33,6 +33,12 @@ Registro das decisões tomadas. Atualize sempre que algo mudar.
 - **Certificados:** fora do MVP.
 - **Privacidade:** base da política em [`politica-de-privacidade.md`](politica-de-privacidade.md), pendente de revisão jurídica.
 
+## Identidade visual
+
+- **Fonte dos títulos:** Playfair Display (Google Fonts), que é a serifada das telas de referência. Hoje carrega pela internet; antes de publicar nas lojas precisa ser embutida no app, para funcionar sem conexão.
+- **Cores:** azul-marinho `#14304f` (texto e botões), azul `#2f7ea6` (links), verde `#3c6a4c` (ações dentro do app).
+- **Arte lateral:** recortada da tela de referência (`src/assets/arte-lateral.jpg`), com a foto dissolvendo no branco por máscara, sem corte reto.
+
 ## Conteúdo e catálogo
 
 - **Quem define quantas aulas cada trilha/MVP tem:** o professor responsável.

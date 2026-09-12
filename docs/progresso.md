@@ -30,6 +30,8 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ### 11/09/2026
 
+- Acabamento da tela de objetivos: arte lateral recortada da referência (folhas + foto, em resolução melhor), fonte serifada **Playfair Display** nos títulos e frases, e degradê dissolvendo a foto na área branca.
+
 - Tela de objetivos ajustada ao pedido do cliente: **Passo 1 de 6** e a **coluna da arte com a logo aparece também no celular**, como na imagem de referência.
 
 - **Tela de criar conta** no fim das perguntas: nome completo, e-mail, telefone, senha e aceite da política. Decidido com o cliente: a conta é criada depois de responder, não antes.
