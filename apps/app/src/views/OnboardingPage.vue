@@ -146,14 +146,15 @@ function continuar() {
 }
 
 .painel {
-  margin-right: 7px;
   box-sizing: border-box;
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: calc(14px + var(--ion-safe-area-top, 0px)) 14px
-    calc(16px + var(--ion-safe-area-bottom, 0px));
+  /* Margem à direita é padding, não margin: margin somaria à largura e empurraria
+     o conteúdo para fora da tela. */
+  padding: calc(14px + var(--ion-safe-area-top, 0px)) 18px
+    calc(16px + var(--ion-safe-area-bottom, 0px)) 14px;
 }
 
 .topo {
