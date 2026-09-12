@@ -27,6 +27,10 @@ Mapa das 15 telas de `midias de flow/` e a sequência do primeiro momento do app
 ## A sequência do Bloco 1
 
 ```
+[1] Boas-vindas
+       ├── "Começar" (não tem conta)  → cadastro + perguntas iniciais
+       └── "Entrar" (já tem conta)    → login → check-in do dia
+
 [1] Boas-vindas → Começar
        ↓
 [cadastro: e-mail e senha]            ← TELA NÃO EXISTE no deck

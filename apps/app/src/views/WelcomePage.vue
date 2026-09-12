@@ -45,10 +45,10 @@ import lotus from '@/assets/lotus.png';
 
 const router = useRouter();
 
-// A tela de cadastro ainda não existe (ver docs/fluxo-bloco-1.md).
-// Por enquanto "Começar" leva ao login, que tem o link "Criar conta".
+// "Começar" é para quem ainda não tem conta: vai para as perguntas iniciais,
+// que só acontecem uma vez (CHK-06).
 function comecar() {
-  router.push('/login');
+  router.push('/onboarding');
 }
 
 function entrar() {
