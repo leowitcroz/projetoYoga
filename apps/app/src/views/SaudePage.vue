@@ -129,7 +129,7 @@ function continuar() {
 
 .lateral {
   flex: none;
-  width: 40%;
+  width: 34%;
   max-width: 22rem;
 }
 
@@ -229,6 +229,8 @@ function continuar() {
 
 .condicoes li {
   flex: 1 1 auto;
+  /* min-width: 0 impede que um nome comprido alargue o cartão além da tela. */
+  min-width: 0;
   max-height: 64px;
   display: flex;
 }
@@ -262,7 +264,7 @@ function continuar() {
   flex: 1;
   min-width: 0;
   font-family: var(--life-serif);
-  font-size: 0.74rem;
+  font-size: 0.7rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -353,6 +355,10 @@ function continuar() {
 }
 
 @media (min-width: 40rem) {
+  .lateral {
+    width: 40%;
+  }
+
   .painel {
     padding: 40px 48px;
   }

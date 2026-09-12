@@ -231,6 +231,8 @@ function continuar() {
 
 .opcoes li {
   flex: 1 1 auto;
+  /* min-width: 0 impede que um nome comprido alargue o cartão além da tela. */
+  min-width: 0;
   max-height: 52px;
   display: flex;
 }
