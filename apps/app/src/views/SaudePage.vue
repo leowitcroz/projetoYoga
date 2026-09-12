@@ -210,7 +210,7 @@ function continuar() {
 .subtitulo {
   margin: 6px 0 12px;
   font-family: var(--life-serif);
-  font-size: 0.78rem;
+  font-size: 0.65rem;
   line-height: 1.45;
   color: #46617d;
 }
