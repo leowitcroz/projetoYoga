@@ -30,8 +30,8 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ### 11/09/2026
 
-- **Decidido com o cliente:** as perguntas são **diárias**. Fluxo do dia: login → "o que você quer trabalhar hoje?" → "como você está hoje?" → recomendação. Quem pular vai para a biblioteca. Virou CHK-06 e CHK-07 no plano (1.6).
-- Fluxo encadeado no protótipo: a mesma tela serve ao cadastro (`/onboarding`) e ao dia a dia (`/dia`).
+- **Esclarecido com o cliente:** o onboarding (objetivo, relação com o Yoga, saúde, Ayurveda, preferências) é **só na criação da conta**. O que se repete todo dia é o **check-in** ("como você está hoje?") que leva à recomendação da aula. Quem pular escolhe a aula na biblioteca. Plano 1.7, CHK-06 e CHK-07.
+- Fluxo do protótipo: boas-vindas → login → check-in → Hoje. O cadastro completo fica em `/onboarding`.
 
 - **Tela "O que você busca?"** refeita igual à referência, com os **12 ícones recortados da imagem** do cliente (PNG transparente em `src/assets/icones/`), logo e coluna da marca em telas largas.
 - Telas de **onboarding** e **check-in diário** criadas por Leonardo e ajustadas (tipos e lint).

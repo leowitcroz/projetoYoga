@@ -21,19 +21,16 @@
               <ion-icon :icon="chevronBackOutline" />
             </button>
 
-            <ol v-if="!diario" class="passos" :aria-label="rotuloPasso">
+            <ol class="passos" :aria-label="rotuloPasso">
               <li v-for="i in total" :key="i" class="ponto" :class="{ feito: i <= passo }"></li>
             </ol>
-            <span v-else class="espaco"></span>
 
             <button type="button" class="pular" @click="pular">Pular</button>
           </header>
 
-          <p class="passo-texto">{{ diario ? 'Seu dia' : `Passo ${passo} de ${total}` }}</p>
+          <p class="passo-texto">Passo {{ passo }} de {{ total }}</p>
 
-          <h1 class="titulo">
-            {{ diario ? 'O que você quer trabalhar hoje?' : 'O que você busca?' }}
-          </h1>
+          <h1 class="titulo">O que você busca?</h1>
           <p class="subtitulo">Você pode escolher mais de uma opção.</p>
 
           <ul class="opcoes">
@@ -91,10 +88,7 @@ import iconePratica from '@/assets/icones/pratica.png';
 import iconeRespiracao from '@/assets/icones/respiracao.png';
 import iconeSono from '@/assets/icones/sono.png';
 
-// `diario` = a mesma tela no uso de todo dia: sem os passos do cadastro e com o
-// objetivo do dia (tático), que vem pré-marcado com os objetivos do perfil.
-const { diario = false } = defineProps<{ diario?: boolean }>();
-
+// Tela do cadastro (passo 2 de 7). Só aparece na primeira vez que a pessoa entra.
 const router = useRouter();
 const passo = 2;
 const total = 7;
@@ -255,10 +249,6 @@ function continuar() {
 
 .ponto.feito {
   background: #14304f;
-}
-
-.espaco {
-  flex: 1;
 }
 
 .passo-texto {

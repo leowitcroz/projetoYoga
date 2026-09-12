@@ -34,8 +34,6 @@ Mapa das 15 telas de `midias de flow/` e a sequência do primeiro momento do app
 [2..7] Onboarding, 6 passos           ← só na primeira vez
        objetivos → relação com Yoga → saúde → ayurveda → preferências → perfil pronto
        ↓
-[2 diária] "O que você quer trabalhar hoje?" (objetivo do dia)   ← todo dia
-       ↓
 [8] Hoje: "Como você está hoje?" + "Quanto tempo você tem?"   ← todo dia
        ↓
 [9] Sua prática de hoje (o motor escolhe) + "Por que esta prática?"
@@ -53,7 +51,7 @@ Atalho a qualquer momento:
 - **Primeira vez:** telas 1 → cadastro → 2 a 7 → 8 → 9 → player → feedback.
 - **Do segundo dia em diante:** abre direto na tela 8 (Hoje). O onboarding não se repete.
 - **Quem não quer seguir a sugestão:** vai pela aba Praticar para a tela 12 e escolhe qualquer aula do banco.
-- **Quem não quer responder:** o "Pular" das duas perguntas leva direto à tela 12 (biblioteca).
+- **Quem não quer responder o check-in:** o "Pular" leva direto à tela 12 (biblioteca).
 
 ## Telas que ainda faltam desenhar
 
