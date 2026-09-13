@@ -12,6 +12,7 @@ const routes: RouteRecordRaw[] = [
   { path: '/onboarding/relacao', component: () => import('@/views/RelacaoYogaPage.vue') },
   { path: '/onboarding/saude', component: () => import('@/views/SaudePage.vue') },
   { path: '/onboarding/ayurveda', component: () => import('@/views/AyurvedaPage.vue') },
+  { path: '/onboarding/preferencias', component: () => import('@/views/PreferenciasPage.vue') },
   { path: '/criar-conta', component: () => import('@/views/CriarContaPage.vue') },
   { path: '/checkin', component: () => import('@/views/DailyCheckinPage.vue') },
   {

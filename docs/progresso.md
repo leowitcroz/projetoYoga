@@ -28,6 +28,10 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ## Linha do tempo
 
+### 13/09/2026
+
+- **Passo 5 do cadastro** ("O que você prefere?"): estilos de prática, temas de interesse e horário preferido, com fichas verdes quando marcadas e os três ícones de horário recortados da referência. Mesmo fundo dos passos 1 a 3.
+
 ### 12/09/2026
 
 - **Passo 4 do cadastro** ("Conheça seu perfil ayurvédico"): constituição (Vata, Pitta, Kapha) e estado atual, com fundo próprio montado a partir da referência (foto das especiarias, logo e frase, sem a barra do celular nem a seta).
