@@ -424,6 +424,7 @@ function continuar() {
 
 .continuar {
   /* o espaço que sobra na tela fica antes do botão */
+  margin-top: 7px !important;
   margin: auto 0 0;
   width: 100%;
   display: inline-flex;
