@@ -253,7 +253,7 @@ function continuar() {
 }
 
 .secao {
-  margin: 14px 0 6px;
+  margin: clamp(12px, 2.2vh, 22px) 0 6px;
   font-family: var(--life-serif);
   font-size: 0.8rem;
   font-weight: 600;
@@ -266,14 +266,25 @@ function continuar() {
   margin: 0;
   padding: 0;
   list-style: none;
+  flex: 0 0 auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
+  /* as fichas crescem um pouco em telas altas, sem virar cápsulas enormes */
+  grid-auto-rows: minmax(32px, 44px);
+  column-gap: 6px;
+  row-gap: clamp(6px, 1.6vh, 14px);
+}
+
+.fichas li,
+.horarios li {
+  min-width: 0;
+  display: flex;
 }
 
 .ficha {
   position: relative;
-  height: 100%;
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 7px;
@@ -342,14 +353,17 @@ function continuar() {
   margin: 0;
   padding: 0;
   list-style: none;
+  flex: 0 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(58px, 80px);
   gap: 7px;
 }
 
 .horario {
   position: relative;
-  height: 100%;
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -409,6 +423,7 @@ function continuar() {
 }
 
 .continuar {
+  /* o espaço que sobra na tela fica antes do botão */
   margin: auto 0 0;
   width: 100%;
   display: inline-flex;
