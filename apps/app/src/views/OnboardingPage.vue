@@ -100,8 +100,9 @@ function voltar() {
 }
 
 // Quem não quer responder vai direto para a biblioteca escolher a própria aula.
+// Quem pula as perguntas ainda precisa criar a conta (AUTH-01).
 function pular() {
-  router.push('/tabs/praticar');
+  router.push('/criar-conta');
 }
 
 function continuar() {

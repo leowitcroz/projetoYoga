@@ -265,8 +265,9 @@ function voltar() {
   }
 }
 
+// Sem check-in não há recomendação do dia: vai para a Home.
 function pular() {
-  router.push('/tabs/praticar');
+  router.push('/tabs/hoje');
 }
 
 function concluirCheckin() {

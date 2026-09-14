@@ -30,6 +30,8 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ### 13/09/2026
 
+- **Botão "Pular" arrumado:** nos 5 passos do cadastro ele leva para a criação da conta (`/criar-conta`), porque conta é obrigatória; no check-in diário leva para a Home (`/tabs/hoje`), já que sem respostas não há prática recomendada.
+
 - **Passo 6 do cadastro** ("Seu perfil está pronto!"): o cartão de criar conta foi compactado para caber inteiro em uma tela de celular (393×852), sem rolagem — marca, quatro campos, aceite da política, botão e rodapé.
 
 - **Passo 5 do cadastro** ("O que você prefere?"): estilos de prática, temas de interesse e horário preferido, com fichas verdes quando marcadas e os três ícones de horário recortados da referência. Mesmo fundo dos passos 1 a 3.
