@@ -165,20 +165,21 @@ function irParaLogin() {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 16px calc(24px + var(--ion-safe-area-bottom, 0px));
+  padding: calc(14px + var(--ion-safe-area-top, 0px)) 14px
+    calc(14px + var(--ion-safe-area-bottom, 0px));
 }
 
 .painel {
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
-  max-width: min(26rem, 100%);
+  max-width: min(23.5rem, 100%);
   overflow-wrap: anywhere;
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(20, 48, 79, 0.08);
-  border-radius: 28px;
-  padding: 26px 24px 20px;
+  border-radius: 26px;
+  padding: 20px 20px 16px;
   box-shadow: 0 18px 50px rgba(20, 48, 79, 0.16);
 }
 
@@ -190,21 +191,21 @@ function irParaLogin() {
 }
 
 .logo {
-  width: 92px;
+  width: 72px;
   height: auto;
 }
 
 .assinatura {
   margin: 0;
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   letter-spacing: 0.06em;
   color: #4d627a;
 }
 
 .titulo {
-  margin: 18px 0 4px;
+  margin: 12px 0 3px;
   font-family: var(--life-serif);
-  font-size: 1.6rem;
+  font-size: 1.35rem;
   font-weight: 500;
   line-height: 1.15;
   color: #14304f;
@@ -212,8 +213,8 @@ function irParaLogin() {
 }
 
 .subtitulo {
-  margin: 0 0 20px;
-  font-size: 0.95rem;
+  margin: 0 0 14px;
+  font-size: 0.78rem;
   color: #4d627a;
   text-align: center;
 }
@@ -221,17 +222,17 @@ function irParaLogin() {
 .formulario {
   display: flex;
   flex-direction: column;
-  gap: 13px;
+  gap: 10px;
 }
 
 .campo {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .rotulo {
-  font-size: 0.78rem;
+  font-size: 0.66rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -244,12 +245,12 @@ input[type='tel'],
 input[type='password'] {
   width: 100%;
   box-sizing: border-box;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #14304f;
   background: #fff;
   border: 1px solid #d8e1ea;
-  border-radius: 14px;
-  padding: 13px 15px;
+  border-radius: 13px;
+  padding: 11px 13px;
 }
 
 input::placeholder {
@@ -314,8 +315,8 @@ input.invalido {
 
 .caixa {
   flex: none;
-  width: 22px;
-  height: 22px;
+  width: 19px;
+  height: 19px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -338,7 +339,7 @@ input.invalido {
 }
 
 .aceite-texto {
-  font-size: 0.88rem;
+  font-size: 0.75rem;
   line-height: 1.4;
   color: #4d627a;
 }
@@ -349,12 +350,12 @@ input.invalido {
 }
 
 .botao {
-  margin-top: 8px;
+  margin-top: 6px;
   width: 100%;
-  padding: 15px;
+  padding: 13px;
   background: #14304f;
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.98rem;
   font-weight: 600;
   border: 0;
   border-radius: 999px;
@@ -366,9 +367,9 @@ input.invalido {
 }
 
 .entrar {
-  margin: 16px 0 0;
+  margin: 12px 0 0;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   color: #4d627a;
 }
 
@@ -377,20 +378,20 @@ input.invalido {
   background: none;
   border: 0;
   color: #2f7ea6;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
 }
 
 .aviso {
-  margin: 10px 0 0;
+  margin: 7px 0 0;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.62rem;
   color: #7a8da0;
 }
 
 .rodape {
-  margin-top: 18px;
+  margin-top: 12px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -404,15 +405,15 @@ input.invalido {
 }
 
 .lotus {
-  width: 30px;
+  width: 22px;
   height: auto;
 }
 
 .lema {
   grid-column: 1 / -1;
-  margin: 8px 0 0;
+  margin: 6px 0 0;
   text-align: center;
-  font-size: 0.66rem;
+  font-size: 0.54rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #4d627a;
