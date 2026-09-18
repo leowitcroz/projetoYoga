@@ -13,6 +13,8 @@ export interface CheckinDoDia {
   /** Data no formato AAAA-MM-DD, pelo relógio do aparelho (CHK-02). */
   dia: string;
   respostas: Partial<Record<ChaveCheckin, string>>;
+  /** Onde dói, perguntado só quando há dor (CHK-03). */
+  localDaDor?: string;
   tempo?: number;
   /** Momento em que a pessoa mandou atualizar a prática. */
   enviadoEm?: string;
@@ -36,6 +38,7 @@ export async function carregarCheckin(agora: Date = new Date()): Promise<void> {
   if (salvo && salvo.dia === hoje) {
     checkin.dia = salvo.dia;
     checkin.respostas = salvo.respostas ?? {};
+    checkin.localDaDor = salvo.localDaDor;
     checkin.tempo = salvo.tempo;
     checkin.enviadoEm = salvo.enviadoEm;
     return;
@@ -43,13 +46,27 @@ export async function carregarCheckin(agora: Date = new Date()): Promise<void> {
 
   checkin.dia = hoje;
   checkin.respostas = {};
+  checkin.localDaDor = undefined;
   checkin.tempo = undefined;
   checkin.enviadoEm = undefined;
 }
 
 export async function responder(id: ChaveCheckin, valor: string): Promise<void> {
   checkin.respostas[id] = valor;
+  // Quem diz que não tem dor não guarda região nenhuma.
+  if (id === 'dor' && valor === 'nenhuma') checkin.localDaDor = undefined;
   await salvar();
+}
+
+export async function informarLocalDaDor(regiao: string): Promise<void> {
+  checkin.localDaDor = regiao;
+  await salvar();
+}
+
+/** Há dor a tratar? O motor usa isto para reaplicar a segurança (CHK-03). */
+export function temDor(): boolean {
+  const dor = checkin.respostas.dor;
+  return dor !== undefined && dor !== 'nenhuma';
 }
 
 export async function escolherTempo(minutos: number): Promise<void> {
@@ -66,6 +83,7 @@ export async function marcarEnviado(agora: Date = new Date()): Promise<void> {
 export async function recomecar(agora: Date = new Date()): Promise<void> {
   checkin.dia = diaDeHoje(agora);
   checkin.respostas = {};
+  checkin.localDaDor = undefined;
   checkin.tempo = undefined;
   checkin.enviadoEm = undefined;
   await salvar();
@@ -75,6 +93,7 @@ async function salvar(): Promise<void> {
   await guardar(CHAVE, {
     dia: checkin.dia,
     respostas: checkin.respostas,
+    localDaDor: checkin.localDaDor,
     tempo: checkin.tempo,
     enviadoEm: checkin.enviadoEm,
   });

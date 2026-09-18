@@ -4,9 +4,11 @@ import {
   checkin,
   diaDeHoje,
   escolherTempo,
+  informarLocalDaDor,
   marcarEnviado,
   recomecar,
   responder,
+  temDor,
 } from './checkin-do-dia.js';
 
 describe('check-in do dia', () => {
@@ -53,6 +55,31 @@ describe('check-in do dia', () => {
     expect(checkin.respostas).toEqual({});
     expect(checkin.tempo).toBeUndefined();
     expect(checkin.dia).toBe(diaDeHoje(amanha));
+  });
+
+  it('guarda onde dói quando há dor (CHK-03)', async () => {
+    await responder('dor', 'forte');
+    expect(temDor()).toBe(true);
+
+    await informarLocalDaDor('lombar');
+    expect(checkin.localDaDor).toBe('lombar');
+
+    await carregarCheckin();
+    expect(checkin.localDaDor).toBe('lombar');
+  });
+
+  it('esquece a região se a pessoa disser que não dói mais', async () => {
+    await responder('dor', 'leve');
+    await informarLocalDaDor('joelhos');
+
+    await responder('dor', 'nenhuma');
+
+    expect(temDor()).toBe(false);
+    expect(checkin.localDaDor).toBeUndefined();
+  });
+
+  it('não considera dor quem ainda não respondeu', async () => {
+    expect(temDor()).toBe(false);
   });
 
   it('anota quando a pessoa mandou atualizar a prática', async () => {

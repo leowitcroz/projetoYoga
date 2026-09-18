@@ -1,4 +1,5 @@
 import {
+  bandageOutline,
   flowerOutline,
   happyOutline,
   heartOutline,
@@ -28,7 +29,7 @@ export interface PerguntaCheckin {
   opcoes: [OpcaoCheckin, OpcaoCheckin, OpcaoCheckin];
 }
 
-export type ChaveCheckin = 'sono' | 'energia' | 'corpo' | 'estresse' | 'digestao' | 'humor';
+export type ChaveCheckin = 'sono' | 'energia' | 'corpo' | 'dor' | 'estresse' | 'digestao' | 'humor';
 
 export const perguntas: PerguntaCheckin[] = [
   {
@@ -65,6 +66,17 @@ export const perguntas: PerguntaCheckin[] = [
     ],
   },
   {
+    id: 'dor',
+    nome: 'Dor',
+    pergunta: 'Está sentindo dor hoje?',
+    icone: bandageOutline,
+    opcoes: [
+      { valor: 'nenhuma', rotulo: 'Nenhuma' },
+      { valor: 'leve', rotulo: 'Leve' },
+      { valor: 'forte', rotulo: 'Forte' },
+    ],
+  },
+  {
     id: 'estresse',
     nome: 'Estresse',
     pergunta: 'Como está o seu nível de estresse?',
@@ -98,6 +110,27 @@ export const perguntas: PerguntaCheckin[] = [
     ],
   },
 ];
+
+/**
+ * Onde dói (CHK-03). Só é perguntado quando há dor, porque o motor precisa da
+ * região para reaplicar as regras de segurança do Bloco 1 (`SEG-R05`).
+ *
+ * A lista ainda depende de confirmação do cliente (pendência P-02).
+ */
+export const regioesDaDor: OpcaoCheckin[] = [
+  { valor: 'lombar', rotulo: 'Lombar' },
+  { valor: 'cervical', rotulo: 'Pescoço' },
+  { valor: 'ombros', rotulo: 'Ombros' },
+  { valor: 'joelhos', rotulo: 'Joelhos' },
+  { valor: 'quadril', rotulo: 'Quadril' },
+  { valor: 'punhos', rotulo: 'Punhos' },
+  { valor: 'cabeca', rotulo: 'Cabeça' },
+  { valor: 'outra', rotulo: 'Outra' },
+];
+
+export function rotuloDaRegiao(valor: string | undefined): string | undefined {
+  return regioesDaDor.find((regiao) => regiao.valor === valor)?.rotulo;
+}
 
 /** Quanto tempo a pessoa tem hoje, em minutos (CHK-01). */
 export const temposDisponiveis = [10, 20, 30, 45, 60] as const;

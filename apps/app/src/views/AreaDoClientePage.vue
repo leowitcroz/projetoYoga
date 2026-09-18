@@ -22,8 +22,43 @@
         <section class="bloco">
           <h2 class="bloco-titulo">Como você está hoje?</h2>
 
-          <!-- Uma pergunta por vez, até responder as seis. -->
-          <div v-if="perguntaAtual" class="carrossel">
+          <!-- Onde dói: só aparece para quem respondeu que sente dor (CHK-03). -->
+          <div v-if="faltaLocalDaDor" class="carrossel">
+            <p class="pergunta">
+              <ion-icon :icon="iconeDaDor" class="pergunta-icone" />
+              Onde está doendo?
+            </p>
+
+            <ul class="regioes">
+              <li v-for="regiao in regioesDaDor" :key="regiao.valor">
+                <button
+                  type="button"
+                  class="opcao regiao"
+                  :class="{ escolhida: escolhaAtual === regiao.valor }"
+                  @click="escolhaAtual = regiao.valor"
+                >
+                  {{ regiao.rotulo }}
+                </button>
+              </li>
+            </ul>
+
+            <p class="cuidado">
+              Com dor, a prática vem mais suave. Dor forte ou persistente pede avaliação de um
+              profissional de saúde.
+            </p>
+
+            <button
+              type="button"
+              class="continuar"
+              :disabled="!escolhaAtual"
+              @click="confirmarLocalDaDor"
+            >
+              Continuar
+            </button>
+          </div>
+
+          <!-- Uma pergunta por vez, até responder as sete. -->
+          <div v-else-if="perguntaAtual" class="carrossel">
             <p class="pergunta">
               <ion-icon :icon="perguntaAtual.icone" class="pergunta-icone" />
               {{ perguntaAtual.pergunta }}
@@ -49,13 +84,20 @@
 
           <!-- Respondeu tudo: vira o resumo, que continua editável (CHK-04). -->
           <ul v-else class="resumo">
-            <li v-for="pergunta in perguntas" :key="pergunta.id">
-              <button type="button" class="cartao" @click="refazer(pergunta.id)">
+            <li
+              v-for="pergunta in perguntas"
+              :key="pergunta.id"
+              :class="{ largo: pergunta.id === 'dor' }"
+            >
+              <button
+                type="button"
+                class="cartao"
+                :class="{ atencao: pergunta.id === 'dor' && temDor() }"
+                @click="refazer(pergunta.id)"
+              >
                 <ion-icon :icon="pergunta.icone" class="cartao-icone" />
                 <span class="cartao-nome">{{ pergunta.nome }}</span>
-                <span class="cartao-valor">{{
-                  rotuloDaResposta(pergunta.id, checkin.respostas[pergunta.id])
-                }}</span>
+                <span class="cartao-valor">{{ valorNoResumo(pergunta.id) }}</span>
               </button>
             </li>
           </ul>
@@ -111,6 +153,8 @@ import { useRouter } from 'vue-router';
 import lotus from '@/assets/lotus.png';
 import {
   perguntas,
+  regioesDaDor,
+  rotuloDaRegiao,
   rotuloDaResposta,
   rotuloDoTempo,
   temposDisponiveis,
@@ -121,8 +165,10 @@ import {
   carregarCheckin,
   checkin,
   escolherTempo,
+  informarLocalDaDor,
   marcarEnviado,
   responder,
+  temDor,
 } from '@/servicos/checkin-do-dia';
 import { sessao } from '@/servicos/sessao';
 
@@ -146,6 +192,20 @@ const perguntaAtual = computed(() =>
   perguntas.find((pergunta) => checkin.respostas[pergunta.id] === undefined),
 );
 
+/** Disse que dói, mas ainda não disse onde. */
+const faltaLocalDaDor = computed(() => temDor() && checkin.localDaDor === undefined);
+
+const iconeDaDor = perguntas.find((pergunta) => pergunta.id === 'dor')?.icone ?? '';
+
+/** No resumo, a dor aparece junto com a região: "Leve · Lombar". */
+function valorNoResumo(id: ChaveCheckin): string | undefined {
+  const valor = rotuloDaResposta(id, checkin.respostas[id]);
+  if (id !== 'dor' || !temDor()) return valor;
+
+  const regiao = rotuloDaRegiao(checkin.localDaDor);
+  return regiao ? `${valor} · ${regiao}` : valor;
+}
+
 onMounted(async () => {
   await carregarCheckin();
 });
@@ -159,10 +219,20 @@ async function continuar() {
   aviso.value = '';
 }
 
+async function confirmarLocalDaDor() {
+  if (!escolhaAtual.value) return;
+
+  await informarLocalDaDor(escolhaAtual.value);
+  escolhaAtual.value = null;
+  aviso.value = '';
+}
+
 /** Tocar em um cartão do resumo devolve aquela pergunta ao carrossel (CHK-04). */
 function refazer(id: ChaveCheckin) {
   escolhaAtual.value = checkin.respostas[id] ?? null;
   delete checkin.respostas[id];
+  // Mudar a resposta sobre dor também joga fora a região informada antes.
+  if (id === 'dor') checkin.localDaDor = undefined;
   aviso.value = '';
 }
 
@@ -321,6 +391,32 @@ function irParaPerfil() {
   opacity: 0.45;
 }
 
+.regioes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.regioes li {
+  min-width: 0;
+  display: flex;
+}
+
+.regiao {
+  padding: 13px 4px;
+  font-size: 0.75rem;
+}
+
+.cuidado {
+  margin: 14px 0 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: #7a8da0;
+}
+
 /* Resumo das respostas */
 
 .resumo {
@@ -335,6 +431,23 @@ function irParaPerfil() {
 .resumo li {
   min-width: 0;
   display: flex;
+}
+
+/* A dor ocupa a linha inteira: é a resposta que muda a segurança da prática. */
+.resumo li.largo {
+  grid-column: 1 / -1;
+}
+
+.resumo li.largo .cartao {
+  flex-direction: row;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 10px;
+}
+
+.cartao.atencao {
+  background: #fbf3ea;
+  border-color: #e0c9a8;
 }
 
 .cartao {
