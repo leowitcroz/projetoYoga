@@ -5,7 +5,7 @@ Onde cada parte do LIFE roda fora da máquina de desenvolvimento.
 | Parte | Onde | Endereço |
 |---|---|---|
 | App (aluno) | Vercel | a definir |
-| API | Render | a definir |
+| API | Render | https://life-api-542y.onrender.com |
 | Banco | Render Postgres | interno, só a API enxerga |
 | Painel (admin) | ainda não publicado | — |
 
