@@ -34,8 +34,8 @@
                 <button
                   type="button"
                   class="opcao regiao"
-                  :class="{ escolhida: escolhaAtual === regiao.valor }"
-                  @click="escolhaAtual = regiao.valor"
+                  :class="{ escolhida: regiaoEscolhida === regiao.valor }"
+                  @click="regiaoEscolhida = regiao.valor"
                 >
                   {{ regiao.rotulo }}
                 </button>
@@ -50,34 +50,36 @@
             <button
               type="button"
               class="continuar"
-              :disabled="!escolhaAtual"
+              :disabled="!regiaoEscolhida"
               @click="confirmarLocalDaDor"
             >
               Continuar
             </button>
           </div>
 
-          <!-- Uma pergunta por vez, até responder as sete. -->
-          <div v-else-if="perguntaAtual" class="carrossel">
-            <p class="pergunta">
-              <ion-icon :icon="perguntaAtual.icone" class="pergunta-icone" />
-              {{ perguntaAtual.pergunta }}
-            </p>
+          <!-- Duas perguntas por vez, até responder as sete. -->
+          <div v-else-if="perguntasDaVez.length" class="carrossel">
+            <div v-for="pergunta in perguntasDaVez" :key="pergunta.id" class="dupla">
+              <p class="pergunta">
+                <ion-icon :icon="pergunta.icone" class="pergunta-icone" />
+                {{ pergunta.pergunta }}
+              </p>
 
-            <ul class="opcoes">
-              <li v-for="opcao in perguntaAtual.opcoes" :key="opcao.valor">
-                <button
-                  type="button"
-                  class="opcao"
-                  :class="{ escolhida: escolhaAtual === opcao.valor }"
-                  @click="escolhaAtual = opcao.valor"
-                >
-                  {{ opcao.rotulo }}
-                </button>
-              </li>
-            </ul>
+              <ul class="opcoes">
+                <li v-for="opcao in pergunta.opcoes" :key="opcao.valor">
+                  <button
+                    type="button"
+                    class="opcao"
+                    :class="{ escolhida: escolhas[pergunta.id] === opcao.valor }"
+                    @click="escolhas[pergunta.id] = opcao.valor"
+                  >
+                    {{ opcao.rotulo }}
+                  </button>
+                </li>
+              </ul>
+            </div>
 
-            <button type="button" class="continuar" :disabled="!escolhaAtual" @click="continuar">
+            <button type="button" class="continuar" :disabled="!podeContinuar" @click="continuar">
               Continuar
             </button>
           </div>
@@ -103,7 +105,7 @@
           </ul>
         </section>
 
-        <section v-if="!perguntaAtual" class="bloco">
+        <section v-if="checkinCompleto" class="bloco">
           <h2 class="bloco-titulo">Quanto tempo você tem hoje?</h2>
 
           <ul class="tempos">
@@ -148,7 +150,7 @@
 <script setup lang="ts">
 import { IonContent, IonIcon, IonPage } from '@ionic/vue';
 import { personOutline } from 'ionicons/icons';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import lotus from '@/assets/lotus.png';
 import {
@@ -184,16 +186,30 @@ const primeiroNome = computed(() => sessao.value?.usuario.nome.split(' ')[0] ?? 
 // Ainda não guardamos foto de perfil; o espaço já fica pronto para ela.
 const foto = ref<string | null>(null);
 
-const escolhaAtual = ref<string | null>(null);
+/** Respostas da tela atual, antes de a pessoa confirmar no Continuar. */
+const escolhas = reactive<Partial<Record<ChaveCheckin, string>>>({});
+const regiaoEscolhida = ref<string | null>(null);
 const aviso = ref('');
 
-/** A primeira pergunta ainda sem resposta. `undefined` = respondeu todas. */
-const perguntaAtual = computed(() =>
-  perguntas.find((pergunta) => checkin.respostas[pergunta.id] === undefined),
+/** Quantas perguntas aparecem juntas na mesma tela. */
+const PERGUNTAS_POR_VEZ = 2;
+
+/** As próximas perguntas sem resposta. Lista vazia = respondeu todas. */
+const perguntasDaVez = computed(() =>
+  perguntas
+    .filter((pergunta) => checkin.respostas[pergunta.id] === undefined)
+    .slice(0, PERGUNTAS_POR_VEZ),
+);
+
+const podeContinuar = computed(() =>
+  perguntasDaVez.value.every((pergunta) => escolhas[pergunta.id] !== undefined),
 );
 
 /** Disse que dói, mas ainda não disse onde. */
 const faltaLocalDaDor = computed(() => temDor() && checkin.localDaDor === undefined);
+
+/** Respondeu tudo, inclusive a região da dor quando havia dor. */
+const checkinCompleto = computed(() => perguntasDaVez.value.length === 0 && !faltaLocalDaDor.value);
 
 const iconeDaDor = perguntas.find((pergunta) => pergunta.id === 'dor')?.icone ?? '';
 
@@ -211,28 +227,32 @@ onMounted(async () => {
 });
 
 async function continuar() {
-  const pergunta = perguntaAtual.value;
-  if (!pergunta || !escolhaAtual.value) return;
+  if (!podeContinuar.value) return;
 
-  await responder(pergunta.id, escolhaAtual.value);
-  escolhaAtual.value = null;
+  for (const pergunta of perguntasDaVez.value) {
+    await responder(pergunta.id, escolhas[pergunta.id] as string);
+    delete escolhas[pergunta.id];
+  }
   aviso.value = '';
 }
 
 async function confirmarLocalDaDor() {
-  if (!escolhaAtual.value) return;
+  if (!regiaoEscolhida.value) return;
 
-  await informarLocalDaDor(escolhaAtual.value);
-  escolhaAtual.value = null;
+  await informarLocalDaDor(regiaoEscolhida.value);
+  regiaoEscolhida.value = null;
   aviso.value = '';
 }
 
 /** Tocar em um cartão do resumo devolve aquela pergunta ao carrossel (CHK-04). */
 function refazer(id: ChaveCheckin) {
-  escolhaAtual.value = checkin.respostas[id] ?? null;
+  escolhas[id] = checkin.respostas[id];
   delete checkin.respostas[id];
   // Mudar a resposta sobre dor também joga fora a região informada antes.
-  if (id === 'dor') checkin.localDaDor = undefined;
+  if (id === 'dor') {
+    checkin.localDaDor = undefined;
+    regiaoEscolhida.value = null;
+  }
   aviso.value = '';
 }
 
@@ -324,6 +344,12 @@ function irParaPerfil() {
 }
 
 /* Carrossel de perguntas */
+
+.dupla + .dupla {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(20, 48, 79, 0.08);
+}
 
 .pergunta {
   margin: 0 0 14px;
