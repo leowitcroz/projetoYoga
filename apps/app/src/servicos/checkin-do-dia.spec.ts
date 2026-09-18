@@ -1,9 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest';
+import { sessao } from './sessao.js';
 import {
   carregarCheckin,
   checkin,
   diaDeHoje,
   escolherTempo,
+  esquecerCheckin,
   informarLocalDaDor,
   marcarEnviado,
   recomecar,
@@ -11,9 +13,19 @@ import {
   temDor,
 } from './checkin-do-dia.js';
 
+function entrarComo(id: string) {
+  sessao.value = {
+    accessToken: 'a',
+    refreshToken: 'r',
+    expiraEm: Date.now() + 60000,
+    usuario: { id, nome: 'Pessoa de Teste', email: `${id}@life.local` },
+  };
+}
+
 describe('check-in do dia', () => {
   beforeEach(async () => {
     localStorage.clear();
+    sessao.value = null;
     await recomecar();
   });
 
@@ -80,6 +92,36 @@ describe('check-in do dia', () => {
 
   it('não considera dor quem ainda não respondeu', async () => {
     expect(temDor()).toBe(false);
+  });
+
+  it('não mostra a uma conta o check-in de outra', async () => {
+    entrarComo('pessoa-1');
+    await responder('sono', 'bom');
+    await escolherTempo(45);
+
+    // outra pessoa cria conta e entra no mesmo aparelho
+    entrarComo('pessoa-2');
+    await carregarCheckin();
+
+    expect(checkin.respostas).toEqual({});
+    expect(checkin.tempo).toBeUndefined();
+
+    // e a primeira continua com o que respondeu
+    entrarComo('pessoa-1');
+    await carregarCheckin();
+    expect(checkin.respostas.sono).toBe('bom');
+    expect(checkin.tempo).toBe(45);
+  });
+
+  it('tira o check-in do aparelho quando a pessoa sai da conta', async () => {
+    entrarComo('pessoa-3');
+    await responder('humor', 'abatido');
+
+    await esquecerCheckin();
+
+    expect(checkin.respostas).toEqual({});
+    await carregarCheckin();
+    expect(checkin.respostas).toEqual({});
   });
 
   it('anota quando a pessoa mandou atualizar a prática', async () => {

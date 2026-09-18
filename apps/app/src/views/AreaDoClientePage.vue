@@ -127,7 +127,7 @@
             :disabled="checkin.tempo === undefined"
             @click="atualizarPratica"
           >
-            Atualizar minha prática
+            Recomendar minha prática
           </button>
 
           <p v-if="aviso" class="aviso">{{ aviso }}</p>
@@ -191,15 +191,23 @@ const escolhas = reactive<Partial<Record<ChaveCheckin, string>>>({});
 const regiaoEscolhida = ref<string | null>(null);
 const aviso = ref('');
 
-/** Quantas perguntas aparecem juntas na mesma tela. */
-const PERGUNTAS_POR_VEZ = 2;
+/** Teto de perguntas por tela. */
+const MAXIMO_POR_TELA = 3;
 
-/** As próximas perguntas sem resposta. Lista vazia = respondeu todas. */
-const perguntasDaVez = computed(() =>
-  perguntas
-    .filter((pergunta) => checkin.respostas[pergunta.id] === undefined)
-    .slice(0, PERGUNTAS_POR_VEZ),
-);
+/**
+ * As próximas perguntas sem resposta. Lista vazia = respondeu todas.
+ *
+ * Em vez de sempre tirar três, dividimos o que falta em telas do mesmo
+ * tamanho: com sete pendentes saem 3, 2 e 2, e nenhuma tela fica com uma
+ * pergunta só, boiando no meio do vazio.
+ */
+const perguntasDaVez = computed(() => {
+  const pendentes = perguntas.filter((pergunta) => checkin.respostas[pergunta.id] === undefined);
+  if (pendentes.length === 0) return [];
+
+  const telasQueFaltam = Math.ceil(pendentes.length / MAXIMO_POR_TELA);
+  return pendentes.slice(0, Math.ceil(pendentes.length / telasQueFaltam));
+});
 
 const podeContinuar = computed(() =>
   perguntasDaVez.value.every((pergunta) => escolhas[pergunta.id] !== undefined),

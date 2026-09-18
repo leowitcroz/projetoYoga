@@ -30,7 +30,9 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ### 18/09/2026
 
-- **Aba Hoje refeita (HOME-01, CHK-01, CHK-04):** saudação pela hora do dia com o nome, frase de acolhimento, avatar (espaço pronto para foto), check-in em carrossel de **duas perguntas por vez** com 3 opções cada (7 perguntas, incluindo **dor**; havendo dor, pergunta também a região — CHK-03), escolha do tempo, botão "Atualizar minha prática", ditado do Yoga que troca todo dia e rodapé da marca. Tocar num cartão do resumo refaz aquela resposta. O check-in fica guardado no aparelho e zera à meia-noite.
+- **Corrigido:** o check-in do dia era guardado numa chave única do aparelho, sem dono — quem criasse uma conta nova via as respostas de quem tinha usado o app antes. Agora cada conta tem a sua chave, e sair da conta apaga o check-in e as respostas do cadastro do aparelho.
+
+- **Aba Hoje refeita (HOME-01, CHK-01, CHK-04):** saudação pela hora do dia com o nome, frase de acolhimento, avatar (espaço pronto para foto), check-in em carrossel de até **3 perguntas por tela** (7 pendentes viram telas de 3, 2 e 2) com 3 opções cada (7 perguntas, incluindo **dor**; havendo dor, pergunta também a região — CHK-03), escolha do tempo, botão "Recomendar minha prática", ditado do Yoga que troca todo dia e rodapé da marca. Tocar num cartão do resumo refaz aquela resposta. O check-in fica guardado no aparelho e zera à meia-noite.
 - **Aba Eu:** tela simples com nome, e-mail e "Sair da conta" — antes não havia como sair.
 - **Bancos de frases:** 15 acolhimentos e 20 ditados do Yoga e do Ayurveda, escolhidos pelo dia do calendário. **As traduções precisam da revisão do Marcos.**
 

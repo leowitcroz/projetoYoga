@@ -1,4 +1,5 @@
 import { chamar } from './api.js';
+import { esquecerCheckin } from './checkin-do-dia.js';
 import { limparRespostas, respostas } from './respostas.js';
 import { carregarSessaoSalva, limparSessao, salvarSessao, sessao, type Sessao } from './sessao.js';
 
@@ -54,6 +55,9 @@ export async function sair(): Promise<void> {
       // Se a API não responder, a sessão sai do aparelho do mesmo jeito.
     }
   }
+  // O check-in e as respostas do cadastro saem do aparelho junto com a conta.
+  await esquecerCheckin();
+  await limparRespostas();
   await limparSessao();
 }
 

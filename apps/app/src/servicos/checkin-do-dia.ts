@@ -1,6 +1,7 @@
 import { reactive } from 'vue';
 import type { ChaveCheckin } from '@/dados/checkin';
-import { guardar, ler } from './armazenamento.js';
+import { apagar, guardar, ler } from './armazenamento.js';
+import { sessao } from './sessao.js';
 
 /**
  * Check-in do dia guardado no aparelho.
@@ -20,7 +21,13 @@ export interface CheckinDoDia {
   enviadoEm?: string;
 }
 
-const CHAVE = 'life.checkin';
+/**
+ * Cada conta guarda o seu check-in, senão quem entra depois no mesmo aparelho
+ * vê as respostas de quem entrou antes.
+ */
+function chaveDoAparelho(): string {
+  return `life.checkin.${sessao.value?.usuario.id ?? 'sem-conta'}`;
+}
 
 export function diaDeHoje(agora: Date = new Date()): string {
   const mes = String(agora.getMonth() + 1).padStart(2, '0');
@@ -32,7 +39,7 @@ export const checkin = reactive<CheckinDoDia>({ dia: diaDeHoje(), respostas: {} 
 
 /** Lê o check-in guardado. Se for de outro dia, começa um novo (CHK-06). */
 export async function carregarCheckin(agora: Date = new Date()): Promise<void> {
-  const salvo = await ler<CheckinDoDia>(CHAVE);
+  const salvo = await ler<CheckinDoDia>(chaveDoAparelho());
   const hoje = diaDeHoje(agora);
 
   if (salvo && salvo.dia === hoje) {
@@ -79,6 +86,16 @@ export async function marcarEnviado(agora: Date = new Date()): Promise<void> {
   await salvar();
 }
 
+/** Tira o check-in do aparelho. Usado quando a pessoa sai da conta. */
+export async function esquecerCheckin(): Promise<void> {
+  await apagar(chaveDoAparelho());
+  checkin.dia = diaDeHoje();
+  checkin.respostas = {};
+  checkin.localDaDor = undefined;
+  checkin.tempo = undefined;
+  checkin.enviadoEm = undefined;
+}
+
 /** Apaga as respostas do dia para a pessoa refazer o check-in do zero. */
 export async function recomecar(agora: Date = new Date()): Promise<void> {
   checkin.dia = diaDeHoje(agora);
@@ -90,7 +107,7 @@ export async function recomecar(agora: Date = new Date()): Promise<void> {
 }
 
 async function salvar(): Promise<void> {
-  await guardar(CHAVE, {
+  await guardar(chaveDoAparelho(), {
     dia: checkin.dia,
     respostas: checkin.respostas,
     localDaDor: checkin.localDaDor,
