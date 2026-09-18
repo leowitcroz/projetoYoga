@@ -87,15 +87,17 @@
             </label>
             <span v-if="erros.aceite" class="erro erro-aceite">{{ erros.aceite }}</span>
 
-            <button type="submit" class="botao">Criar conta</button>
+            <p v-if="erroDaApi" class="erro erro-api">{{ erroDaApi }}</p>
+
+            <button type="submit" class="botao" :disabled="salvando">
+              {{ salvando ? 'Criando...' : 'Criar conta' }}
+            </button>
           </form>
 
           <p class="entrar">
             Já tem uma conta?
             <button type="button" class="link" @click="irParaLogin">Entrar</button>
           </p>
-
-          <p class="aviso">Protótipo visual. A conta de verdade é criada na Fase 2.</p>
 
           <footer class="rodape">
             <span class="linha"></span>
@@ -117,6 +119,8 @@ import { useRouter } from 'vue-router';
 import logo from '@/assets/logo.png';
 import lotus from '@/assets/lotus.png';
 import { formatarTelefone, temErro, validarCadastro, type ErrosCadastro } from '@/utils/validacao';
+import { criarConta } from '@/servicos/conta';
+import { ErroDaApi } from '@/servicos/api';
 
 const router = useRouter();
 const nome = ref('');
@@ -126,17 +130,35 @@ const senha = ref('');
 const aceite = ref(false);
 const mostrarSenha = ref(false);
 const erros = ref<ErrosCadastro>({});
+const salvando = ref(false);
+const erroDaApi = ref('');
 
 function digitarTelefone(evento: Event) {
   telefone.value = formatarTelefone((evento.target as HTMLInputElement).value);
 }
 
-function criar() {
+async function criar() {
   erros.value = validarCadastro(nome.value, email.value, telefone.value, senha.value, aceite.value);
   if (temErro(erros.value)) return;
 
-  // Protótipo: a criação de conta de verdade (AUTH-01) entra na Fase 2.
-  router.push('/checkin');
+  salvando.value = true;
+  erroDaApi.value = '';
+  try {
+    // Cria a conta e manda junto tudo o que foi respondido nos 5 passos (AUTH-01).
+    await criarConta({
+      nome: nome.value,
+      email: email.value,
+      telefone: telefone.value,
+      senha: senha.value,
+      aceitePrivacidade: aceite.value,
+    });
+    router.replace('/tabs/hoje');
+  } catch (erro) {
+    erroDaApi.value =
+      erro instanceof ErroDaApi ? erro.message : 'Não foi possível criar a conta agora';
+  } finally {
+    salvando.value = false;
+  }
 }
 
 function irParaLogin() {
@@ -383,11 +405,13 @@ input.invalido {
   cursor: pointer;
 }
 
-.aviso {
-  margin: 7px 0 0;
+.erro-api {
+  margin: 2px 0 0;
   text-align: center;
-  font-size: 0.62rem;
-  color: #7a8da0;
+}
+
+.botao[disabled] {
+  opacity: 0.6;
 }
 
 .rodape {

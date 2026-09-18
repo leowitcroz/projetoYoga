@@ -1,7 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// Modelo de dados do LIFE.
+// Nesta etapa só entram conta, consentimentos e as respostas do onboarding.
+// O restante das entidades da seção 5 do plano entra no resto da Fase 2.
 
 generator client {
   provider = "prisma-client"
@@ -10,4 +9,102 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+/// Conta do aluno. A senha só existe como hash argon2 (AUTH-01).
+model User {
+  id           String   @id @default(uuid())
+  nome         String
+  email        String   @unique
+  telefone     String
+  senhaHash    String
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  consentimentos Consent[]
+  sessoes        RefreshToken[]
+  perfil         OnboardingProfile?
+  saude          HealthProfile?
+}
+
+/// Registro de consentimento (PRIV-01). Cada aceite vira uma linha nova:
+/// o histórico não é apagado nem sobrescrito.
+model Consent {
+  id       String      @id @default(uuid())
+  userId   String
+  tipo     ConsentType
+  aceito   Boolean
+  versao   String
+  criadoEm DateTime    @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, tipo])
+}
+
+enum ConsentType {
+  /// Política de privacidade e termos de uso.
+  PRIVACIDADE
+  /// Consentimento separado para dados de saúde (ONB-03).
+  SAUDE
+}
+
+/// Sessão longa do aparelho (AUTH-03). Guardamos só o hash do refresh token,
+/// para que um vazamento do banco não permita entrar na conta de ninguém.
+model RefreshToken {
+  id        String    @id @default(uuid())
+  userId    String
+  tokenHash String    @unique
+  expiraEm  DateTime
+  criadoEm  DateTime  @default(now())
+  revogadoEm DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// Respostas dos passos 1, 2, 4 e 5 do cadastro (ONB-01, ONB-02, ONB-05, ONB-06).
+/// Saúde fica fora daqui de propósito: é um módulo separado.
+model OnboardingProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  /// Passo 1 — objetivos (ONB-01).
+  objetivoPrincipal    String?
+  objetivosSecundarios String[] @default([])
+
+  /// Passo 2 — relação com o Yoga (ONB-02): área => nível.
+  experiencia Json?
+
+  /// Passo 4 — Ayurveda (ONB-05).
+  constituicao String?
+  estadoAtual  String?
+
+  /// Passo 5 — preferências (ONB-06).
+  estilos          String[] @default([])
+  temas            String[] @default([])
+  horarioPreferido String?
+
+  /// Último passo concluído, para retomar de onde parou (ONB-08).
+  passoConcluido Int      @default(0)
+  atualizadoEm   DateTime @updatedAt
+  criadoEm       DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// Passo 3 — saúde (ONB-04). Tabela separada: estes dados nunca entram em log
+/// nem em resposta do painel (PRIV-02).
+model HealthProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  /// Condições marcadas pelo aluno, pelos códigos da tela.
+  condicoes    String[] @default([])
+  observacoes  String?
+  atualizadoEm DateTime @updatedAt
+  criadoEm     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

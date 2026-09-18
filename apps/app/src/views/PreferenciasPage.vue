@@ -94,6 +94,7 @@ import { useRouter } from 'vue-router';
 import iconeManha from '@/assets/icones/horario/manha.png';
 import iconeNoite from '@/assets/icones/horario/noite.png';
 import iconeTarde from '@/assets/icones/horario/tarde.png';
+import { guardarPasso } from '@/servicos/respostas';
 
 // Passo 5 do cadastro. Só aparece na primeira vez que a pessoa entra.
 const router = useRouter();
@@ -141,8 +142,13 @@ function pular() {
   router.push('/criar-conta');
 }
 
-// Protótipo: no fim das perguntas vem a criação da conta.
-function continuar() {
+// No fim das perguntas vem a criação da conta (AUTH-01).
+async function continuar() {
+  await guardarPasso(5, {
+    estilos: estilosEscolhidos.value,
+    temas: temasEscolhidos.value,
+    horarioPreferido: horarioEscolhido.value,
+  });
   router.push('/criar-conta');
 }
 </script>

@@ -70,6 +70,7 @@ import iconeMobilidade from '@/assets/icones/mobilidade.png';
 import iconePratica from '@/assets/icones/pratica.png';
 import iconeRespiracao from '@/assets/icones/respiracao.png';
 import iconeSono from '@/assets/icones/sono.png';
+import { guardarPasso } from '@/servicos/respostas';
 
 // Tela do cadastro. Só aparece na primeira vez que a pessoa entra.
 const router = useRouter();
@@ -105,7 +106,13 @@ function pular() {
   router.push('/criar-conta');
 }
 
-function continuar() {
+async function continuar() {
+  // O primeiro escolhido é o objetivo principal; os outros são secundários (ONB-01).
+  const [principal, ...secundarios] = selecionados.value;
+  await guardarPasso(1, {
+    objetivoPrincipal: principal,
+    objetivosSecundarios: secundarios.slice(0, 2),
+  });
   router.push('/onboarding/relacao');
 }
 </script>

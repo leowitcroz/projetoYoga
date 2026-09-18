@@ -7,9 +7,9 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ## Onde estamos agora
 
-- **Fase atual:** 0 · Fundação — 12 de 13 tarefas prontas.
-- **Falta para fechar a fase:** subir para o GitHub e ver a CI verde (F0.11).
-- **Próximo passo depois disso:** Fase 1 · Motor (`packages/motor`), começando pelos tipos em `shared` (F1.1).
+- **Fase atual:** 2 · API base (recorte antecipado: conta e onboarding). A Fase 0 só espera a CI verde no GitHub (F0.11).
+- **Falta para fechar a fase 2:** verificação de e-mail (AUTH-02), recuperação de senha (AUTH-04), limite de tentativas (F2.7), Swagger (F2.4), check-in e catálogo.
+- **Próximo passo:** Fase 1 · Motor (`packages/motor`), começando pelos tipos em `shared` (F1.1).
 - **Commits locais ainda não enviados:** 4.
 
 ## Esperando resposta
@@ -27,6 +27,12 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ---
 
 ## Linha do tempo
+
+### 18/09/2026
+
+- **Backend da conta no ar (F2.1, F2.3, F2.5, F2.8 parcial, F2.11, F2.12, F2.13):** cadastro com as respostas do onboarding, login, sessão que continua valendo no aparelho (refresh de 30 dias com rotação), logout e `GET /onboarding`. Senha em hash argon2, saúde em tabela separada e só com consentimento, banco Postgres com Prisma.
+- **App ligado na API:** os 5 passos guardam as respostas no aparelho e o cadastro manda tudo junto; login e cadastro levam para a área do cliente (`/tabs/hoje`), que mostra o nome e as respostas vindas do banco. Quem já entrou não vê mais a tela de boas-vindas nem o login.
+- **12 testes ponta a ponta** da conta, incluindo: senha nunca em texto puro, saúde recusada sem consentimento e refresh que não serve duas vezes.
 
 ### 13/09/2026
 

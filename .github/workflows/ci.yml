@@ -13,6 +13,27 @@ jobs:
   verificar:
     name: Lint, tipos, testes e build
     runs-on: ubuntu-latest
+
+    # Os testes ponta a ponta da conta precisam de um banco de verdade.
+    services:
+      db:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: life
+          POSTGRES_PASSWORD: life
+          POSTGRES_DB: life
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U life -d life"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://life:life@localhost:5433/life?schema=public
+      JWT_SECRET: segredo-so-da-ci
+
     steps:
       - uses: actions/checkout@v4
 
@@ -32,6 +53,9 @@ jobs:
 
       - name: Tipos
         run: npm run typecheck
+
+      - name: Preparar o banco
+        run: npm run prisma:deploy -w @life/api
 
       - name: Testes
         run: npm test

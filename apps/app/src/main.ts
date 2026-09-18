@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
+import { carregarRespostasSalvas } from './servicos/respostas';
 
 import { IonicVue } from '@ionic/vue';
 
@@ -36,6 +37,9 @@ import './theme/variables.css';
 
 const app = createApp(App).use(IonicVue).use(router);
 
-router.isReady().then(() => {
-  app.mount('#app');
-});
+// As respostas do cadastro ficam no aparelho até a conta existir (ONB-08).
+carregarRespostasSalvas()
+  .then(() => router.isReady())
+  .then(() => {
+    app.mount('#app');
+  });

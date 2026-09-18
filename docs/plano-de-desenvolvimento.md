@@ -435,7 +435,7 @@ Pipeline conforme a aba 08 da Matriz.
 
 ### Fase 2 · API base
 
-**Status:** Não iniciada
+**Status:** Em andamento (recorte antecipado: conta e onboarding, veja a seção 12)
 
 **Objetivo:** expor pela API tudo o que o app precisa para a jornada principal, com dados reais no banco e o motor ligado.
 
@@ -444,25 +444,25 @@ Pipeline conforme a aba 08 da Matriz.
 **Tarefas**
 
 *Banco*
-- [ ] **F2.1** Schema Prisma com todas as entidades da seção 5 (inclusive as do painel, para estabilizar o modelo) e migrations.
+- [x] **F2.1** Schema Prisma com todas as entidades da seção 5 (inclusive as do painel, para estabilizar o modelo) e migrations.
 - [ ] **F2.2** Seed: `EngineConfig` v1 e catálogo de teste da Fase 1 (somente em desenvolvimento).
 
 *Base da API*
-- [ ] **F2.3** Configuração por variáveis de ambiente, validação de entrada (DTOs), formato padrão de erro, CORS.
+- [x] **F2.3** Configuração por variáveis de ambiente, validação de entrada (DTOs), formato padrão de erro, CORS.
 - [ ] **F2.4** Documentação automática da API (Swagger) em `/docs`, só em desenvolvimento.
-- [ ] **F2.5** Logger que remove campos de saúde antes de gravar (PRIV-02), com teste.
+- [x] **F2.5** Logger que remove campos de saúde antes de gravar (PRIV-02), com teste.
 - [ ] **F2.6** Registro de acesso (IP e data/hora) e rotina que apaga registros com mais de 6 meses (PRIV-03).
 - [ ] **F2.7** Limite de tentativas nas rotas de login, cadastro e recuperação de senha.
 
 *Conta*
-- [ ] **F2.8** Cadastro, verificação de e-mail, login, refresh, logout, recuperação de senha: AUTH-01 a AUTH-04.
+- [~] **F2.8** Cadastro, verificação de e-mail, login, refresh, logout, recuperação de senha: AUTH-01 a AUTH-04. **Parcial:** cadastro, login, refresh e logout prontos; verificação de e-mail (AUTH-02) e recuperação de senha (AUTH-04) continuam pendentes.
 - [ ] **F2.9** Envio de e-mail em desenvolvimento com Mailpit (caixa de e-mail local); provedor real fica para a Fase 7.
 - [ ] **F2.10** Excluir conta: AUTH-07.
-- [ ] **F2.11** Registro de consentimentos: PRIV-01.
+- [x] **F2.11** Registro de consentimentos: PRIV-01.
 
 *Aluno*
-- [ ] **F2.12** Perfil e onboarding: endpoints para salvar cada bloco (objetivos, experiência, preferências, Ayurveda) e retomar de onde parou.
-- [ ] **F2.13** Saúde em módulo separado; só aceita dados se houver consentimento de saúde ativo.
+- [x] **F2.12** Perfil e onboarding: endpoints para salvar cada bloco (objetivos, experiência, preferências, Ayurveda) e retomar de onde parou.
+- [x] **F2.13** Saúde em módulo separado; só aceita dados se houver consentimento de saúde ativo.
 - [ ] **F2.14** Check-in diário: CHK-01 a CHK-04.
 - [ ] **F2.15** Catálogo para o app: listar e detalhar conteúdos aprovados, com filtros.
 - [ ] **F2.16** `GET /hoje`: carrega contexto, chama o motor, salva a `Recommendation` com auditoria e devolve o resultado.
@@ -749,6 +749,7 @@ Toda ideia nova entra aqui antes de virar código.
 | 11/09/2026 | Antecipar a tela de **login** (visual, com as imagens da marca) da Fase 4 para agora, para mostrar ao cliente | Baixo. A tela é só visual: validação no próprio aparelho, sem API. Na Fase 2 ela é ligada ao AUTH-03 e na Fase 4 recebe o tema completo | **Aprovado** por Leonardo. Feito em `apps/app/src/views/LoginPage.vue` |
 | 12/09/2026 | Publicar o protótipo na **Vercel** para testar no celular pelo navegador, sem gerar o app | Baixo. É só a versão web do protótipo, sem API e sem dados reais. A hospedagem de produção continua na Fase 7 (P-04) | **Aprovado** por Leonardo. `vercel.json` na raiz |
 | 11/09/2026 | Antecipar as telas de **boas-vindas**, **onboarding (passo 2)** e **check-in diário** como protótipo visual | Baixo, mesma lógica do login: sem API | **Aprovado** por Leonardo. `WelcomePage`, `OnboardingPage` e `DailyCheckinPage` |
+| 18/09/2026 | Antecipar o **backend de conta** (cadastro, login, sessão salva no aparelho) e o **salvamento das respostas do onboarding**, pulando da Fase 0 para um recorte da Fase 2 | Médio. Entra cedo o banco, o Prisma e o JWT. Ficam de fora desta antecipação: verificação de e-mail (AUTH-02), recuperação de senha (AUTH-04), limite de tentativas (F2.7), Swagger (F2.4) e tudo do motor e do check-in | **Aprovado** por Leonardo em 18/09. Vira a Fase 2 parcial: F2.1, F2.3, F2.5, F2.8 (parcial), F2.11, F2.12 e F2.13 |
 
 ---
 
@@ -759,6 +760,7 @@ Toda ideia nova entra aqui antes de virar código.
 | 1.0 | 10/09/2026 | Primeira versão |
 | 1.1 | 10/09/2026 | Fases detalhadas com tarefas (F0.1 a F7.14), dependências, entregáveis e critérios de saída; novo requisito MOT-20 (aprendizado); nova pendência P-07; EU-02 movido para a Fase 6; módulos Aprender e Ayurveda renomeados para EDU e AYV |
 | 1.2 | 11/09/2026 | Fase 0: TypeScript 6.0 (limite do typescript-eslint), Vitest também na API (Nest 12), NestJS 12 em ESM e Prisma 7; banco local decidido (Docker, porta 5433); API na porta 3100 |
+| 2.0 | 18/09/2026 | Backend de conta antecipado: cadastro, login com sessão salva e salvamento das respostas do onboarding (seção 12). Fase 2 começa parcial, antes da Fase 1 |
 | 1.9 | 12/09/2026 | Protótipo publicado na Vercel para teste no celular (seção 12) |
 | 1.8 | 11/09/2026 | Cadastro no fim do onboarding, com nome completo, e-mail, telefone e senha (AUTH-01) |
 | 1.7 | 11/09/2026 | Esclarecido pelo cliente: onboarding só na criação da conta; diário é só o check-in. CHK-06 reescrito e MOT-06 volta ao objetivo do perfil |

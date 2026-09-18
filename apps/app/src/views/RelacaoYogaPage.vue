@@ -85,6 +85,7 @@ import iconeMeditacaoPratica from '@/assets/icones/praticas/meditacao.png';
 import iconeNidra from '@/assets/icones/praticas/nidra.png';
 import iconeOutras from '@/assets/icones/praticas/outras.png';
 import iconePranayama from '@/assets/icones/praticas/pranayama.png';
+import { guardarPasso } from '@/servicos/respostas';
 
 // Passo 2 do cadastro. Só aparece na primeira vez que a pessoa entra.
 const router = useRouter();
@@ -123,7 +124,12 @@ function pular() {
   router.push('/criar-conta');
 }
 
-function continuar() {
+async function continuar() {
+  // Um nível geral mais as práticas que a pessoa já conhece (ONB-02).
+  const porArea: Record<string, string> = { geral: experiencia.value };
+  for (const pratica of conhecidas.value) porArea[pratica] = experiencia.value;
+
+  await guardarPasso(2, { experiencia: porArea });
   router.push('/onboarding/saude');
 }
 </script>

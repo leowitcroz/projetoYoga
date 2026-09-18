@@ -72,6 +72,7 @@ import iconeHipertensao from '@/assets/icones/saude/hipertensao.png';
 import iconeInfo from '@/assets/icones/saude/info.png';
 import iconeOutras from '@/assets/icones/saude/outras.png';
 import iconeRespiratorios from '@/assets/icones/saude/respiratorios.png';
+import { guardarSaude } from '@/servicos/respostas';
 
 // Passo 3 do cadastro. Só aparece na primeira vez que a pessoa entra.
 const router = useRouter();
@@ -104,7 +105,8 @@ function pular() {
   router.push('/criar-conta');
 }
 
-function continuar() {
+async function continuar() {
+  await guardarSaude(marcadas.value);
   router.push('/onboarding/ayurveda');
 }
 </script>

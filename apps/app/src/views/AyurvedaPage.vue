@@ -94,6 +94,7 @@ import iconeKapha from '@/assets/icones/ayurveda/kapha.png';
 import iconeLeve from '@/assets/icones/ayurveda/leve.png';
 import iconePitta from '@/assets/icones/ayurveda/pitta.png';
 import iconeVata from '@/assets/icones/ayurveda/vata.png';
+import { guardarPasso } from '@/servicos/respostas';
 
 // Passo 4 do cadastro. Só aparece na primeira vez que a pessoa entra.
 const router = useRouter();
@@ -156,7 +157,11 @@ function pular() {
   router.push('/criar-conta');
 }
 
-function continuar() {
+async function continuar() {
+  await guardarPasso(4, {
+    constituicao: constituicao.value || undefined,
+    estadoAtual: estadoAtual.value || undefined,
+  });
   router.push('/onboarding/preferencias');
 }
 </script>

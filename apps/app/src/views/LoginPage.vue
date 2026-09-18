@@ -51,7 +51,11 @@
 
             <button type="button" class="link esqueci">Esqueci minha senha</button>
 
-            <button type="submit" class="botao">Entrar</button>
+            <p v-if="erroDaApi" class="erro erro-api">{{ erroDaApi }}</p>
+
+            <button type="submit" class="botao" :disabled="entrando">
+              {{ entrando ? 'Entrando...' : 'Entrar' }}
+            </button>
           </form>
 
           <p class="criar">
@@ -81,25 +85,36 @@ import { useRouter } from 'vue-router';
 import logo from '@/assets/logo.png';
 import lotus from '@/assets/lotus.png';
 import { temErro, validarLogin, type ErrosLogin } from '@/utils/validacao';
+import { entrar as entrarNaConta } from '@/servicos/conta';
+import { ErroDaApi } from '@/servicos/api';
 
 const router = useRouter();
 const email = ref('');
 const senha = ref('');
 const mostrarSenha = ref(false);
 const erros = ref<ErrosLogin>({});
+const entrando = ref(false);
+const erroDaApi = ref('');
 
 function criarConta() {
   router.push('/onboarding');
 }
 
-function entrar() {
+async function entrar() {
   erros.value = validarLogin(email.value, senha.value);
   if (temErro(erros.value)) return;
 
-  // Protótipo: a autenticação de verdade (AUTH-03) entra na Fase 2.
-  // Quem já tem conta cai direto no check-in do dia -> recomendação.
-  // O cadastro (/onboarding) só acontece na primeira vez.
-  router.push('/checkin');
+  entrando.value = true;
+  erroDaApi.value = '';
+  try {
+    // AUTH-03. A sessão fica guardada no aparelho: da próxima vez entra direto.
+    await entrarNaConta(email.value, senha.value);
+    router.replace('/tabs/hoje');
+  } catch (erro) {
+    erroDaApi.value = erro instanceof ErroDaApi ? erro.message : 'Não foi possível entrar agora';
+  } finally {
+    entrando.value = false;
+  }
 }
 </script>
 
@@ -277,6 +292,15 @@ input.invalido {
   border: 0;
   border-radius: 999px;
   cursor: pointer;
+}
+
+.erro-api {
+  margin: 0 0 4px;
+  text-align: center;
+}
+
+.botao[disabled] {
+  opacity: 0.6;
 }
 
 .botao:active {
