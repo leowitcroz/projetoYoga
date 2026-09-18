@@ -30,6 +30,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ### 18/09/2026
 
+- **Protótipo completo no ar:** app em https://projeto-yoga-nine.vercel.app falando com a API em https://life-api-542y.onrender.com. Cadastro, login, sessão salva e leitura das respostas testados no site publicado, pelo navegador. `CORS_ORIGIN` fechado só para o endereço da Vercel.
 - **API no ar em https://life-api-542y.onrender.com** (Render, plano gratuito): cadastro, login e leitura do onboarding testados contra o banco de lá. Falta apontar o app da Vercel para ela (`VITE_API_URL`) e fechar o `CORS_ORIGIN`, hoje aberto a qualquer endereço.
 - **Hospedagem da API preparada (P-04 parcial):** `render.yaml` cria a API e o Postgres no Render, e o app aponta para lá pela variável `VITE_API_URL`. Passo a passo em [hospedagem.md](hospedagem.md).
 
