@@ -1,0 +1,44 @@
+# Hospedagem da API no Render (o app continua na Vercel).
+#
+# Como usar: no Render, New > Blueprint, aponte para este repositório.
+# Ele lê este arquivo e cria a API e o banco de uma vez.
+# O passo a passo está em docs/hospedagem.md.
+
+services:
+  - type: web
+    name: life-api
+    runtime: node
+    plan: free
+    region: oregon
+
+    # --include=dev porque o Render usa NODE_ENV=production, e sem as
+    # dependências de desenvolvimento não existe compilador nem Prisma CLI.
+    buildCommand: npm ci --include=dev && npm run build -w @life/api
+
+    # As migrations rodam a cada deploy, antes de a API atender.
+    startCommand: npm run prisma:deploy -w @life/api && npm run start:prod -w @life/api
+
+    healthCheckPath: /health
+
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: life-db
+          property: connectionString
+
+      # Gerado pelo Render e guardado só lá. Trocar este valor desconecta
+      # todo mundo que estiver logado.
+      - key: JWT_SECRET
+        generateValue: true
+
+      # Endereço do app na Vercel, para o navegador poder chamar a API.
+      # Preencher no painel do Render depois que a Vercel der a URL.
+      - key: CORS_ORIGIN
+        sync: false
+
+databases:
+  - name: life-db
+    plan: free
+    databaseName: life
+    user: life
+    region: oregon

@@ -732,7 +732,7 @@ Um requisito está pronto quando:
 | P-01 | Idade mínima exata e regras para menores | AUTH-05, AUTH-06 | Fase 7 |
 | P-02 | Lista de sinais de alerta e limites de persistência (masters + profissional de saúde) | MOT-13, MOT-14 | Fase 7 (o mecanismo é feito na Fase 1) |
 | P-03 | Provedor de vídeo e áudio | ADM-04, PRA-03, PRA-04 | Fase 3 |
-| P-04 | Hospedagem da API e do banco | Fase 7 | Fase 7 |
+| P-04 | Hospedagem da API e do banco | Fase 7 | **Parcial:** API e banco no Render para demonstração, descritos em [hospedagem.md](hospedagem.md) e no `render.yaml`. A hospedagem de produção, com banco pago e backup diário, continua na Fase 7 (F7.4) |
 | P-05 | Revisão jurídica da política de privacidade | Publicação | Fase 7 |
 | P-06 | "Minhas anotações" (aparece nas telas, mas não nos documentos): entra ou não? | — | Fase 5 |
 | P-07 | Catálogo mínimo para o beta: quantos conteúdos, trilhas e receitas (definido pelos professores) | Fase 7 | Fim da Fase 3 |
@@ -750,6 +750,7 @@ Toda ideia nova entra aqui antes de virar código.
 | 12/09/2026 | Publicar o protótipo na **Vercel** para testar no celular pelo navegador, sem gerar o app | Baixo. É só a versão web do protótipo, sem API e sem dados reais. A hospedagem de produção continua na Fase 7 (P-04) | **Aprovado** por Leonardo. `vercel.json` na raiz |
 | 11/09/2026 | Antecipar as telas de **boas-vindas**, **onboarding (passo 2)** e **check-in diário** como protótipo visual | Baixo, mesma lógica do login: sem API | **Aprovado** por Leonardo. `WelcomePage`, `OnboardingPage` e `DailyCheckinPage` |
 | 18/09/2026 | Antecipar o **backend de conta** (cadastro, login, sessão salva no aparelho) e o **salvamento das respostas do onboarding**, pulando da Fase 0 para um recorte da Fase 2 | Médio. Entra cedo o banco, o Prisma e o JWT. Ficam de fora desta antecipação: verificação de e-mail (AUTH-02), recuperação de senha (AUTH-04), limite de tentativas (F2.7), Swagger (F2.4) e tudo do motor e do check-in | **Aprovado** por Leonardo em 18/09. Vira a Fase 2 parcial: F2.1, F2.3, F2.5, F2.8 (parcial), F2.11, F2.12 e F2.13 |
+| 18/09/2026 | Hospedar a **API no Render** (com Postgres) para o cliente testar o cadastro e o login no celular dele | Baixo para o código: a API é a mesma, só ganha `render.yaml` e a variável `VITE_API_URL` no app. O plano gratuito dorme quando fica parado e o banco tem prazo de validade — serve para demonstração, não para dados de aluno | **Aprovado** por Leonardo em 18/09. Guia em [hospedagem.md](hospedagem.md) |
 
 ---
 
@@ -760,6 +761,7 @@ Toda ideia nova entra aqui antes de virar código.
 | 1.0 | 10/09/2026 | Primeira versão |
 | 1.1 | 10/09/2026 | Fases detalhadas com tarefas (F0.1 a F7.14), dependências, entregáveis e critérios de saída; novo requisito MOT-20 (aprendizado); nova pendência P-07; EU-02 movido para a Fase 6; módulos Aprender e Ayurveda renomeados para EDU e AYV |
 | 1.2 | 11/09/2026 | Fase 0: TypeScript 6.0 (limite do typescript-eslint), Vitest também na API (Nest 12), NestJS 12 em ESM e Prisma 7; banco local decidido (Docker, porta 5433); API na porta 3100 |
+| 2.1 | 18/09/2026 | Hospedagem da API no Render antecipada para demonstração (seção 12 e P-04); guia em hospedagem.md |
 | 2.0 | 18/09/2026 | Backend de conta antecipado: cadastro, login com sessão salva e salvamento das respostas do onboarding (seção 12). Fase 2 começa parcial, antes da Fase 1 |
 | 1.9 | 12/09/2026 | Protótipo publicado na Vercel para teste no celular (seção 12) |
 | 1.8 | 11/09/2026 | Cadastro no fim do onboarding, com nome completo, e-mail, telefone e senha (AUTH-01) |

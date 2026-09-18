@@ -30,6 +30,8 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ### 18/09/2026
 
+- **Hospedagem da API preparada (P-04 parcial):** `render.yaml` cria a API e o Postgres no Render, e o app aponta para lá pela variável `VITE_API_URL`. Passo a passo em [hospedagem.md](hospedagem.md).
+
 - **Backend da conta no ar (F2.1, F2.3, F2.5, F2.8 parcial, F2.11, F2.12, F2.13):** cadastro com as respostas do onboarding, login, sessão que continua valendo no aparelho (refresh de 30 dias com rotação), logout e `GET /onboarding`. Senha em hash argon2, saúde em tabela separada e só com consentimento, banco Postgres com Prisma.
 - **App ligado na API:** os 5 passos guardam as respostas no aparelho e o cadastro manda tudo junto; login e cadastro levam para a área do cliente (`/tabs/hoje`), que mostra o nome e as respostas vindas do banco. Quem já entrou não vê mais a tela de boas-vindas nem o login.
 - **12 testes ponta a ponta** da conta, incluindo: senha nunca em texto puro, saúde recusada sem consentimento e refresh que não serve duas vezes.
