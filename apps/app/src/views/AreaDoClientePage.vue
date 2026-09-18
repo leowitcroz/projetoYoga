@@ -133,6 +133,11 @@
           <p v-if="aviso" class="aviso">{{ aviso }}</p>
         </section>
 
+        <!-- CHK-07: quem não quer recomendação escolhe a própria aula. -->
+        <button type="button" class="escolher" @click="escolherSozinho">
+          Prefiro escolher minha prática
+        </button>
+
         <figure class="ditado">
           <blockquote>“{{ ditado.texto }}”</blockquote>
           <figcaption>{{ ditado.fonte }}</figcaption>
@@ -272,6 +277,11 @@ async function atualizarPratica() {
 
 function irParaPerfil() {
   router.push('/tabs/eu');
+}
+
+/** CHK-07 — sem check-in não há recomendação; a pessoa vai à biblioteca. */
+function escolherSozinho() {
+  router.push('/tabs/praticar');
 }
 </script>
 
@@ -567,6 +577,17 @@ function irParaPerfil() {
   text-align: center;
   font-size: 0.78rem;
   color: #5b7183;
+}
+
+.escolher {
+  align-self: center;
+  padding: 6px 4px;
+  background: none;
+  border: 0;
+  color: #3f6b52;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* Ditado do dia */
