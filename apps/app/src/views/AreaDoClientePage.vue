@@ -3,95 +3,183 @@
     <ion-content :fullscreen="true" class="tela">
       <div class="conteudo">
         <header class="topo">
-          <img :src="logo" alt="LIFE" class="logo" />
-          <button type="button" class="sair" @click="encerrar">Sair</button>
+          <div class="saudacao">
+            <h1 class="titulo">{{ saudacao }}, {{ primeiroNome }}</h1>
+            <p class="acolhimento">“{{ acolhimento }}”</p>
+          </div>
+
+          <button
+            type="button"
+            class="avatar"
+            :aria-label="'Perfil de ' + primeiroNome"
+            @click="irParaPerfil"
+          >
+            <img v-if="foto" :src="foto" alt="" class="foto" />
+            <ion-icon v-else :icon="personOutline" />
+          </button>
         </header>
 
-        <h1 class="titulo">Olá, {{ primeiroNome }}</h1>
-        <p class="subtitulo">Sua conta está criada e suas respostas ficaram salvas.</p>
+        <section class="bloco">
+          <h2 class="bloco-titulo">Como você está hoje?</h2>
 
-        <section class="cartao">
-          <h2 class="cartao-titulo">Suas respostas</h2>
+          <!-- Uma pergunta por vez, até responder as seis. -->
+          <div v-if="perguntaAtual" class="carrossel">
+            <p class="pergunta">
+              <ion-icon :icon="perguntaAtual.icone" class="pergunta-icone" />
+              {{ perguntaAtual.pergunta }}
+            </p>
 
-          <p v-if="carregando" class="linha">Carregando...</p>
-          <p v-else-if="erro" class="linha">{{ erro }}</p>
-          <dl v-else class="lista">
-            <div class="item">
-              <dt>Objetivo principal</dt>
-              <dd>{{ perfil.objetivoPrincipal || 'não respondido' }}</dd>
-            </div>
-            <div class="item">
-              <dt>Constituição</dt>
-              <dd>{{ perfil.constituicao || 'não respondida' }}</dd>
-            </div>
-            <div class="item">
-              <dt>Horário preferido</dt>
-              <dd>{{ perfil.horarioPreferido || 'não respondido' }}</dd>
-            </div>
-            <div class="item">
-              <dt>Passos respondidos</dt>
-              <dd>{{ perfil.passoConcluido ?? 0 }} de 5</dd>
-            </div>
-          </dl>
+            <ul class="opcoes">
+              <li v-for="opcao in perguntaAtual.opcoes" :key="opcao.valor">
+                <button
+                  type="button"
+                  class="opcao"
+                  :class="{ escolhida: escolhaAtual === opcao.valor }"
+                  @click="escolhaAtual = opcao.valor"
+                >
+                  {{ opcao.rotulo }}
+                </button>
+              </li>
+            </ul>
+
+            <button type="button" class="continuar" :disabled="!escolhaAtual" @click="continuar">
+              Continuar
+            </button>
+          </div>
+
+          <!-- Respondeu tudo: vira o resumo, que continua editável (CHK-04). -->
+          <ul v-else class="resumo">
+            <li v-for="pergunta in perguntas" :key="pergunta.id">
+              <button type="button" class="cartao" @click="refazer(pergunta.id)">
+                <ion-icon :icon="pergunta.icone" class="cartao-icone" />
+                <span class="cartao-nome">{{ pergunta.nome }}</span>
+                <span class="cartao-valor">{{
+                  rotuloDaResposta(pergunta.id, checkin.respostas[pergunta.id])
+                }}</span>
+              </button>
+            </li>
+          </ul>
         </section>
 
-        <p class="aviso">
-          Esta é a área do cliente por enquanto. A prática do dia, o catálogo e o check-in chegam
-          nas próximas fases.
-        </p>
+        <section v-if="!perguntaAtual" class="bloco">
+          <h2 class="bloco-titulo">Quanto tempo você tem hoje?</h2>
 
-        <button type="button" class="botao" @click="irParaCheckin">Fazer o check-in de hoje</button>
+          <ul class="tempos">
+            <li v-for="minutos in temposDisponiveis" :key="minutos">
+              <button
+                type="button"
+                class="tempo"
+                :class="{ escolhido: checkin.tempo === minutos }"
+                @click="escolherTempo(minutos)"
+              >
+                {{ rotuloDoTempo(minutos) }}
+              </button>
+            </li>
+          </ul>
+
+          <button
+            type="button"
+            class="principal"
+            :disabled="checkin.tempo === undefined"
+            @click="atualizarPratica"
+          >
+            Atualizar minha prática
+          </button>
+
+          <p v-if="aviso" class="aviso">{{ aviso }}</p>
+        </section>
+
+        <figure class="ditado">
+          <blockquote>“{{ ditado.texto }}”</blockquote>
+          <figcaption>{{ ditado.fonte }}</figcaption>
+        </figure>
+
+        <footer class="rodape">
+          <img :src="lotus" alt="" class="lotus" />
+          <p class="lema">Prática · Conhecimento · Equilíbrio para a vida</p>
+        </footer>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonContent, IonPage } from '@ionic/vue';
+import { IonContent, IonIcon, IonPage } from '@ionic/vue';
+import { personOutline } from 'ionicons/icons';
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import logo from '@/assets/logo.png';
-import { chamar } from '@/servicos/api';
-import { sair } from '@/servicos/conta';
+import lotus from '@/assets/lotus.png';
+import {
+  perguntas,
+  rotuloDaResposta,
+  rotuloDoTempo,
+  temposDisponiveis,
+  type ChaveCheckin,
+} from '@/dados/checkin';
+import { acolhimentoDoDia, ditadoDoDia, saudacaoDaHora } from '@/dados/frases';
+import {
+  carregarCheckin,
+  checkin,
+  escolherTempo,
+  marcarEnviado,
+  responder,
+} from '@/servicos/checkin-do-dia';
 import { sessao } from '@/servicos/sessao';
 
-interface Perfil {
-  objetivoPrincipal?: string | null;
-  constituicao?: string | null;
-  horarioPreferido?: string | null;
-  passoConcluido?: number;
-}
-
 const router = useRouter();
-const perfil = ref<Perfil>({});
-const carregando = ref(true);
-const erro = ref('');
+
+// Saudação e frases são fixadas ao abrir a tela: não mudam enquanto a pessoa usa.
+const agora = new Date();
+const saudacao = saudacaoDaHora(agora);
+const acolhimento = acolhimentoDoDia(agora);
+const ditado = ditadoDoDia(agora);
 
 const primeiroNome = computed(() => sessao.value?.usuario.nome.split(' ')[0] ?? '');
+// Ainda não guardamos foto de perfil; o espaço já fica pronto para ela.
+const foto = ref<string | null>(null);
+
+const escolhaAtual = ref<string | null>(null);
+const aviso = ref('');
+
+/** A primeira pergunta ainda sem resposta. `undefined` = respondeu todas. */
+const perguntaAtual = computed(() =>
+  perguntas.find((pergunta) => checkin.respostas[pergunta.id] === undefined),
+);
 
 onMounted(async () => {
-  try {
-    perfil.value = await chamar<Perfil>('/onboarding');
-  } catch {
-    erro.value = 'Não foi possível carregar suas respostas agora.';
-  } finally {
-    carregando.value = false;
-  }
+  await carregarCheckin();
 });
 
-async function encerrar() {
-  await sair();
-  router.replace('/');
+async function continuar() {
+  const pergunta = perguntaAtual.value;
+  if (!pergunta || !escolhaAtual.value) return;
+
+  await responder(pergunta.id, escolhaAtual.value);
+  escolhaAtual.value = null;
+  aviso.value = '';
 }
 
-function irParaCheckin() {
-  router.push('/checkin');
+/** Tocar em um cartão do resumo devolve aquela pergunta ao carrossel (CHK-04). */
+function refazer(id: ChaveCheckin) {
+  escolhaAtual.value = checkin.respostas[id] ?? null;
+  delete checkin.respostas[id];
+  aviso.value = '';
+}
+
+async function atualizarPratica() {
+  await marcarEnviado();
+  // O motor entra na Fase 1 e o /hoje na Fase 2 (F2.16). Por enquanto, confirmamos.
+  aviso.value = 'Check-in guardado. A prática de hoje chega quando o motor entrar.';
+}
+
+function irParaPerfil() {
+  router.push('/tabs/eu');
 }
 </script>
 
 <style scoped>
 .tela {
-  --background: #f4f7fa;
+  --background: #f2f7f9;
 }
 
 .conteudo {
@@ -99,109 +187,291 @@ function irParaCheckin() {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  padding: calc(18px + var(--ion-safe-area-top, 0px)) 18px
+  gap: 18px;
+  padding: calc(20px + var(--ion-safe-area-top, 0px)) 18px
     calc(18px + var(--ion-safe-area-bottom, 0px));
 }
 
+/* Cabeçalho */
+
 .topo {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.logo {
-  width: 54px;
-  height: auto;
-}
-
-.sair {
-  padding: 0;
-  background: none;
-  border: 0;
-  color: #2f7ea6;
-  font-size: 0.85rem;
+.saudacao {
+  flex: 1;
+  min-width: 0;
 }
 
 .titulo {
-  margin: 18px 0 4px;
+  margin: 0 0 6px;
   font-family: var(--life-serif);
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 600;
+  line-height: 1.15;
   color: #14304f;
 }
 
-.subtitulo {
-  margin: 0 0 18px;
-  font-size: 0.88rem;
+.acolhimento {
+  margin: 0;
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.4;
+  color: #5b7183;
+}
+
+.avatar {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: #3f6b52;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.25rem;
+  overflow: hidden;
+}
+
+.foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Blocos */
+
+.bloco-titulo {
+  margin: 0 0 12px;
+  font-family: var(--life-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #14304f;
+}
+
+/* Carrossel de perguntas */
+
+.pergunta {
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
   color: #4d627a;
 }
 
-.cartao {
+.pergunta-icone {
+  flex: none;
+  font-size: 1.3rem;
+  color: #3f6b52;
+}
+
+.opcoes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.opcoes li {
+  min-width: 0;
+  display: flex;
+}
+
+.opcao {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px 6px;
   background: #fff;
   border: 1px solid rgba(20, 48, 79, 0.08);
-  border-radius: 18px;
-  padding: 16px;
-}
-
-.cartao-titulo {
-  margin: 0 0 12px;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #7a8da0;
-}
-
-.lista {
-  margin: 0;
-}
-
-.item {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 7px 0;
-  border-top: 1px solid rgba(20, 48, 79, 0.07);
-}
-
-.item:first-child {
-  border-top: 0;
-}
-
-dt {
-  min-width: 0;
-  font-size: 0.85rem;
+  border-radius: 14px;
   color: #4d627a;
+  font-size: 0.82rem;
+  line-height: 1.25;
+  text-align: center;
 }
 
-dd {
-  margin: 0;
-  min-width: 0;
-  font-size: 0.85rem;
-  color: #14304f;
-  text-align: right;
+.opcao.escolhida {
+  background: #3f6b52;
+  border-color: #3f6b52;
+  color: #fff;
 }
 
-.linha {
-  margin: 0;
-  font-size: 0.85rem;
-  color: #4d627a;
-}
-
-.aviso {
-  margin: 16px 0 0;
-  font-size: 0.78rem;
-  color: #7a8da0;
-}
-
-.botao {
-  margin: auto 0 0;
+.continuar {
+  margin-top: 14px;
   width: 100%;
-  padding: 14px;
-  background: #14304f;
+  padding: 13px;
+  background: #3f6b52;
   color: #fff;
   font-size: 0.95rem;
   font-weight: 600;
   border: 0;
   border-radius: 999px;
+}
+
+.continuar[disabled] {
+  opacity: 0.45;
+}
+
+/* Resumo das respostas */
+
+.resumo {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.resumo li {
+  min-width: 0;
+  display: flex;
+}
+
+.cartao {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 13px 5px;
+  background: #fff;
+  border: 1px solid rgba(20, 48, 79, 0.08);
+  border-radius: 14px;
+  text-align: center;
+}
+
+.cartao-icone {
+  font-size: 1.4rem;
+  color: #3f6b52;
+}
+
+.cartao-nome {
+  font-size: 0.72rem;
+  color: #14304f;
+}
+
+.cartao-valor {
+  font-size: 0.68rem;
+  color: #7a8da0;
+}
+
+/* Tempo */
+
+.tempos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 7px;
+}
+
+.tempos li {
+  min-width: 0;
+  display: flex;
+}
+
+.tempo {
+  flex: 1;
+  min-width: 0;
+  padding: 11px 2px;
+  background: #fff;
+  border: 1px solid rgba(20, 48, 79, 0.08);
+  border-radius: 12px;
+  color: #4d627a;
+  font-size: 0.85rem;
+}
+
+.tempo.escolhido {
+  background: #3f6b52;
+  border-color: #3f6b52;
+  color: #fff;
+}
+
+.principal {
+  margin-top: 14px;
+  width: 100%;
+  padding: 14px;
+  background: #3f6b52;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 0;
+  border-radius: 999px;
+}
+
+.principal[disabled] {
+  opacity: 0.45;
+}
+
+.aviso {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #5b7183;
+}
+
+/* Ditado do dia */
+
+.ditado {
+  margin: 0;
+  padding: 18px 16px;
+  background: #f3eee4;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.ditado blockquote {
+  margin: 0;
+  font-family: var(--life-serif);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: #14304f;
+}
+
+.ditado figcaption {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(20, 48, 79, 0.12);
+  font-size: 0.72rem;
+  color: #7a8da0;
+}
+
+/* Rodapé */
+
+.rodape {
+  margin-top: auto;
+  padding-top: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.lotus {
+  width: 26px;
+  height: auto;
+  opacity: 0.75;
+}
+
+.lema {
+  margin: 0;
+  text-align: center;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8a9aa8;
 }
 </style>

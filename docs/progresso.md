@@ -30,6 +30,10 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ### 18/09/2026
 
+- **Aba Hoje refeita (HOME-01, CHK-01, CHK-04):** saudação pela hora do dia com o nome, frase de acolhimento, avatar (espaço pronto para foto), check-in em carrossel de uma pergunta por vez com 3 opções, escolha do tempo, botão "Atualizar minha prática", ditado do Yoga que troca todo dia e rodapé da marca. Tocar num cartão do resumo refaz aquela resposta. O check-in fica guardado no aparelho e zera à meia-noite.
+- **Aba Eu:** tela simples com nome, e-mail e "Sair da conta" — antes não havia como sair.
+- **Bancos de frases:** 15 acolhimentos e 20 ditados do Yoga e do Ayurveda, escolhidos pelo dia do calendário. **As traduções precisam da revisão do Marcos.**
+
 - **Protótipo completo no ar:** app em https://projeto-yoga-nine.vercel.app falando com a API em https://life-api-542y.onrender.com. Cadastro, login, sessão salva e leitura das respostas testados no site publicado, pelo navegador. `CORS_ORIGIN` fechado só para o endereço da Vercel.
 - **API no ar em https://life-api-542y.onrender.com** (Render, plano gratuito): cadastro, login e leitura do onboarding testados contra o banco de lá. Falta apontar o app da Vercel para ela (`VITE_API_URL`) e fechar o `CORS_ORIGIN`, hoje aberto a qualquer endereço.
 - **Hospedagem da API preparada (P-04 parcial):** `render.yaml` cria a API e o Postgres no Render, e o app aponta para lá pela variável `VITE_API_URL`. Passo a passo em [hospedagem.md](hospedagem.md).

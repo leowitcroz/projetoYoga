@@ -31,7 +31,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'aprender', component: placeholder, props: { title: 'Aprender' } },
       { path: 'ayurveda', component: placeholder, props: { title: 'Ayurveda' } },
       { path: 'cozinha', component: placeholder, props: { title: 'Cozinha' } },
-      { path: 'eu', component: placeholder, props: { title: 'Eu' } },
+      { path: 'eu', component: () => import('@/views/PerfilPage.vue') },
     ],
   },
 ];
