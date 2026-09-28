@@ -93,6 +93,11 @@ export interface Conteudo {
   retencaoRespiratoria?: boolean;
   /** Conteúdo revisado para gestação (SEG-008). */
   revisadoParaGestacao?: boolean;
+  /**
+   * Conteúdo feito para um público específico. Quem não é desse público não
+   * recebe: uma aula para gestantes não serve para quem não está grávida.
+   */
+  publicoEspecifico?: 'gestacao';
   /** Existe versão adaptada aprovada para usar no lugar (SEG-002). */
   temVersaoAdaptada?: boolean;
 

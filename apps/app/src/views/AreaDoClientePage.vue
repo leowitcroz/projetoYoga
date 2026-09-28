@@ -124,13 +124,36 @@
           <button
             type="button"
             class="principal"
-            :disabled="checkin.tempo === undefined"
+            :disabled="checkin.tempo === undefined || buscando"
             @click="atualizarPratica"
           >
-            Recomendar minha prática
+            {{ buscando ? 'Montando sua prática...' : 'Recomendar minha prática' }}
           </button>
 
-          <p v-if="aviso" class="aviso">{{ aviso }}</p>
+          <p v-if="erroDaRecomendacao" class="aviso">{{ erroDaRecomendacao }}</p>
+        </section>
+
+        <!-- HOME-02 e HOME-03: a prática de hoje, com o porquê. -->
+        <section v-if="recomendacao?.principal" class="bloco">
+          <h2 class="bloco-titulo">Sua prática de hoje</h2>
+
+          <p v-if="recomendacao.aviso" class="aviso-seguranca">{{ recomendacao.aviso }}</p>
+
+          <article class="pratica">
+            <p class="pratica-tipo">{{ recomendacao.principal.conteudo.modalidade }}</p>
+            <h3 class="pratica-titulo">{{ recomendacao.principal.conteudo.titulo }}</h3>
+            <p class="pratica-tempo">{{ recomendacao.principal.conteudo.duracaoMin }} min</p>
+            <p class="pratica-porque">{{ recomendacao.principal.explicacao }}</p>
+            <button type="button" class="principal" @click="iniciarPratica">Iniciar prática</button>
+          </article>
+
+          <article v-if="recomendacao.alternativa" class="pratica alternativa">
+            <p class="pratica-tipo">
+              Se preferir · {{ recomendacao.alternativa.conteudo.modalidade }}
+            </p>
+            <h3 class="pratica-titulo">{{ recomendacao.alternativa.conteudo.titulo }}</h3>
+            <p class="pratica-tempo">{{ recomendacao.alternativa.conteudo.duracaoMin }} min</p>
+          </article>
         </section>
 
         <!-- CHK-07: quem não quer recomendação escolhe a própria aula. -->
@@ -177,6 +200,13 @@ import {
   responder,
   temDor,
 } from '@/servicos/checkin-do-dia';
+import {
+  buscando,
+  erroDaRecomendacao,
+  esquecerRecomendacao,
+  pedirRecomendacao,
+  recomendacao,
+} from '@/servicos/pratica-de-hoje';
 import { sessao } from '@/servicos/sessao';
 
 const router = useRouter();
@@ -194,7 +224,6 @@ const foto = ref<string | null>(null);
 /** Respostas da tela atual, antes de a pessoa confirmar no Continuar. */
 const escolhas = reactive<Partial<Record<ChaveCheckin, string>>>({});
 const regiaoEscolhida = ref<string | null>(null);
-const aviso = ref('');
 
 /** Teto de perguntas por tela. */
 const MAXIMO_POR_TELA = 3;
@@ -246,7 +275,7 @@ async function continuar() {
     await responder(pergunta.id, escolhas[pergunta.id] as string);
     delete escolhas[pergunta.id];
   }
-  aviso.value = '';
+  esquecerRecomendacao();
 }
 
 async function confirmarLocalDaDor() {
@@ -254,7 +283,7 @@ async function confirmarLocalDaDor() {
 
   await informarLocalDaDor(regiaoEscolhida.value);
   regiaoEscolhida.value = null;
-  aviso.value = '';
+  esquecerRecomendacao();
 }
 
 /** Tocar em um cartão do resumo devolve aquela pergunta ao carrossel (CHK-04). */
@@ -266,13 +295,18 @@ function refazer(id: ChaveCheckin) {
     checkin.localDaDor = undefined;
     regiaoEscolhida.value = null;
   }
-  aviso.value = '';
+  // A recomendação anterior foi feita com outras respostas: não vale mais.
+  esquecerRecomendacao();
 }
 
 async function atualizarPratica() {
   await marcarEnviado();
-  // O motor entra na Fase 1 e o /hoje na Fase 2 (F2.16). Por enquanto, confirmamos.
-  aviso.value = 'Check-in guardado. A prática de hoje chega quando o motor entrar.';
+  await pedirRecomendacao();
+}
+
+function iniciarPratica() {
+  // O player entra na Fase 5; por ora a pessoa vai para a biblioteca.
+  router.push('/tabs/praticar');
 }
 
 function irParaPerfil() {
@@ -577,6 +611,65 @@ function escolherSozinho() {
   text-align: center;
   font-size: 0.78rem;
   color: #5b7183;
+}
+
+/* Prática de hoje */
+
+.aviso-seguranca {
+  margin: 0 0 12px;
+  padding: 11px 13px;
+  background: #fbf3ea;
+  border: 1px solid #e0c9a8;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: #6b5a42;
+}
+
+.pratica {
+  padding: 18px 16px;
+  background: #fff;
+  border: 1px solid rgba(20, 48, 79, 0.08);
+  border-radius: 16px;
+}
+
+.pratica + .pratica {
+  margin-top: 10px;
+}
+
+.pratica-tipo {
+  margin: 0 0 4px;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #3f6b52;
+}
+
+.pratica-titulo {
+  margin: 0 0 4px;
+  font-family: var(--life-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #14304f;
+}
+
+.pratica-tempo {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #7a8da0;
+}
+
+.pratica-porque {
+  margin: 12px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #4d627a;
+}
+
+.alternativa {
+  background: transparent;
+  border-style: dashed;
 }
 
 .escolher {

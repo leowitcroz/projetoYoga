@@ -25,6 +25,8 @@ model User {
   sessoes        RefreshToken[]
   perfil         OnboardingProfile?
   saude          HealthProfile?
+  checkins       DailyCheckin[]
+  recomendacoes  Recommendation[]
 }
 
 /// Registro de consentimento (PRIV-01). Cada aceite vira uma linha nova:
@@ -107,4 +109,86 @@ model HealthProfile {
   criadoEm     DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// Catálogo de práticas (aba 07 da Matriz). Os campos que o motor filtra têm
+/// coluna própria; os que ele lê em bloco ficam em JSON.
+model Content {
+  id         String @id
+  titulo     String
+  tipo       String
+  modalidade String
+  duracaoMin Int
+  /// 1 introdutório → 5 especializado.
+  nivelTecnico Int
+  /// 1 muito baixa → 5 muito alta.
+  demandaFisica Int
+  area          String
+  aprovado      Boolean @default(false)
+
+  /// Objetivos atendidos, com peso: { "sono": 5, "estresse": 4 }.
+  objetivos Json
+  /// O quanto entrega de cada dimensão do estado do dia.
+  caracteristicas Json
+  /// Cargas e marcas de segurança: cargaCervical, invertida, retencao...
+  seguranca Json
+  /// Tags ayurvédicas, quando houver.
+  ayurveda Json?
+
+  trilhaId    String?
+  ordemTrilha Int?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  @@index([aprovado])
+  @@index([trilhaId, ordemTrilha])
+}
+
+/// Check-in diário (CHK-01 a CHK-04). Um por pessoa por dia; refazer no mesmo
+/// dia sobrescreve, e a recomendação é recalculada.
+model DailyCheckin {
+  id     String @id @default(uuid())
+  userId String
+  /// Data no fuso do aparelho, no formato AAAA-MM-DD (CHK-02).
+  dia    String
+
+  sono    String
+  energia String
+  corpo   String
+  dor     String
+  /// Onde dói, só quando há dor (CHK-03). É dado de saúde.
+  regiaoDaDor String?
+  estresse    String
+  digestao    String
+  humor       String
+  tempo       Int
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dia])
+}
+
+/// Recomendação entregue, com a auditoria do motor (MOT-10).
+model Recommendation {
+  id     String @id @default(uuid())
+  userId String
+  dia    String
+
+  principalId     String?
+  alternativaId   String?
+  estadoFuncional String
+  /// Versão da EngineConfig que gerou este resultado.
+  versaoConfig String
+  /// Candidatos, filtros, pontuação por critério e modificadores.
+  auditoria Json
+
+  criadoEm DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, dia])
 }

@@ -81,6 +81,18 @@ describe('Bloco 1 — segurança', () => {
     expect(seguros).toEqual(['PRAT-027']);
   });
 
+  it('SEG-008: aula para gestantes não é oferecida a quem não está grávida', () => {
+    const contexto = contextoDeTeste({ saude: { consentida: true, condicoes: [] } });
+
+    expect(idsSeguros(contexto)).not.toContain('PRAT-027');
+  });
+
+  it('SEG-008: sem dados de saúde, a aula para gestantes também fica fora', () => {
+    const contexto = contextoDeTeste({ saude: { consentida: false, condicoes: [] } });
+
+    expect(idsSeguros(contexto)).not.toContain('PRAT-027');
+  });
+
   it('SEG-009: dor no joelho tira carga elevada no joelho', () => {
     const contexto = contextoDeTeste({ checkin: { dor: 'leve', regiaoDaDor: 'joelhos' } });
 

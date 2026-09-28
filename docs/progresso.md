@@ -10,7 +10,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Fase atual:** 1 · Motor (núcleo pronto) + 2 · API base (conta e onboarding prontos). A Fase 0 só espera a CI verde no GitHub (F0.11).
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
 - **Falta para fechar a fase 2:** verificação de e-mail (AUTH-02), recuperação de senha (AUTH-04), limite de tentativas (F2.7), Swagger (F2.4), check-in e catálogo.
-- **Próximo passo:** ligar o motor na API (`GET /hoje`, F2.16) e na aba Hoje, para a recomendação sair na tela.
+- **Próximo passo:** catálogo para o app (F2.15) e a tela Praticar, para o "Iniciar prática" levar a algum lugar.
 - **Commits locais ainda não enviados:** 4.
 
 ## Esperando resposta
@@ -30,6 +30,10 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ## Linha do tempo
 
 ### 28/09/2026
+
+- **Motor ligado na tela (F2.2, F2.14, F2.16):** `PUT /checkin` guarda o check-in do dia e `GET /hoje` carrega perfil, saúde, catálogo e histórico, chama o motor e devolve a prática, gravando a recomendação com a auditoria. A aba Hoje mostra a prática principal, a alternativa e o "por quê".
+- **Catálogo no banco:** as 22 práticas de teste viraram linhas da tabela `Content`, populadas por `npm run db:seed -w @life/api` (só em desenvolvimento).
+- **Corrigido:** o motor oferecia "Saudações ao sol para gestantes" a quem não está grávida. Conteúdo de público específico agora só vai para quem pertence ao público.
 
 - **Motor da prática do dia pronto (F1.1 a F1.13, F1.17 a F1.21):** o check-in vira recomendação passando por segurança (Bloco 1), tempo, nível técnico, score 0–100 com os pesos da aba 05, modificadores de trilha e repetição, e sai como principal + alternativa de outra natureza, com explicação e auditoria completa.
 - **Regras transcritas da Matriz 1.1** com os IDs originais: SEG-001 a SEG-010, SEG-R01 a SEG-R05, EST-001 a EST-011, PER-003, PER-008, AYU-010 a AYU-012 e os pesos do ranking. Nova regra **EST-012** (humor), que não existe na Matriz.

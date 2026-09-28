@@ -111,6 +111,16 @@ export function filtrarPorSeguranca(
       continue;
     }
 
+    // Aula feita para um público específico não serve para quem está fora dele.
+    if (conteudo.publicoEspecifico === 'gestacao' && !estaGestante(contexto)) {
+      exclusoes.push({
+        conteudoId: conteudo.id,
+        regra: 'SEG-008',
+        motivo: 'Conteúdo específico para gestação',
+      });
+      continue;
+    }
+
     if (modoConservador) {
       const motivo = motivoConservador(conteudo, config);
       if (motivo) {
@@ -133,6 +143,10 @@ export function filtrarPorSeguranca(
   }
 
   return { seguros, exclusoes, modoConservador };
+}
+
+function estaGestante(contexto: ContextoUsuario): boolean {
+  return contexto.saude.consentida && contexto.saude.condicoes.includes('gestacao');
 }
 
 function motivoConservador(conteudo: Conteudo, config: EngineConfig): string | null {

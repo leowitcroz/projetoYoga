@@ -291,7 +291,7 @@ export const CATALOGO_DE_TESTE: Conteudo[] = [
     area: 'asanas',
     objetivos: { disposicao: 4, mobilidade: 3 },
     caracteristicas: { intensidade: 2, ativacao: 3, mobilidade: 3 },
-    extras: { revisadoParaGestacao: true },
+    extras: { revisadoParaGestacao: true, publicoEspecifico: 'gestacao' },
   }),
   pratica({
     id: 'PRAT-028',

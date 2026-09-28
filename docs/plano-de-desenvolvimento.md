@@ -445,7 +445,7 @@ Pipeline conforme a aba 08 da Matriz.
 
 *Banco*
 - [x] **F2.1** Schema Prisma com todas as entidades da seção 5 (inclusive as do painel, para estabilizar o modelo) e migrations.
-- [ ] **F2.2** Seed: `EngineConfig` v1 e catálogo de teste da Fase 1 (somente em desenvolvimento).
+- [x] **F2.2** Seed: `EngineConfig` v1 e catálogo de teste da Fase 1 (somente em desenvolvimento).
 
 *Base da API*
 - [x] **F2.3** Configuração por variáveis de ambiente, validação de entrada (DTOs), formato padrão de erro, CORS.
@@ -463,9 +463,9 @@ Pipeline conforme a aba 08 da Matriz.
 *Aluno*
 - [x] **F2.12** Perfil e onboarding: endpoints para salvar cada bloco (objetivos, experiência, preferências, Ayurveda) e retomar de onde parou.
 - [x] **F2.13** Saúde em módulo separado; só aceita dados se houver consentimento de saúde ativo.
-- [ ] **F2.14** Check-in diário: CHK-01 a CHK-04.
+- [x] **F2.14** Check-in diário: CHK-01 a CHK-04.
 - [ ] **F2.15** Catálogo para o app: listar e detalhar conteúdos aprovados, com filtros.
-- [ ] **F2.16** `GET /hoje`: carrega contexto, chama o motor, salva a `Recommendation` com auditoria e devolve o resultado.
+- [x] **F2.16** `GET /hoje`: carrega contexto, chama o motor, salva a `Recommendation` com auditoria e devolve o resultado.
 - [ ] **F2.17** Resposta de pergunta adaptativa, que recalcula a recomendação.
 - [ ] **F2.18** Eventos de uso e feedback pós-prática.
 
@@ -762,6 +762,7 @@ Toda ideia nova entra aqui antes de virar código.
 | 1.0 | 10/09/2026 | Primeira versão |
 | 1.1 | 10/09/2026 | Fases detalhadas com tarefas (F0.1 a F7.14), dependências, entregáveis e critérios de saída; novo requisito MOT-20 (aprendizado); nova pendência P-07; EU-02 movido para a Fase 6; módulos Aprender e Ayurveda renomeados para EDU e AYV |
 | 1.2 | 11/09/2026 | Fase 0: TypeScript 6.0 (limite do typescript-eslint), Vitest também na API (Nest 12), NestJS 12 em ESM e Prisma 7; banco local decidido (Docker, porta 5433); API na porta 3100 |
+| 2.4 | 28/09/2026 | Motor ligado na API (`GET /hoje`) e na aba Hoje: o check-in vai para o banco e a prática recomendada aparece na tela. Nova regra: conteúdo de público específico (gestação) não é oferecido a quem está fora dele |
 | 2.3 | 28/09/2026 | Motor da prática do dia construído (Fase 1 parcial): segurança, tempo, nível, estado, score, modificadores, principal + alternativa, explicação e auditoria. O catálogo de teste tem 22 práticas fictícias, não 40 |
 | 2.2 | 18/09/2026 | Aba Hoje refeita: check-in em carrossel com 3 opções por pergunta, humor no lugar da dor, ditado do dia (seção 12). CHK-01 e HOME-01 afetados |
 | 2.1 | 18/09/2026 | Hospedagem da API no Render antecipada para demonstração (seção 12 e P-04); guia em hospedagem.md |
