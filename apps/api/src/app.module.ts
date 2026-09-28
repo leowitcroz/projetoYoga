@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { OnboardingModule } from './onboarding/onboarding.module.js';
 import { HojeModule } from './hoje/hoje.module.js';
+import { CatalogoModule } from './catalogo/catalogo.module.js';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { HojeModule } from './hoje/hoje.module.js';
     AuthModule,
     OnboardingModule,
     HojeModule,
+    CatalogoModule,
   ],
   controllers: [HealthController],
 })

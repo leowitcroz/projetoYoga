@@ -305,8 +305,9 @@ async function atualizarPratica() {
 }
 
 function iniciarPratica() {
-  // O player entra na Fase 5; por ora a pessoa vai para a biblioteca.
-  router.push('/tabs/praticar');
+  // O player entra na Fase 5; por ora a pessoa vai para a ficha da aula.
+  const id = recomendacao.value?.principal?.conteudo.id;
+  router.push(id ? `/tabs/praticar/${id}` : '/tabs/praticar');
 }
 
 function irParaPerfil() {

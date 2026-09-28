@@ -10,7 +10,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Fase atual:** 1 · Motor (núcleo pronto) + 2 · API base (conta e onboarding prontos). A Fase 0 só espera a CI verde no GitHub (F0.11).
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
 - **Falta para fechar a fase 2:** verificação de e-mail (AUTH-02), recuperação de senha (AUTH-04), limite de tentativas (F2.7), Swagger (F2.4), check-in e catálogo.
-- **Próximo passo:** catálogo para o app (F2.15) e a tela Praticar, para o "Iniciar prática" levar a algum lugar.
+- **Próximo passo:** segurança da conta — verificação de e-mail (AUTH-02), recuperação de senha (AUTH-04) e limite de tentativas (F2.7). Obrigatório antes de qualquer aluno real criar conta.
 - **Commits locais ainda não enviados:** 4.
 
 ## Esperando resposta
@@ -30,6 +30,9 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ## Linha do tempo
 
 ### 28/09/2026
+
+- **Aba Praticar (F2.15):** `GET /catalogo` com filtros de duração, modalidade e objetivo, mais `GET /catalogo/:id`. A tela lista as aulas, filtra por tempo e modalidade e abre a ficha com duração, nível, intensidade e o que a aula ajuda. "Iniciar prática" agora leva à ficha da aula recomendada.
+- **SEG-R02 na prática:** a biblioteca mostra até o que o motor não recomendaria hoje — deixar de recomendar não é proibir o acesso.
 
 - **Motor ligado na tela (F2.2, F2.14, F2.16):** `PUT /checkin` guarda o check-in do dia e `GET /hoje` carrega perfil, saúde, catálogo e histórico, chama o motor e devolve a prática, gravando a recomendação com a auditoria. A aba Hoje mostra a prática principal, a alternativa e o "por quê".
 - **Catálogo no banco:** as 22 práticas de teste viraram linhas da tabela `Content`, populadas por `npm run db:seed -w @life/api` (só em desenvolvimento).

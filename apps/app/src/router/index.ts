@@ -27,7 +27,8 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', redirect: '/tabs/hoje' },
       { path: 'hoje', component: () => import('@/views/AreaDoClientePage.vue') },
-      { path: 'praticar', component: placeholder, props: { title: 'Praticar' } },
+      { path: 'praticar', component: () => import('@/views/PraticarPage.vue') },
+      { path: 'praticar/:id', component: () => import('@/views/AulaPage.vue') },
       { path: 'aprender', component: placeholder, props: { title: 'Aprender' } },
       { path: 'ayurveda', component: placeholder, props: { title: 'Ayurveda' } },
       { path: 'cozinha', component: placeholder, props: { title: 'Cozinha' } },
