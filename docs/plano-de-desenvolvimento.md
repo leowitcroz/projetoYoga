@@ -385,7 +385,7 @@ Pipeline conforme a aba 08 da Matriz.
 
 ### Fase 1 · Motor
 
-**Status:** Não iniciada
+**Status:** Em andamento — o núcleo da prática do dia está pronto (F1.1 a F1.13, F1.17 a F1.21). Faltam Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16)
 
 **Objetivo:** construir o Motor LIFE completo em `packages/motor`, como função pura, provado pelos casos T01, T02 e T03, sem banco, API ou telas.
 
@@ -394,31 +394,31 @@ Pipeline conforme a aba 08 da Matriz.
 **Tarefas**
 
 *Tipos e configuração*
-- [ ] **F1.1** Em `shared`: enums de objetivos, áreas de experiência, modalidades, tipos de conteúdo, corpo, digestão, tempo disponível, status de segurança (Livre, Atenção, Adaptar, Bloquear) e estados funcionais.
-- [ ] **F1.2** Em `shared`: tipo `Conteudo` com a ficha completa da aba 07 (incluindo características usadas pelo estado do dia: intensidade, mobilidade, respiração calma, Yoga Nidra, relaxamento, ativação).
-- [ ] **F1.3** Em `shared`: tipos `ContextoUsuario` (perfil, saúde, check-in, Ayurveda, histórico recente) e `ResultadoDia`.
-- [ ] **F1.4** `EngineConfig` versão 1 em JSON, transcrita da Matriz 1.1: pesos (aba 05), SEG (01), EST (02), PER (03), AYU (04), APR (06), JOR (11), CTX (12) e modificadores. Cada regra mantém seu ID.
-- [ ] **F1.5** Catálogo de teste (fixtures): cerca de 40 práticas fictícias cobrindo modalidades, durações, níveis, cargas, invertidas e retenções; 10 receitas com alérgenos; 10 orientações ayurvédicas; 2 trilhas.
+- [x] **F1.1** Em `shared`: enums de objetivos, áreas de experiência, modalidades, tipos de conteúdo, corpo, digestão, tempo disponível, status de segurança (Livre, Atenção, Adaptar, Bloquear) e estados funcionais.
+- [x] **F1.2** Em `shared`: tipo `Conteudo` com a ficha completa da aba 07 (incluindo características usadas pelo estado do dia: intensidade, mobilidade, respiração calma, Yoga Nidra, relaxamento, ativação).
+- [x] **F1.3** Em `shared`: tipos `ContextoUsuario` (perfil, saúde, check-in, Ayurveda, histórico recente) e `ResultadoDia`.
+- [x] **F1.4** `EngineConfig` versão 1 em JSON, transcrita da Matriz 1.1: pesos (aba 05), SEG (01), EST (02), PER (03), AYU (04), APR (06), JOR (11), CTX (12) e modificadores. Cada regra mantém seu ID.
+- [x] **F1.5** Catálogo de teste (fixtures): cerca de 40 práticas fictícias cobrindo modalidades, durações, níveis, cargas, invertidas e retenções; 10 receitas com alérgenos; 10 orientações ayurvédicas; 2 trilhas.
 
 *Pipeline (etapas da aba 08)*
-- [ ] **F1.6** Segurança: MOT-01, MOT-02, MOT-12 (modo conservador), MOT-13 e MOT-14 (mecanismo com lista vazia).
-- [ ] **F1.7** Filtros de tempo, nível e pré-requisitos: MOT-03, MOT-04.
-- [ ] **F1.8** Estado funcional: MOT-05.
-- [ ] **F1.9** Score base 0–100: MOT-06.
-- [ ] **F1.10** Modificadores (continuidade, repetição, descoberta, horário): MOT-07. A descoberta usa uma semente recebida por parâmetro.
-- [ ] **F1.11** Seleção de principal + alternativa: MOT-08.
-- [ ] **F1.12** Explicação por templates, seguindo a seção 9: MOT-09.
-- [ ] **F1.13** Objeto de auditoria completo: MOT-10.
+- [x] **F1.6** Segurança: MOT-01, MOT-02, MOT-12 (modo conservador), MOT-13 e MOT-14 (mecanismo com lista vazia).
+- [x] **F1.7** Filtros de tempo, nível e pré-requisitos: MOT-03, MOT-04.
+- [x] **F1.8** Estado funcional: MOT-05.
+- [x] **F1.9** Score base 0–100: MOT-06.
+- [x] **F1.10** Modificadores (continuidade, repetição, descoberta, horário): MOT-07. A descoberta usa uma semente recebida por parâmetro.
+- [x] **F1.11** Seleção de principal + alternativa: MOT-08.
+- [x] **F1.12** Explicação por templates, seguindo a seção 9: MOT-09.
+- [x] **F1.13** Objeto de auditoria completo: MOT-10.
 - [ ] **F1.14** Aprenda Hoje, Ayurveda Hoje e Cozinha Hoje: MOT-15, MOT-16, MOT-17.
 - [ ] **F1.15** Pergunta adaptativa: MOT-18. O motor devolve "pergunta pendente" quando a resposta muda a decisão.
 - [ ] **F1.16** Jornada (objetivo estratégico, meta semanal, progressão, recuperação, diversidade): MOT-19.
-- [ ] **F1.17** Função pública única: `recomendarDia(contexto, catalogo, config, { agora, semente })`.
+- [x] **F1.17** Função pública única: `recomendarDia(contexto, catalogo, config, { agora, semente })`.
 
 *Testes*
-- [ ] **F1.18** Um teste por regra da Matriz (SEG, EST, AYU, CTX, JOR), com o ID da regra no nome do teste.
-- [ ] **F1.19** Testes de cenário T01 (Ana), T02 (Ricardo) e T03 (Helena), conforme a seção 8.
-- [ ] **F1.20** Testes de garantia: conteúdo bloqueado nunca aparece em nenhuma saída; receita com alérgeno nunca aparece; mesma entrada gera sempre a mesma saída.
-- [ ] **F1.21** Desempenho: catálogo de 1.200 conteúdos processado em menos de 100 ms.
+- [x] **F1.18** Um teste por regra da Matriz (SEG, EST, AYU, CTX, JOR), com o ID da regra no nome do teste.
+- [x] **F1.19** Testes de cenário T01 (Ana), T02 (Ricardo) e T03 (Helena), conforme a seção 8.
+- [x] **F1.20** Testes de garantia: conteúdo bloqueado nunca aparece em nenhuma saída; receita com alérgeno nunca aparece; mesma entrada gera sempre a mesma saída.
+- [x] **F1.21** Desempenho: catálogo de 1.200 conteúdos processado em menos de 100 ms.
 
 **Entregáveis:** pacote `motor` publicado no workspace; `EngineConfig` v1; catálogo de teste.
 
@@ -762,6 +762,7 @@ Toda ideia nova entra aqui antes de virar código.
 | 1.0 | 10/09/2026 | Primeira versão |
 | 1.1 | 10/09/2026 | Fases detalhadas com tarefas (F0.1 a F7.14), dependências, entregáveis e critérios de saída; novo requisito MOT-20 (aprendizado); nova pendência P-07; EU-02 movido para a Fase 6; módulos Aprender e Ayurveda renomeados para EDU e AYV |
 | 1.2 | 11/09/2026 | Fase 0: TypeScript 6.0 (limite do typescript-eslint), Vitest também na API (Nest 12), NestJS 12 em ESM e Prisma 7; banco local decidido (Docker, porta 5433); API na porta 3100 |
+| 2.3 | 28/09/2026 | Motor da prática do dia construído (Fase 1 parcial): segurança, tempo, nível, estado, score, modificadores, principal + alternativa, explicação e auditoria. O catálogo de teste tem 22 práticas fictícias, não 40 |
 | 2.2 | 18/09/2026 | Aba Hoje refeita: check-in em carrossel com 3 opções por pergunta, humor no lugar da dor, ditado do dia (seção 12). CHK-01 e HOME-01 afetados |
 | 2.1 | 18/09/2026 | Hospedagem da API no Render antecipada para demonstração (seção 12 e P-04); guia em hospedagem.md |
 | 2.0 | 18/09/2026 | Backend de conta antecipado: cadastro, login com sessão salva e salvamento das respostas do onboarding (seção 12). Fase 2 começa parcial, antes da Fase 1 |

@@ -1,3 +1,5 @@
+export * from './tipos-motor.js';
+
 export const APP_NAME = 'LIFE';
 
 /** Resposta da rota `GET /health` da API. */
