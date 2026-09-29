@@ -68,7 +68,7 @@ Decidida em 29/09/2026, com as cores tiradas da própria logo.
 
 - **O azul manda.** É a cor da logo e a identidade do app.
 - **O verde apoia**, e é um verde puxado para o frio de propósito, para conversar com o azul em vez de brigar com ele.
-- **Ações principais usam a mescla** (`--life-gradiente`): saem do azul e chegam no verde. É o que amarra as duas cores.
+- **Ações principais são azul sólido.** Sem degradê: Leonardo pediu para tirar em 29/09.
 - As capas desenhadas das práticas partem todas do azul e caminham para a cor da modalidade: variedade sem perder a identidade.
 
 ## Em aberto

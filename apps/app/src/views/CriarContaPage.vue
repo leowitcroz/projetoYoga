@@ -375,7 +375,7 @@ input.invalido {
   margin-top: 6px;
   width: 100%;
   padding: 13px;
-  background: var(--life-gradiente);
+  background: var(--life-azul);
   color: #fff;
   font-size: 0.98rem;
   font-weight: 600;

@@ -18,9 +18,6 @@
   --life-verde-claro: #5b9382;
   --life-verde-suave: #e6efea;
 
-  /* A mescla das duas: usada nas ações principais e nos destaques. */
-  --life-gradiente: linear-gradient(135deg, var(--life-azul), var(--life-verde));
-
   /* Textos, do mais forte ao mais discreto. */
   --life-texto: #14304f;
   --life-texto-medio: #4d627a;

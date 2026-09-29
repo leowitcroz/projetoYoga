@@ -469,7 +469,7 @@ function escolherSozinho() {
   margin-top: 14px;
   width: 100%;
   padding: 13px;
-  background: var(--life-gradiente);
+  background: var(--life-azul);
   color: #fff;
   font-size: 0.95rem;
   font-weight: 600;
@@ -606,7 +606,7 @@ function escolherSozinho() {
   margin-top: 14px;
   width: 100%;
   padding: 14px;
-  background: var(--life-gradiente);
+  background: var(--life-azul);
   color: #fff;
   font-size: 0.95rem;
   font-weight: 600;
