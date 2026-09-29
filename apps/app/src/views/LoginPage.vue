@@ -150,7 +150,7 @@ async function entrar() {
   overflow-wrap: anywhere;
   background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(20, 48, 79, 0.08);
+  border: 1px solid var(--life-borda);
   border-radius: 28px;
   padding: 28px 24px 20px;
   box-shadow: 0 18px 50px rgba(20, 48, 79, 0.16);
@@ -172,7 +172,7 @@ async function entrar() {
   margin: 0;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
-  color: #4d627a;
+  color: var(--life-texto-medio);
 }
 
 .titulo {
@@ -181,14 +181,14 @@ async function entrar() {
   font-size: 1.7rem;
   font-weight: 500;
   line-height: 1.15;
-  color: #14304f;
+  color: var(--life-texto);
   text-align: center;
 }
 
 .subtitulo {
   margin: 0 0 22px;
   font-size: 0.95rem;
-  color: #4d627a;
+  color: var(--life-texto-medio);
   text-align: center;
 }
 
@@ -209,14 +209,14 @@ async function entrar() {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #4d627a;
+  color: var(--life-texto-medio);
 }
 
 input {
   width: 100%;
   box-sizing: border-box;
   font-size: 1rem;
-  color: #14304f;
+  color: var(--life-texto);
   background: #fff;
   border: 1px solid #d8e1ea;
   border-radius: 14px;
@@ -228,7 +228,7 @@ input::placeholder {
 }
 
 input:focus {
-  outline: 2px solid #2f7ea6;
+  outline: 2px solid var(--life-azul-claro);
   outline-offset: 1px;
   border-color: transparent;
 }
@@ -255,7 +255,7 @@ input.invalido {
   padding: 8px;
   background: none;
   border: 0;
-  color: #4d627a;
+  color: var(--life-texto-medio);
   font-size: 1.15rem;
   cursor: pointer;
 }
@@ -269,7 +269,7 @@ input.invalido {
   padding: 0;
   background: none;
   border: 0;
-  color: #2f7ea6;
+  color: var(--life-azul-claro);
   font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
@@ -284,7 +284,7 @@ input.invalido {
   margin-top: 6px;
   width: 100%;
   padding: 15px;
-  background: #14304f;
+  background: var(--life-gradiente);
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
@@ -311,14 +311,14 @@ input.invalido {
   margin: 18px 0 0;
   text-align: center;
   font-size: 0.9rem;
-  color: #4d627a;
+  color: var(--life-texto-medio);
 }
 
 .aviso {
   margin: 10px 0 0;
   text-align: center;
   font-size: 0.75rem;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
 }
 
 .rodape {
@@ -347,6 +347,6 @@ input.invalido {
   font-size: 0.66rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #4d627a;
+  color: var(--life-texto-medio);
 }
 </style>

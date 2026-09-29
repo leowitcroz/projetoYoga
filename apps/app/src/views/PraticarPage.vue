@@ -135,7 +135,7 @@ function abrir(id: string) {
 
 <style scoped>
 .tela {
-  --background: #f2f7f9;
+  --background: var(--life-fundo);
 }
 
 .conteudo {
@@ -150,14 +150,14 @@ function abrir(id: string) {
   font-family: var(--life-serif);
   font-size: 1.5rem;
   font-weight: 600;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .subtitulo {
   margin: 0 0 18px;
   font-size: 0.85rem;
   line-height: 1.45;
-  color: #5b7183;
+  color: var(--life-texto-medio);
 }
 
 .filtro-titulo {
@@ -165,7 +165,7 @@ function abrir(id: string) {
   font-size: 0.68rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
 }
 
 .fichas {
@@ -183,13 +183,13 @@ function abrir(id: string) {
   background: #fff;
   border: 1px solid rgba(20, 48, 79, 0.1);
   border-radius: 999px;
-  color: #4d627a;
+  color: var(--life-texto-medio);
   font-size: 0.78rem;
 }
 
 .ficha.ativa {
-  background: #3f6b52;
-  border-color: #3f6b52;
+  background: var(--life-verde);
+  border-color: var(--life-verde);
   color: #fff;
 }
 
@@ -197,7 +197,7 @@ function abrir(id: string) {
   margin: 24px 0;
   text-align: center;
   font-size: 0.85rem;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
 }
 
 .aulas {
@@ -217,7 +217,7 @@ function abrir(id: string) {
   gap: 12px;
   padding: 11px 13px;
   background: #fff;
-  border: 1px solid rgba(20, 48, 79, 0.08);
+  border: 1px solid var(--life-borda);
   border-radius: 14px;
   text-align: left;
 }
@@ -239,7 +239,7 @@ function abrir(id: string) {
   font-size: 0.64rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #3f6b52;
+  color: var(--life-verde);
 }
 
 .aula-titulo {
@@ -247,11 +247,11 @@ function abrir(id: string) {
   font-size: 1.02rem;
   font-weight: 600;
   line-height: 1.3;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .aula-detalhes {
   font-size: 0.76rem;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
 }
 </style>

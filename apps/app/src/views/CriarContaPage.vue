@@ -199,7 +199,7 @@ function irParaLogin() {
   overflow-wrap: anywhere;
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(20, 48, 79, 0.08);
+  border: 1px solid var(--life-borda);
   border-radius: 26px;
   padding: 20px 20px 16px;
   box-shadow: 0 18px 50px rgba(20, 48, 79, 0.16);
@@ -221,7 +221,7 @@ function irParaLogin() {
   margin: 0;
   font-size: 0.62rem;
   letter-spacing: 0.06em;
-  color: #4d627a;
+  color: var(--life-texto-medio);
 }
 
 .titulo {
@@ -230,14 +230,14 @@ function irParaLogin() {
   font-size: 1.35rem;
   font-weight: 500;
   line-height: 1.15;
-  color: #14304f;
+  color: var(--life-texto);
   text-align: center;
 }
 
 .subtitulo {
   margin: 0 0 14px;
   font-size: 0.78rem;
-  color: #4d627a;
+  color: var(--life-texto-medio);
   text-align: center;
 }
 
@@ -258,7 +258,7 @@ function irParaLogin() {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #4d627a;
+  color: var(--life-texto-medio);
 }
 
 input[type='text'],
@@ -268,7 +268,7 @@ input[type='password'] {
   width: 100%;
   box-sizing: border-box;
   font-size: 0.9rem;
-  color: #14304f;
+  color: var(--life-texto);
   background: #fff;
   border: 1px solid #d8e1ea;
   border-radius: 13px;
@@ -280,7 +280,7 @@ input::placeholder {
 }
 
 input:focus {
-  outline: 2px solid #2f7ea6;
+  outline: 2px solid var(--life-azul-claro);
   outline-offset: 1px;
   border-color: transparent;
 }
@@ -307,7 +307,7 @@ input.invalido {
   padding: 8px;
   background: none;
   border: 0;
-  color: #4d627a;
+  color: var(--life-texto-medio);
   font-size: 1.15rem;
   cursor: pointer;
 }
@@ -350,24 +350,24 @@ input.invalido {
 }
 
 .aceite:has(.caixa-real:checked) .caixa {
-  background: #14304f;
-  border-color: #14304f;
+  background: var(--life-texto);
+  border-color: var(--life-texto);
   color: #fff;
 }
 
 .caixa-real:focus-visible + .caixa {
-  outline: 2px solid #2f7ea6;
+  outline: 2px solid var(--life-azul-claro);
   outline-offset: 2px;
 }
 
 .aceite-texto {
   font-size: 0.75rem;
   line-height: 1.4;
-  color: #4d627a;
+  color: var(--life-texto-medio);
 }
 
 .aceite-texto a {
-  color: #2f7ea6;
+  color: var(--life-azul-claro);
   font-weight: 600;
 }
 
@@ -375,7 +375,7 @@ input.invalido {
   margin-top: 6px;
   width: 100%;
   padding: 13px;
-  background: #14304f;
+  background: var(--life-gradiente);
   color: #fff;
   font-size: 0.98rem;
   font-weight: 600;
@@ -392,14 +392,14 @@ input.invalido {
   margin: 12px 0 0;
   text-align: center;
   font-size: 0.82rem;
-  color: #4d627a;
+  color: var(--life-texto-medio);
 }
 
 .link {
   padding: 0;
   background: none;
   border: 0;
-  color: #2f7ea6;
+  color: var(--life-azul-claro);
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
@@ -440,6 +440,6 @@ input.invalido {
   font-size: 0.54rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #4d627a;
+  color: var(--life-texto-medio);
 }
 </style>

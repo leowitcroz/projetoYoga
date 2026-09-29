@@ -333,7 +333,7 @@ function escolherSozinho() {
 
 <style scoped>
 .tela {
-  --background: #f2f7f9;
+  --background: var(--life-fundo);
 }
 
 .conteudo {
@@ -365,7 +365,7 @@ function escolherSozinho() {
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.15;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .acolhimento {
@@ -373,7 +373,7 @@ function escolherSozinho() {
   font-size: 0.82rem;
   font-style: italic;
   line-height: 1.4;
-  color: #5b7183;
+  color: var(--life-texto-medio);
 }
 
 .avatar {
@@ -383,7 +383,7 @@ function escolherSozinho() {
   display: grid;
   place-items: center;
   padding: 0;
-  background: #3f6b52;
+  background: var(--life-azul-profundo);
   border: 0;
   border-radius: 50%;
   color: #fff;
@@ -404,7 +404,7 @@ function escolherSozinho() {
   font-family: var(--life-serif);
   font-size: 1.1rem;
   font-weight: 600;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 /* Carrossel de perguntas */
@@ -412,7 +412,7 @@ function escolherSozinho() {
 .dupla + .dupla {
   margin-top: 22px;
   padding-top: 20px;
-  border-top: 1px solid rgba(20, 48, 79, 0.08);
+  border-top: 1px solid var(--life-borda);
 }
 
 .pergunta {
@@ -421,13 +421,13 @@ function escolherSozinho() {
   align-items: center;
   gap: 8px;
   font-size: 0.95rem;
-  color: #4d627a;
+  color: var(--life-texto-medio);
 }
 
 .pergunta-icone {
   flex: none;
   font-size: 1.3rem;
-  color: #3f6b52;
+  color: var(--life-verde);
 }
 
 .opcoes {
@@ -451,17 +451,17 @@ function escolherSozinho() {
   place-items: center;
   padding: 20px 6px;
   background: #fff;
-  border: 1px solid rgba(20, 48, 79, 0.08);
+  border: 1px solid var(--life-borda);
   border-radius: 14px;
-  color: #4d627a;
+  color: var(--life-texto-medio);
   font-size: 0.82rem;
   line-height: 1.25;
   text-align: center;
 }
 
 .opcao.escolhida {
-  background: #3f6b52;
-  border-color: #3f6b52;
+  background: var(--life-verde);
+  border-color: var(--life-verde);
   color: #fff;
 }
 
@@ -469,7 +469,7 @@ function escolherSozinho() {
   margin-top: 14px;
   width: 100%;
   padding: 13px;
-  background: #3f6b52;
+  background: var(--life-gradiente);
   color: #fff;
   font-size: 0.95rem;
   font-weight: 600;
@@ -504,7 +504,7 @@ function escolherSozinho() {
   margin: 14px 0 0;
   font-size: 0.75rem;
   line-height: 1.45;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
 }
 
 /* Resumo das respostas */
@@ -536,8 +536,8 @@ function escolherSozinho() {
 }
 
 .cartao.atencao {
-  background: #fbf3ea;
-  border-color: #e0c9a8;
+  background: var(--life-atencao-fundo);
+  border-color: var(--life-atencao-borda);
 }
 
 .cartao {
@@ -549,24 +549,24 @@ function escolherSozinho() {
   gap: 5px;
   padding: 13px 5px;
   background: #fff;
-  border: 1px solid rgba(20, 48, 79, 0.08);
+  border: 1px solid var(--life-borda);
   border-radius: 14px;
   text-align: center;
 }
 
 .cartao-icone {
   font-size: 1.4rem;
-  color: #3f6b52;
+  color: var(--life-verde);
 }
 
 .cartao-nome {
   font-size: 0.72rem;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .cartao-valor {
   font-size: 0.68rem;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
 }
 
 /* Tempo */
@@ -590,15 +590,15 @@ function escolherSozinho() {
   min-width: 0;
   padding: 11px 2px;
   background: #fff;
-  border: 1px solid rgba(20, 48, 79, 0.08);
+  border: 1px solid var(--life-borda);
   border-radius: 12px;
-  color: #4d627a;
+  color: var(--life-texto-medio);
   font-size: 0.85rem;
 }
 
 .tempo.escolhido {
-  background: #3f6b52;
-  border-color: #3f6b52;
+  background: var(--life-verde);
+  border-color: var(--life-verde);
   color: #fff;
 }
 
@@ -606,7 +606,7 @@ function escolherSozinho() {
   margin-top: 14px;
   width: 100%;
   padding: 14px;
-  background: #3f6b52;
+  background: var(--life-gradiente);
   color: #fff;
   font-size: 0.95rem;
   font-weight: 600;
@@ -622,7 +622,7 @@ function escolherSozinho() {
   margin: 10px 0 0;
   text-align: center;
   font-size: 0.78rem;
-  color: #5b7183;
+  color: var(--life-texto-medio);
 }
 
 /* Prática de hoje */
@@ -630,8 +630,8 @@ function escolherSozinho() {
 .aviso-seguranca {
   margin: 0 0 12px;
   padding: 11px 13px;
-  background: #fbf3ea;
-  border: 1px solid #e0c9a8;
+  background: var(--life-atencao-fundo);
+  border: 1px solid var(--life-atencao-borda);
   border-radius: 12px;
   font-size: 0.8rem;
   line-height: 1.45;
@@ -641,7 +641,7 @@ function escolherSozinho() {
 .pratica {
   padding: 18px 16px;
   background: #fff;
-  border: 1px solid rgba(20, 48, 79, 0.08);
+  border: 1px solid var(--life-borda);
   border-radius: 16px;
 }
 
@@ -654,7 +654,7 @@ function escolherSozinho() {
   font-size: 0.66rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #3f6b52;
+  color: var(--life-verde);
 }
 
 .pratica-titulo {
@@ -663,13 +663,13 @@ function escolherSozinho() {
   font-size: 1.15rem;
   font-weight: 600;
   line-height: 1.25;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .pratica-professor {
   margin: 0;
   font-size: 0.8rem;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
 }
 
 .capa {
@@ -680,7 +680,7 @@ function escolherSozinho() {
   margin: 12px 0 0;
   font-size: 0.82rem;
   line-height: 1.5;
-  color: #4d627a;
+  color: var(--life-texto-medio);
 }
 
 .alternativa {
@@ -693,7 +693,7 @@ function escolherSozinho() {
   padding: 6px 4px;
   background: none;
   border: 0;
-  color: #3f6b52;
+  color: var(--life-verde);
   font-size: 0.85rem;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -715,7 +715,7 @@ function escolherSozinho() {
   font-size: 1rem;
   font-style: italic;
   line-height: 1.45;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .ditado figcaption {
@@ -723,7 +723,7 @@ function escolherSozinho() {
   padding-top: 10px;
   border-top: 1px solid rgba(20, 48, 79, 0.12);
   font-size: 0.72rem;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
 }
 
 /* Rodapé */

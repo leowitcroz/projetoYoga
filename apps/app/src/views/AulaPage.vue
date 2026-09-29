@@ -104,7 +104,7 @@ function voltar() {
 
 <style scoped>
 .tela {
-  --background: #f2f7f9;
+  --background: var(--life-fundo);
 }
 
 .conteudo {
@@ -122,7 +122,7 @@ function voltar() {
   padding: 0;
   background: none;
   border: 0;
-  color: #3f6b52;
+  color: var(--life-verde);
   font-size: 0.85rem;
 }
 
@@ -133,7 +133,7 @@ function voltar() {
 .professor {
   margin: -12px 0 18px;
   font-size: 0.85rem;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
 }
 
 .modalidade {
@@ -141,7 +141,7 @@ function voltar() {
   font-size: 0.66rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #3f6b52;
+  color: var(--life-verde);
 }
 
 .titulo {
@@ -150,14 +150,14 @@ function voltar() {
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.2;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .ficha {
   margin: 0;
   padding: 14px 16px;
   background: #fff;
-  border: 1px solid rgba(20, 48, 79, 0.08);
+  border: 1px solid var(--life-borda);
   border-radius: 14px;
 }
 
@@ -176,14 +176,14 @@ function voltar() {
 dt {
   min-width: 0;
   font-size: 0.85rem;
-  color: #5b7183;
+  color: var(--life-texto-medio);
 }
 
 dd {
   margin: 0;
   min-width: 0;
   font-size: 0.85rem;
-  color: #14304f;
+  color: var(--life-texto);
   text-align: right;
 }
 
@@ -196,7 +196,7 @@ dd {
   font-size: 0.68rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
 }
 
 .marcas {
@@ -210,23 +210,23 @@ dd {
 
 .marcas li {
   padding: 7px 12px;
-  background: #e8f0ea;
+  background: var(--life-verde-suave);
   border-radius: 999px;
   font-size: 0.76rem;
-  color: #3f6b52;
+  color: var(--life-verde);
 }
 
 .recado {
   margin: 24px 0;
   text-align: center;
   font-size: 0.85rem;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
 }
 
 .aviso {
   margin: 24px 0 0;
   font-size: 0.78rem;
   line-height: 1.5;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
 }
 </style>

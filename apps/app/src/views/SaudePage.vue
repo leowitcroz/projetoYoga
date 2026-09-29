@@ -156,7 +156,7 @@ async function continuar() {
   padding: 6px;
   background: none;
   border: 0;
-  color: #14304f;
+  color: var(--life-texto);
   font-size: 1.35rem;
   cursor: pointer;
 }
@@ -189,7 +189,7 @@ async function continuar() {
 }
 
 .ponto.feito {
-  background: #14304f;
+  background: var(--life-texto);
 }
 
 .passo-texto {
@@ -206,7 +206,7 @@ async function continuar() {
   font-size: clamp(1.35rem, 5.8vw, 2.1rem);
   font-weight: 600;
   line-height: 1.15;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .subtitulo {
@@ -270,7 +270,7 @@ async function continuar() {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .marca-real {
@@ -301,7 +301,7 @@ async function continuar() {
 }
 
 .condicao.marcada .chave {
-  background: #14304f;
+  background: var(--life-texto);
 }
 
 .condicao.marcada .bolinha {
@@ -309,7 +309,7 @@ async function continuar() {
 }
 
 .marca-real:focus-visible ~ .chave {
-  outline: 2px solid #2f7ea6;
+  outline: 2px solid var(--life-azul-claro);
   outline-offset: 2px;
 }
 
@@ -346,7 +346,7 @@ async function continuar() {
   font-size: 0.95rem;
   font-weight: 500;
   color: #fff;
-  background: #14304f;
+  background: var(--life-texto);
   border: 0;
   border-radius: 999px;
   cursor: pointer;

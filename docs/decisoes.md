@@ -54,6 +54,23 @@ Papéis no painel:
 | Professor master | tudo do professor + aprovar/reprovar conteúdos, publicar no catálogo |
 | Admin | gerenciar usuários e papéis, pesos do motor |
 
+## Paleta da marca
+
+Decidida em 29/09/2026, com as cores tiradas da própria logo.
+
+| Token | Cor | Onde |
+|---|---|---|
+| `--life-azul-profundo` | `#0e3050` | o traço escuro do círculo da logo; avatar, títulos fortes |
+| `--life-azul` | `#1c5b80` | **cor principal**, início das ações e das capas |
+| `--life-azul-claro` | `#3890b0` | a pincelada clara da logo; links e detalhes |
+| `--life-verde` | `#35705f` | cor de apoio; seleções (opções do check-in, filtros) |
+| `--life-verde-claro` | `#5b9382` | fim dos gradientes |
+
+- **O azul manda.** É a cor da logo e a identidade do app.
+- **O verde apoia**, e é um verde puxado para o frio de propósito, para conversar com o azul em vez de brigar com ele.
+- **Ações principais usam a mescla** (`--life-gradiente`): saem do azul e chegam no verde. É o que amarra as duas cores.
+- As capas desenhadas das práticas partem todas do azul e caminham para a cor da modalidade: variedade sem perder a identidade.
+
 ## Em aberto
 
 - **Sinais de alerta e limites de persistência** (regras SEG-R03 e SEG-R04 da matriz): quem define? Proposta: os professores master redigem e, de preferência, um profissional de saúde valida.

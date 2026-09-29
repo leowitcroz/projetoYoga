@@ -211,7 +211,7 @@ async function continuar() {
   padding: 6px;
   background: none;
   border: 0;
-  color: #14304f;
+  color: var(--life-texto);
   font-size: 1.35rem;
   cursor: pointer;
 }
@@ -244,7 +244,7 @@ async function continuar() {
 }
 
 .ponto.feito {
-  background: #14304f;
+  background: var(--life-texto);
 }
 
 .passo-texto {
@@ -261,7 +261,7 @@ async function continuar() {
   font-size: clamp(1.3rem, 5.6vw, 2.1rem);
   font-weight: 600;
   line-height: 1.15;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .subtitulo {
@@ -301,7 +301,7 @@ async function continuar() {
 .dosha.marcada,
 .estado.marcada {
   background: rgba(255, 255, 255, 0.96);
-  border-color: #14304f;
+  border-color: var(--life-texto);
 }
 
 .selo {
@@ -345,7 +345,7 @@ async function continuar() {
   font-family: var(--life-serif);
   font-size: 0.72rem;
   font-weight: 600;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .descricao {
@@ -371,12 +371,12 @@ async function continuar() {
 
 .dosha.marcada .bolinha,
 .estado.marcada .bolinha {
-  border: 5px solid #14304f;
+  border: 5px solid var(--life-texto);
   background: #fff;
 }
 
 .marca-real:focus-visible ~ .bolinha {
-  outline: 2px solid #2f7ea6;
+  outline: 2px solid var(--life-azul-claro);
   outline-offset: 2px;
 }
 
@@ -387,7 +387,7 @@ async function continuar() {
   font-family: var(--life-serif);
   font-size: 0.88rem;
   font-weight: 600;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .secao-ajuda {
@@ -418,7 +418,7 @@ async function continuar() {
   font-size: 0.95rem;
   font-weight: 500;
   color: #fff;
-  background: #14304f;
+  background: var(--life-texto);
   border: 0;
   border-radius: 999px;
   cursor: pointer;

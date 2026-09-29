@@ -147,7 +147,7 @@ async function continuar() {
   padding: 6px;
   background: none;
   border: 0;
-  color: #14304f;
+  color: var(--life-texto);
   font-size: 1.35rem;
   cursor: pointer;
 }
@@ -198,7 +198,7 @@ async function continuar() {
 }
 
 .ponto.feito {
-  background: #14304f;
+  background: var(--life-texto);
 }
 
 .passo-texto {
@@ -215,7 +215,7 @@ async function continuar() {
   font-size: clamp(1.35rem, 5.8vw, 2.1rem);
   font-weight: 500;
   line-height: 1.1;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .subtitulo {
@@ -278,7 +278,7 @@ async function continuar() {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #14304f;
+  color: var(--life-texto);
 }
 
 .caixa-real {
@@ -302,13 +302,13 @@ async function continuar() {
 }
 
 .opcao.marcada .caixa {
-  background: #14304f;
-  border-color: #14304f;
+  background: var(--life-texto);
+  border-color: var(--life-texto);
   color: #fff;
 }
 
 .caixa-real:focus-visible + .caixa {
-  outline: 2px solid #2f7ea6;
+  outline: 2px solid var(--life-azul-claro);
   outline-offset: 2px;
 }
 
@@ -324,7 +324,7 @@ async function continuar() {
   font-size: 0.95rem;
   font-weight: 500;
   color: #fff;
-  background: #14304f;
+  background: var(--life-texto);
   border: 0;
   border-radius: 999px;
   cursor: pointer;

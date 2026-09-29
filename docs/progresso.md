@@ -29,6 +29,10 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ## Linha do tempo
 
+### 29/09/2026 (fim do dia)
+
+- **Paleta da marca definida a partir da logo:** o azul passa a ser a cor principal (`#1c5b80`, com o profundo `#0e3050` e o claro `#3890b0`, todos tirados da imagem da logo) e o verde vira cor de apoio, puxado para o frio para conversar com o azul. As ações principais usam a mescla das duas, em gradiente. As cores saíram de dentro das telas para tokens em `theme/variables.css`. Registrada em [decisoes.md](decisoes.md).
+
 ### 29/09/2026 (noite)
 
 - **Imagem de capa por prática:** campo `capaUrl` no conteúdo, escolhido pelo professor no painel (Fase 3). Aparece no cartão da prática de hoje, na lista da aba Praticar e na ficha da aula. Enquanto não houver imagem, o app **desenha a capa** a partir da modalidade — gradiente e símbolo próprios — em vez de mostrar um retângulo vazio.

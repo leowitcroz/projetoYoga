@@ -1,6 +1,36 @@
 :root {
   /* Fonte serifada da marca, usada nos títulos e frases. */
   --life-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+
+  /*
+   * Paleta da marca.
+   *
+   * O azul é a cor principal: os dois tons vieram da própria logo — o traço
+   * profundo do círculo (#083050) e o azul claro da pincelada (#3890b0). O
+   * verde é a cor de apoio, puxada para o lado frio de propósito, para
+   * conversar com o azul em vez de brigar com ele.
+   */
+  --life-azul-profundo: #0e3050;
+  --life-azul: #1c5b80;
+  --life-azul-claro: #3890b0;
+
+  --life-verde: #35705f;
+  --life-verde-claro: #5b9382;
+  --life-verde-suave: #e6efea;
+
+  /* A mescla das duas: usada nas ações principais e nos destaques. */
+  --life-gradiente: linear-gradient(135deg, var(--life-azul), var(--life-verde));
+
+  /* Textos, do mais forte ao mais discreto. */
+  --life-texto: #14304f;
+  --life-texto-medio: #4d627a;
+  --life-texto-suave: #7a8da0;
+
+  /* Fundos e traços. */
+  --life-fundo: #f2f7f9;
+  --life-borda: rgba(20, 48, 79, 0.08);
+  --life-atencao-fundo: #fbf3ea;
+  --life-atencao-borda: #e0c9a8;
 }
 
 /* For information on how to create your own theme, please refer to:

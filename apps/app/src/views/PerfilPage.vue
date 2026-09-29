@@ -39,7 +39,7 @@ async function encerrar() {
 
 <style scoped>
 .tela {
-  --background: #f2f7f9;
+  --background: var(--life-fundo);
 }
 
 .conteudo {
@@ -57,7 +57,7 @@ async function encerrar() {
   height: 76px;
   display: grid;
   place-items: center;
-  background: #3f6b52;
+  background: var(--life-azul-profundo);
   border-radius: 50%;
   color: #fff;
   font-size: 2.2rem;
@@ -68,14 +68,14 @@ async function encerrar() {
   font-family: var(--life-serif);
   font-size: 1.35rem;
   font-weight: 600;
-  color: #14304f;
+  color: var(--life-texto);
   text-align: center;
 }
 
 .email {
   margin: 0;
   font-size: 0.85rem;
-  color: #5b7183;
+  color: var(--life-texto-medio);
 }
 
 .aviso {
@@ -83,7 +83,7 @@ async function encerrar() {
   max-width: 24rem;
   font-size: 0.82rem;
   line-height: 1.5;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
   text-align: center;
 }
 
@@ -93,9 +93,9 @@ async function encerrar() {
   max-width: 24rem;
   padding: 14px;
   background: none;
-  border: 1px solid rgba(20, 48, 79, 0.18);
+  border: 1px solid rgba(14, 48, 80, 0.2);
   border-radius: 999px;
-  color: #14304f;
+  color: var(--life-texto);
   font-size: 0.95rem;
 }
 </style>

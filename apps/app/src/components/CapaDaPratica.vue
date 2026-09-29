@@ -92,25 +92,30 @@ const tom = computed(() => desenho.value.tom);
   font-size: 0.68rem;
 }
 
-/* Tons das capas desenhadas */
+/*
+ * Tons das capas desenhadas.
+ *
+ * Todas partem do azul da marca e caminham para a cor da modalidade: a lista
+ * fica variada sem deixar de parecer o mesmo app.
+ */
 
 .tom-verde {
-  background: linear-gradient(135deg, #3f6b52, #6d9b7c);
+  background: linear-gradient(135deg, var(--life-azul), var(--life-verde-claro));
 }
 
 .tom-azul {
-  background: linear-gradient(135deg, #2f5d7c, #6b9ab8);
+  background: linear-gradient(135deg, var(--life-azul-profundo), var(--life-azul-claro));
 }
 
 .tom-roxo {
-  background: linear-gradient(135deg, #4c4a7d, #8886b8);
+  background: linear-gradient(135deg, var(--life-azul-profundo), #6f6ba8);
 }
 
 .tom-laranja {
-  background: linear-gradient(135deg, #a8663a, #d2996a);
+  background: linear-gradient(135deg, var(--life-azul), #c08a5e);
 }
 
 .tom-ciano {
-  background: linear-gradient(135deg, #2f7e7e, #74b5b5);
+  background: linear-gradient(135deg, var(--life-azul), #56a8a8);
 }
 </style>

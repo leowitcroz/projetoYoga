@@ -340,7 +340,7 @@ function concluirCheckin() {
   border: 0;
   padding: 8px 0;
   font-size: 1.5rem;
-  color: #14304f;
+  color: var(--life-texto);
   cursor: pointer;
   align-self: flex-start;
 }
@@ -353,14 +353,14 @@ function concluirCheckin() {
 }
 .assinatura {
   font-size: 0.7rem;
-  color: #14304f;
+  color: var(--life-texto);
   margin-top: 5px;
 }
 
 .frase {
   margin-top: 80px;
   font-family: Georgia, serif;
-  color: #14304f;
+  color: var(--life-texto);
   font-size: 2rem;
   line-height: 1.2;
 }
@@ -387,14 +387,14 @@ function concluirCheckin() {
 }
 
 .bolinha.ativa {
-  background: #14304f;
+  background: var(--life-texto);
   width: 10px;
 }
 
 .pular {
   background: none;
   border: 0;
-  color: #4d627a;
+  color: var(--life-texto-medio);
   font-size: 0.9rem;
 }
 
@@ -402,7 +402,7 @@ function concluirCheckin() {
   font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
   text-align: center;
   margin-top: 20px;
 }
@@ -410,14 +410,14 @@ function concluirCheckin() {
 .titulo {
   font-family: Georgia, serif;
   font-size: 2rem;
-  color: #14304f;
+  color: var(--life-texto);
   text-align: center;
   margin: 10px 0 20px;
 }
 
 .subtitulo {
   text-align: center;
-  color: #4d627a;
+  color: var(--life-texto-medio);
   margin-bottom: 20px;
 }
 
@@ -440,14 +440,14 @@ function concluirCheckin() {
   border: 1px solid #d8e1ea;
   background: #fff;
   font-size: 1.2rem;
-  color: #14304f;
+  color: var(--life-texto);
   cursor: pointer;
   transition: 0.2s;
 }
 .opcao-unica.selecionada {
-  background: #14304f;
+  background: var(--life-texto);
   color: #fff;
-  border-color: #14304f;
+  border-color: var(--life-texto);
 }
 
 .opcoes-lista {
@@ -471,11 +471,11 @@ function concluirCheckin() {
   border-color: #cbd5e1;
 }
 .opcao-check.selecionada {
-  border-color: #14304f;
+  border-color: var(--life-texto);
   background: #f8fafc;
 }
 .texto-opcao {
-  color: #14304f;
+  color: var(--life-texto);
   font-size: 1rem;
 }
 .opcao-check input {
@@ -494,8 +494,8 @@ function concluirCheckin() {
   border-radius: 12px;
 }
 .opcao-check.selecionada .checkbox-falso {
-  background: #14304f;
-  border-color: #14304f;
+  background: var(--life-texto);
+  border-color: var(--life-texto);
 }
 .opcao-check.selecionada .checkbox-falso::after {
   content: '';
@@ -514,7 +514,7 @@ function concluirCheckin() {
 }
 
 .botao-continuar {
-  background: #14304f;
+  background: var(--life-texto);
   color: #fff;
   width: 100%;
   max-width: 300px;
@@ -548,7 +548,7 @@ function concluirCheckin() {
   text-align: center;
   font-size: 0.6rem;
   letter-spacing: 0.15em;
-  color: #7a8da0;
+  color: var(--life-texto-suave);
   margin-top: 10px;
   line-height: 1.4;
 }
