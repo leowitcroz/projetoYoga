@@ -19,7 +19,8 @@
     "prisma:migrate": "prisma migrate dev",
     "postinstall": "prisma generate",
     "prisma:deploy": "prisma migrate deploy",
-    "db:seed": "npm run build && node dist/seed.js"
+    "db:seed": "npm run build && npm run seed:dist",
+    "seed:dist": "node dist/seed.js"
   },
   "dependencies": {
     "@life/motor": "*",

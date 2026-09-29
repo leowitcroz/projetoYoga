@@ -29,6 +29,10 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ## Linha do tempo
 
+### 29/09/2026 (tarde)
+
+- **Catálogo de demonstração no Render:** o seed passa a rodar a cada partida da API, mas só faz alguma coisa com `SEED_CATALOGO_DE_TESTE=1`. É idempotente (upsert) e, sem a variável, sai sem tocar no banco. Passo a passo em [hospedagem.md](hospedagem.md).
+
 ### 29/09/2026
 
 - **Corrigido:** o histórico que o motor usa vinha da tabela de recomendações **incluindo o dia de hoje** — então pedir a recomendação duas vezes no mesmo dia penalizava a aula sugerida minutos antes, como se já tivesse sido praticada. Agora só contam dias anteriores. A aproximação some quando existir o evento de conclusão (F2.18): recomendar não é praticar.

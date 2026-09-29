@@ -15,8 +15,13 @@ services:
     # dependências de desenvolvimento não existe compilador nem Prisma CLI.
     buildCommand: npm ci --include=dev && npm run build -w @life/api
 
-    # As migrations rodam a cada deploy, antes de a API atender.
-    startCommand: npm run prisma:deploy -w @life/api && npm run start:prod -w @life/api
+    # As migrations rodam a cada deploy, antes de a API atender. O seed só faz
+    # alguma coisa se SEED_CATALOGO_DE_TESTE=1 estiver ligada (catálogo fictício
+    # para demonstração); sem ela, sai sem tocar no banco.
+    startCommand: >-
+      npm run prisma:deploy -w @life/api &&
+      npm run seed:dist -w @life/api &&
+      npm run start:prod -w @life/api
 
     healthCheckPath: /health
 
@@ -34,6 +39,11 @@ services:
       # Endereço do app na Vercel, para o navegador poder chamar a API.
       # Preencher no painel do Render depois que a Vercel der a URL.
       - key: CORS_ORIGIN
+        sync: false
+
+      # Ligue com "1" para gravar o catálogo FICTÍCIO de teste no banco, para
+      # a demonstração ter o que mostrar. Apague quando houver conteúdo real.
+      - key: SEED_CATALOGO_DE_TESTE
         sync: false
 
 databases:

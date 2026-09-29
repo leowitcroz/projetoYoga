@@ -63,6 +63,22 @@ A resposta tem de ser:
 Para mais de um endereço (produção e pré-visualização da Vercel), separe por
 vírgula, sem espaços.
 
+### Catálogo de demonstração
+
+O catálogo de verdade é cadastrado pelos professores no painel (Fase 3).
+Enquanto ele não existe, dá para gravar o **catálogo fictício de teste** no
+banco de demonstração:
+
+1. No Render, em *Environment*, crie `SEED_CATALOGO_DE_TESTE` com o valor `1`.
+2. Salve. O serviço reinicia e o seed roda no início, gravando 22 práticas.
+3. Confira nos *Logs*: deve aparecer `Catálogo de teste no banco: 22 conteúdos.`
+
+O seed usa upsert e não apaga nada, então repetir não faz mal. Quando houver
+conteúdo real, **apague a variável** — sem ela o seed sai sem tocar no banco.
+
+São aulas inventadas, com títulos como "Hatha suave para o fim do dia". Servem
+para demonstrar o motor, não para alguém praticar.
+
 ### 4. Variáveis de ambiente
 
 | Variável | De onde vem | Para quê |
@@ -70,6 +86,7 @@ vírgula, sem espaços.
 | `DATABASE_URL` | o Render preenche a partir do banco | conexão com o Postgres |
 | `JWT_SECRET` | o Render gera sozinho | assina os tokens de acesso |
 | `CORS_ORIGIN` | você preenche | endereços que podem chamar a API |
+| `SEED_CATALOGO_DE_TESTE` | você preenche, opcional | `1` grava o catálogo fictício de demonstração |
 | `PORT` | o Render define | porta que a API escuta |
 
 **Cuidado:** trocar o `JWT_SECRET` desconecta todo mundo que estiver logado.
