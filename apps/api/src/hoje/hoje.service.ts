@@ -29,7 +29,7 @@ export class HojeService {
     const [perfil, saude, catalogo, historico, diasComDor] = await Promise.all([
       this.prisma.onboardingProfile.findUnique({ where: { userId } }),
       this.buscarSaude(userId),
-      this.prisma.content.findMany({ where: { aprovado: true } }),
+      this.prisma.content.findMany({ where: { status: 'APROVADO' } }),
       this.buscarHistorico(userId, dia),
       this.checkins.diasSeguidosComDor(userId, dia),
     ]);

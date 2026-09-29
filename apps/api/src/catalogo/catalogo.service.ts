@@ -14,7 +14,7 @@ export class CatalogoService {
   constructor(private readonly prisma: PrismaService) {}
 
   async listar(filtros: FiltrosDoCatalogoDto) {
-    const where: Record<string, unknown> = { aprovado: true };
+    const where: Record<string, unknown> = { status: 'APROVADO' };
 
     if (filtros.modalidade) where.modalidade = filtros.modalidade;
     if (filtros.duracaoMax) where.duracaoMin = { lte: filtros.duracaoMax };
@@ -53,7 +53,7 @@ export class CatalogoService {
   /** Modalidades que têm pelo menos uma aula aprovada, para montar os filtros. */
   async modalidades(): Promise<string[]> {
     const linhas = await this.prisma.content.findMany({
-      where: { aprovado: true },
+      where: { status: 'APROVADO' },
       distinct: ['modalidade'],
       orderBy: { modalidade: 'asc' },
       select: { modalidade: true },
@@ -63,7 +63,7 @@ export class CatalogoService {
 
   async detalhar(id: string) {
     const conteudo = await this.prisma.content.findFirst({
-      where: { id, aprovado: true },
+      where: { id, status: 'APROVADO' },
       select: {
         id: true,
         titulo: true,

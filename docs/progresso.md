@@ -10,7 +10,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Fase atual:** 1 · Motor (núcleo pronto) + 2 · API base (conta e onboarding prontos). A Fase 0 só espera a CI verde no GitHub (F0.11).
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
 - **Falta para fechar a fase 2:** verificação de e-mail (AUTH-02), recuperação de senha (AUTH-04), limite de tentativas (F2.7), Swagger (F2.4), check-in e catálogo.
-- **Próximo passo:** segurança da conta — verificação de e-mail (AUTH-02), recuperação de senha (AUTH-04) e limite de tentativas (F2.7). Obrigatório antes de qualquer aluno real criar conta.
+- **Próximo passo:** upload de vídeo no painel (F3.5, depende de decidir o provedor — P-03) ou a segurança da conta (AUTH-02, AUTH-04, F2.7), obrigatória antes de aluno real.
 - **Commits locais ainda não enviados:** 4.
 
 ## Esperando resposta
@@ -28,6 +28,14 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ---
 
 ## Linha do tempo
+
+### 29/09/2026 (Fase 3)
+
+- **Painel dos professores no ar (F3.1 a F3.4, F3.8 a F3.10, F3.12):** login por papel, lista de práticas, ficha completa e fila de revisão do master. Roda em http://localhost:5174 (`npm run dev:admin`).
+- **Papéis:** ALUNO, PROFESSOR, MASTER e ADMIN. Quem se cadastra pelo app nasce ALUNO; contas de equipe são criadas por `npm run conta:equipe -w @life/api`, nunca pelo app.
+- **Fluxo de aprovação (ADM-06):** Rascunho → Em revisão → Aprovado ou Devolvido com comentário. Só o master aprova, ninguém aprova a própria prática, e editar uma prática aprovada devolve para revisão — a versão no ar não muda sozinha.
+- **14 testes do painel**, incluindo: aluno não entra, professor não aprova, professor não vê rascunho de outro, e nenhuma rota do painel devolve dado de saúde.
+- **PrimeVue removido:** mostrava "Invalid PrimeUI License" sobre a tela e não estava sendo usado. Decisão registrada em [decisoes.md](decisoes.md).
 
 ### 29/09/2026 (fim do dia)
 

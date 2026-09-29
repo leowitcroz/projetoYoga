@@ -29,7 +29,7 @@ export interface LinhaDeConteudo {
   nivelTecnico: number;
   demandaFisica: number;
   area: string;
-  aprovado: boolean;
+  status: string;
   capaUrl: string | null;
   professor: string | null;
   objetivos: unknown;
@@ -70,7 +70,9 @@ export function paraConteudo(linha: LinhaDeConteudo): Conteudo {
     nivelTecnico: linha.nivelTecnico as Conteudo['nivelTecnico'],
     demandaFisica: linha.demandaFisica as Conteudo['demandaFisica'],
     area: linha.area as Conteudo['area'],
-    aprovado: linha.aprovado,
+    // Para o motor só existe aprovado ou não (MOT-02); o fluxo de revisão é
+    // assunto do painel.
+    aprovado: linha.status === 'APROVADO',
     capaUrl: linha.capaUrl ?? undefined,
     professor: linha.professor ?? undefined,
     objetivos: comoObjeto(linha.objetivos) as Conteudo['objetivos'],
@@ -108,7 +110,7 @@ export function paraLinha(conteudo: Conteudo) {
     nivelTecnico: conteudo.nivelTecnico,
     demandaFisica: conteudo.demandaFisica,
     area: conteudo.area,
-    aprovado: conteudo.aprovado,
+    status: conteudo.aprovado ? ('APROVADO' as const) : ('RASCUNHO' as const),
     capaUrl: conteudo.capaUrl ?? null,
     professor: conteudo.professor ?? null,
     // O Prisma só aceita objetos "chatos" nos campos Json; as interfaces do

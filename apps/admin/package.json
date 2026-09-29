@@ -13,9 +13,8 @@
   },
   "dependencies": {
     "@life/shared": "*",
-    "@primeuix/themes": "^3.0.0",
-    "primevue": "^5.0.1",
-    "vue": "^3.5.42"
+    "vue": "^3.5.42",
+    "vue-router": "^5.3.1"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",

@@ -18,6 +18,8 @@ model User {
   email        String   @unique
   telefone     String
   senhaHash    String
+  /// Quem pode o quê (ADM-01, ADM-10). Todo cadastro pelo app nasce ALUNO.
+  papel        Role     @default(ALUNO)
   criadoEm     DateTime @default(now())
   atualizadoEm DateTime @updatedAt
 
@@ -27,6 +29,19 @@ model User {
   saude          HealthProfile?
   checkins       DailyCheckin[]
   recomendacoes  Recommendation[]
+  conteudos      Content[]
+}
+
+/// Papéis do sistema (ADM-01, ADM-10).
+enum Role {
+  /// Usa o app.
+  ALUNO
+  /// Cataloga as próprias práticas.
+  PROFESSOR
+  /// Professor master: também aprova o conteúdo dos outros.
+  MASTER
+  /// Gerencia pessoas, papéis e os pesos do motor.
+  ADMIN
 }
 
 /// Registro de consentimento (PRIV-01). Cada aceite vira uma linha nova:
@@ -123,8 +138,13 @@ model Content {
   nivelTecnico Int
   /// 1 muito baixa → 5 muito alta.
   demandaFisica Int
-  area          String
-  aprovado      Boolean @default(false)
+  area   String
+  /// Rascunho → Em revisão → Aprovado ou Devolvido (ADM-06).
+  status ContentStatus @default(RASCUNHO)
+  /// Quem cadastrou. Vazio nos conteúdos de teste, que não têm dono.
+  autorId String?
+  /// O que o master escreveu ao devolver.
+  comentarioRevisao String?
 
   /// Imagem de capa escolhida pelo professor. Vazio = o app desenha a capa.
   capaUrl   String?
@@ -146,8 +166,19 @@ model Content {
   criadoEm     DateTime @default(now())
   atualizadoEm DateTime @updatedAt
 
-  @@index([aprovado])
+  autor User? @relation(fields: [autorId], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([autorId])
   @@index([trilhaId, ordemTrilha])
+}
+
+/// Fluxo de aprovação do conteúdo (ADM-06).
+enum ContentStatus {
+  RASCUNHO
+  EM_REVISAO
+  APROVADO
+  DEVOLVIDO
 }
 
 /// Check-in diário (CHK-01 a CHK-04). Um por pessoa por dia; refazer no mesmo

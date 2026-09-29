@@ -1,4 +1,38 @@
+/*
+ * Painel dos professores. A paleta é a mesma do app (ver docs/decisoes.md):
+ * o azul da logo manda, o verde apoia.
+ */
+:root {
+  --azul-profundo: #0e3050;
+  --azul: #1c5b80;
+  --verde: #35705f;
+
+  --texto: #14304f;
+  --texto-medio: #4d627a;
+  --texto-suave: #7a8da0;
+
+  --fundo: #f2f7f9;
+  --borda: rgba(20, 48, 79, 0.1);
+  --borda-forte: rgba(20, 48, 79, 0.22);
+
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  color: var(--texto);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
+  background: var(--fundo);
+}
+
+a {
+  color: var(--azul);
 }

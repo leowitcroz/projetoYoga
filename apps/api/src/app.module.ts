@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { OnboardingModule } from './onboarding/onboarding.module.js';
 import { HojeModule } from './hoje/hoje.module.js';
 import { CatalogoModule } from './catalogo/catalogo.module.js';
+import { PainelModule } from './painel/painel.module.js';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CatalogoModule } from './catalogo/catalogo.module.js';
     OnboardingModule,
     HojeModule,
     CatalogoModule,
+    PainelModule,
   ],
   controllers: [HealthController],
 })

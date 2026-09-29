@@ -488,40 +488,40 @@ Pipeline conforme a aba 08 da Matriz.
 
 ### Fase 3 · Painel
 
-**Status:** Não iniciada
+**Status:** Em andamento — papéis, login do painel e cadastro de prática com a ficha do motor (F3.1 a F3.4, F3.8, F3.12). Upload de mídia (F3.5) fica para quando o provedor de vídeo for decidido (P-03)
 
 **Objetivo:** permitir que os professores cataloguem conteúdo real, que o master aprove e que o admin ajuste o motor. **Ao final desta fase, os professores já podem começar a catalogar** enquanto o app é terminado.
 
 **Requisitos:** ADM-01 a ADM-08, ADM-10.
 
-**Antes de começar:** decidir o provedor de vídeo e áudio (P-03).
+**Antes de começar:** decidir o provedor de vídeo e áudio (P-03). *Decisão de 29/09: o painel começa sem upload de vídeo, catalogando práticas fictícias, para que a ficha que alimenta o motor já possa ser preenchida e testada.*
 
 **Tarefas**
 
 *Base*
-- [ ] **F3.1** Login do painel e controle de acesso por papel, no painel e na API: ADM-01.
-- [ ] **F3.2** Layout do painel: menu lateral, lista, formulário, estados vazio e de erro.
+- [x] **F3.1** Login do painel e controle de acesso por papel, no painel e na API: ADM-01.
+- [x] **F3.2** Layout do painel: menu lateral, lista, formulário, estados vazio e de erro.
 
 *Catálogo*
-- [ ] **F3.3** Cadastro de conteúdo com a ficha completa e validação: ADM-02.
-- [ ] **F3.4** Tags de segurança com marcação obrigatória para casos sensíveis: ADM-03.
+- [x] **F3.3** Cadastro de conteúdo com a ficha completa e validação: ADM-02.
+- [x] **F3.4** Tags de segurança com marcação obrigatória para casos sensíveis: ADM-03.
 - [ ] **F3.5** Upload de mídia para o provedor escolhido, com duração preenchida automaticamente: ADM-04.
 - [ ] **F3.6** Trilhas: criar, definir número de aulas, ordem e pré-requisitos: ADM-05.
 - [ ] **F3.7** Receitas e orientações ayurvédicas: ADM-07.
 
 *Aprovação*
-- [ ] **F3.8** Fluxo Rascunho → Em revisão → Aprovado ou Devolvido, com comentário: ADM-06.
-- [ ] **F3.9** Fila "Aguardando revisão" para o master.
-- [ ] **F3.10** Editar conteúdo aprovado gera nova revisão; a versão aprovada continua no ar até a nova ser aprovada.
+- [x] **F3.8** Fluxo Rascunho → Em revisão → Aprovado ou Devolvido, com comentário: ADM-06.
+- [x] **F3.9** Fila "Aguardando revisão" para o master.
+- [x] **F3.10** Editar conteúdo aprovado gera nova revisão; a versão aprovada continua no ar até a nova ser aprovada.
 
 *Admin*
 - [ ] **F3.11** Editor de pesos (soma obrigatória = 100) e de regras, com histórico de versões e botão de voltar versão: ADM-08.
-- [ ] **F3.12** Usuários e papéis: ADM-10. Criar as contas do Marcos (master) e dos professores.
+- [x] **F3.12** Usuários e papéis: ADM-10. Criar as contas do Marcos (master) e dos professores.
 
 *Testes*
-- [ ] **F3.13** Teste: professor não consegue aprovar; professor não vê conteúdo de rascunho de outro professor.
-- [ ] **F3.14** Teste: nenhuma rota do painel devolve dados de saúde de alunos.
-- [ ] **F3.15** Teste: conteúdo só aparece no `/hoje` depois de aprovado.
+- [x] **F3.13** Teste: professor não consegue aprovar; professor não vê conteúdo de rascunho de outro professor.
+- [x] **F3.14** Teste: nenhuma rota do painel devolve dados de saúde de alunos.
+- [x] **F3.15** Teste: conteúdo só aparece no `/hoje` depois de aprovado.
 
 **Entregáveis:** painel funcionando; contas dos professores criadas; guia rápido de catalogação para os professores (1 página).
 

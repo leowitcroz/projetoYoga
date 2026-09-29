@@ -71,6 +71,16 @@ Decidida em 29/09/2026, com as cores tiradas da própria logo.
 - **Ações principais são azul sólido.** Sem degradê: Leonardo pediu para tirar em 29/09.
 - As capas desenhadas das práticas partem todas do azul e caminham para a cor da modalidade: variedade sem perder a identidade.
 
+## Painel sem PrimeVue
+
+Decidido em 29/09/2026. O plano previa Vue + PrimeVue para o painel, mas o
+PrimeVue instalado mostrava um aviso vermelho **"Invalid PrimeUI License"**
+sobre a tela — e nenhum componente dele estava sendo usado: as telas foram
+escritas em HTML e CSS, com a mesma paleta do app.
+
+Removido. Se um dia o painel precisar de componentes prontos (tabelas com
+ordenação, calendários), vale reavaliar — aí com a licença resolvida antes.
+
 ## Em aberto
 
 - **Sinais de alerta e limites de persistência** (regras SEG-R03 e SEG-R04 da matriz): quem define? Proposta: os professores master redigem e, de preferência, um profissional de saúde valida.

@@ -20,7 +20,8 @@
     "postinstall": "prisma generate",
     "prisma:deploy": "prisma migrate deploy",
     "db:seed": "npm run build && npm run seed:dist",
-    "seed:dist": "node dist/seed.js"
+    "seed:dist": "node dist/seed.js",
+    "conta:equipe": "npm run build && node dist/criar-conta-de-equipe.js"
   },
   "dependencies": {
     "@life/motor": "*",
