@@ -9,7 +9,7 @@ import type {
 import { CONFIG_V1, type EngineConfig } from './configuracao.js';
 import { estadoFuncional, perfilDoDia, periodoDoDia } from './estado.js';
 import { avisoDeDor, explicar } from './explicacao.js';
-import { filtrarPorTempoENivel } from './filtros.js';
+import { duracaoIdealMinima, filtrarPorTempoENivel } from './filtros.js';
 import { aplicarModificadores } from './modificadores.js';
 import { avisoDePersistencia, filtrarPorSeguranca } from './seguranca.js';
 import { arredondar, calcularScoreBase } from './score.js';
@@ -85,7 +85,7 @@ export function recomendarDia(
     exclusoes,
     ranking,
     persistencia: avisoDePersistencia(contexto, config),
-    ajusteDeTempo: filtrados.ajusteDeTempo,
+    ajusteDeTempo: avisoDeTempo(principal, contexto, config),
   };
 
   return {
@@ -94,9 +94,26 @@ export function recomendarDia(
     estadoFuncional: estado,
     // A pessoa precisa saber tanto da dor quanto de a prática ter vindo mais
     // curta do que o tempo que ela reservou.
-    aviso: [avisoDeDor(contexto), filtrados.ajusteDeTempo].filter(Boolean).join(' ') || undefined,
+    aviso: [avisoDeDor(contexto), auditoria.ajusteDeTempo].filter(Boolean).join(' ') || undefined,
     auditoria,
   };
+}
+
+/**
+ * Quando a prática escolhida é bem mais curta que o tempo reservado, a pessoa
+ * merece saber por quê — senão parece que o app ignorou o que ela respondeu.
+ */
+function avisoDeTempo(
+  principal: Candidato | undefined,
+  contexto: ContextoUsuario,
+  config: EngineConfig,
+): string | undefined {
+  if (!principal) return undefined;
+
+  const ideal = duracaoIdealMinima(contexto.checkin.tempo, config);
+  if (principal.conteudo.duracaoMin >= ideal) return undefined;
+
+  return `Você tem ${contexto.checkin.tempo} minutos, mas hoje o indicado é uma prática de ${principal.conteudo.duracaoMin}. O tempo que sobrar é seu.`;
 }
 
 /**

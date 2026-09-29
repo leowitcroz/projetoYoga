@@ -32,7 +32,8 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ### 29/09/2026
 
 - **Corrigido:** o histórico que o motor usa vinha da tabela de recomendações **incluindo o dia de hoje** — então pedir a recomendação duas vezes no mesmo dia penalizava a aula sugerida minutos antes, como se já tivesse sido praticada. Agora só contam dias anteriores. A aproximação some quando existir o evento de conclusão (F2.18): recomendar não é praticar.
-- **MOT-03 virou janela:** o tempo escolhido no check-in deixou de ser um teto. Quem escolhe 30 recebe aulas de 25 a 35, e não mais uma de 10; o degrau 60+ vale de 55 em diante. Se nada couber na janela, o motor volta ao teto antigo e avisa na tela que a prática veio mais curta.
+- **MOT-03 reescrito: a adequação vence o relógio.** O tempo continua sendo teto (nada mais longo passa), mas abaixo dele é preferência: a prática mais curta perde até 15 pontos, enquanto o estado do dia vale 30 — então quem tem 60 minutos e está cansado recebe a prática suave de 30, e a tela explica que sobra tempo. Calibrado medindo os resultados com 0, 8, 10 e 15 pontos.
+- **O critério de perfil parou de premiar o nível alto:** um praticante experiente era empurrado para o conteúdo mais avançado mesmo quando ele não servia ao objetivo. Experiência amplia repertório, não obriga a praticar o mais difícil (SEG-R01).
 
 ### 28/09/2026
 

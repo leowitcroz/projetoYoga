@@ -1,5 +1,6 @@
 import type { Conteudo, ContextoUsuario, ModificadorAplicado, StatusSeguranca } from '@life/shared';
 import type { EngineConfig } from './configuracao.js';
+import { duracaoIdealMinima } from './filtros.js';
 
 /**
  * Etapa 5 — modificadores (MOT-07).
@@ -29,6 +30,34 @@ function ehProximaDaTrilha(conteudo: Conteudo, contexto: ContextoUsuario): boole
   return conteudo.ordemTrilha === (ultima.ordemTrilha ?? 0) + 1;
 }
 
+/**
+ * MOT-03 — o quanto a prática aproveita o tempo reservado.
+ *
+ * Quem separou uma hora não quer dez minutos. Mas isto é um desconto, não um
+ * veto: a penalidade é menor que o peso do estado do dia, então a prática
+ * certa para hoje ainda ganha de uma do tamanho certo que não serve. A pessoa
+ * disse quanto tempo **tem**, não quanto precisa gastar.
+ */
+function penalidadeDeTempo(
+  conteudo: Conteudo,
+  contexto: ContextoUsuario,
+  config: EngineConfig,
+): ModificadorAplicado | null {
+  const disponivel = contexto.checkin.tempo;
+  const ideal = duracaoIdealMinima(disponivel, config);
+  if (ideal <= 0 || conteudo.duracaoMin >= ideal) return null;
+
+  // O desconto é proporcional ao tempo que fica sobrando.
+  const sobra = (disponivel - conteudo.duracaoMin) / disponivel;
+  const pontos = -Math.round(config.tempo.penalidadeMaxima * sobra * 10) / 10;
+
+  return {
+    regra: 'MOT-03',
+    pontos,
+    motivo: `Usa ${conteudo.duracaoMin} dos ${contexto.checkin.tempo} minutos que você tem`,
+  };
+}
+
 export function aplicarModificadores(
   conteudo: Conteudo,
   status: StatusSeguranca,
@@ -38,6 +67,9 @@ export function aplicarModificadores(
 ): ModificadorAplicado[] {
   const aplicados: ModificadorAplicado[] = [];
   const { modificadores } = config;
+
+  const tempo = penalidadeDeTempo(conteudo, contexto, config);
+  if (tempo) aplicados.push(tempo);
 
   if (ehProximaDaTrilha(conteudo, contexto)) {
     aplicados.push({

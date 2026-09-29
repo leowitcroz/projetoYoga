@@ -66,14 +66,17 @@ function notaDosSecundarios(conteudo: Conteudo, contexto: ContextoUsuario): numb
 
 /**
  * Perfil: a prática está no ponto certo para a experiência da pessoa?
- * Bem no teto vale mais que muito abaixo dele — conteúdo fácil demais também
- * não serve.
+ *
+ * Conteúdo no teto do nível vale um pouco mais, mas só um pouco: experiência
+ * amplia o repertório, não obriga a praticar sempre o mais difícil (SEG-R01).
+ * Um praticante avançado num dia de cansaço precisa de uma prática simples, e
+ * ela não pode ser punida por ser simples.
  */
 function notaDoPerfil(conteudo: Conteudo, contexto: ContextoUsuario): number {
   const teto = tetoTecnico(contexto, conteudo);
   const distancia = teto - conteudo.nivelTecnico;
   if (distancia < 0) return 0; // acima do teto já foi filtrado (MOT-04)
-  return entreZeroEUm(1 - distancia * 0.25);
+  return entreZeroEUm(1 - distancia * 0.1);
 }
 
 /** AYU-010 a AYU-012: modificador secundário, nunca vence segurança. */

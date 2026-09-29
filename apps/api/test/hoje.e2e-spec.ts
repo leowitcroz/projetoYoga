@@ -223,7 +223,7 @@ describe('Prática de hoje (e2e)', () => {
     expect(segunda.body.principal.scoreFinal).toBe(primeira.body.principal.scoreFinal);
   });
 
-  it('MOT-03: a prática cabe na janela do tempo escolhido', async () => {
+  it('MOT-03: a prática nunca passa do tempo disponível, e avisa se for mais curta', async () => {
     await request(app.getHttpServer())
       .put('/checkin')
       .set('Authorization', `Bearer ${token}`)
@@ -245,8 +245,16 @@ describe('Prática de hoje (e2e)', () => {
       .set('Authorization', `Bearer ${token}`)
       .expect(200);
 
-    expect(resposta.body.principal.conteudo.duracaoMin).toBeGreaterThanOrEqual(25);
-    expect(resposta.body.principal.conteudo.duracaoMin).toBeLessThanOrEqual(35);
+    const escolhida = resposta.body.principal.conteudo;
+
+    // Teto: nunca mais longa que o tempo que a pessoa tem.
+    expect(escolhida.duracaoMin).toBeLessThanOrEqual(30);
+
+    // Se veio mais curta do que o pedido, a pessoa precisa saber por quê —
+    // a adequação vence o relógio, mas não em silêncio.
+    if (escolhida.duracaoMin < 25) {
+      expect(resposta.body.aviso).toContain('30 minutos');
+    }
   });
 
   it('não devolve recomendação para quem não está logado', async () => {

@@ -59,15 +59,28 @@ export interface Modificadores {
   fatiaDeDescoberta: number;
 }
 
-/** Como o tempo escolhido no check-in vira filtro (MOT-03). */
+/**
+ * Como o tempo escolhido no check-in entra na decisão (MOT-03).
+ *
+ * O tempo disponível é um teto que ninguém ultrapassa — não se oferece 70
+ * minutos para quem tem 60. Abaixo do teto, porém, ele é uma **preferência**,
+ * não uma exigência: se a melhor prática para o estado de hoje é mais curta,
+ * ela vence. A pessoa disse quanto tempo tem, não quanto tempo precisa gastar.
+ */
 export interface JanelaDeTempo {
-  /** Quantos minutos para mais ou para menos o tempo escolhido aceita. */
+  /** Quantos minutos abaixo do escolhido ainda contam como "do tamanho certo". */
   tolerancia: number;
   /**
    * A partir daqui o degrau é aberto: quem escolhe "60+" aceita 55 minutos ou
    * qualquer coisa mais longa.
    */
   aberturaAPartirDe: number;
+  /**
+   * Quanto perde, no máximo, a prática que usa muito menos tempo do que o
+   * disponível. É de propósito menor que o peso do estado do dia (30): assim a
+   * prática certa para hoje ainda ganha de uma do tamanho certo que não serve.
+   */
+  penalidadeMaxima: number;
 }
 
 export interface EngineConfig {
@@ -350,7 +363,7 @@ export const CONFIG_V1: EngineConfig = {
     repeticaoTresDias: -8,
     fatiaDeDescoberta: 0.15,
   },
-  tempo: { tolerancia: 5, aberturaAPartirDe: 60 },
+  tempo: { tolerancia: 5, aberturaAPartirDe: 60, penalidadeMaxima: 15 },
   seguranca,
   estado,
   demandaMaximaConservadora: 2,

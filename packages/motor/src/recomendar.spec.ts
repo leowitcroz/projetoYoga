@@ -226,6 +226,92 @@ describe('Garantias do motor', () => {
   });
 });
 
+describe('MOT-03 — a adequação vence o relógio', () => {
+  const experiente = {
+    objetivoPrincipal: 'estresse' as const,
+    experiencia: {
+      asanas: 'experiente' as const,
+      nidra: 'experiente' as const,
+      pranayama: 'experiente' as const,
+      meditacao: 'experiente' as const,
+    },
+  };
+
+  it('com tempo de sobra, entrega uma prática do tamanho pedido', () => {
+    const contexto = contextoDeTeste({
+      perfil: experiente,
+      checkin: { tempo: 30, sono: 'razoavel', energia: 'media', corpo: 'normal' },
+    });
+
+    const resultado = recomendarDia(contexto, CATALOGO_DE_TESTE, { agora: MANHA });
+
+    expect(resultado.principal?.conteudo.duracaoMin).toBeGreaterThanOrEqual(25);
+  });
+
+  it('num dia de recuperação, aceita uma prática mais curta se for a certa', () => {
+    // Uma hora disponível, mas o corpo pedindo descanso: entre uma prática
+    // longa e intensa e uma curta e suave, quem ganha é a suave.
+    const contexto = contextoDeTeste({
+      perfil: experiente,
+      checkin: {
+        tempo: 60,
+        sono: 'ruim',
+        energia: 'baixa',
+        corpo: 'cansado',
+        estresse: 'alto',
+      },
+    });
+
+    const resultado = recomendarDia(contexto, CATALOGO_DE_TESTE, { agora: MANHA });
+    const escolhida = resultado.principal?.conteudo;
+
+    expect(escolhida).toBeDefined();
+    expect(escolhida?.demandaFisica).toBeLessThanOrEqual(2);
+    expect(escolhida?.duracaoMin).toBeLessThan(55);
+  });
+
+  it('e avisa que a prática é mais curta que o tempo reservado', () => {
+    const contexto = contextoDeTeste({
+      perfil: experiente,
+      checkin: { tempo: 60, sono: 'ruim', energia: 'baixa', corpo: 'cansado', estresse: 'alto' },
+    });
+
+    const resultado = recomendarDia(contexto, CATALOGO_DE_TESTE, { agora: MANHA });
+
+    expect(resultado.aviso).toContain('60 minutos');
+    expect(resultado.auditoria.ajusteDeTempo).toBeDefined();
+  });
+
+  it('quando existe a prática certa do tamanho certo, usa o tempo todo', () => {
+    const contexto = contextoDeTeste({
+      perfil: { ...experiente, objetivoPrincipal: 'forca' },
+      checkin: { tempo: 60, sono: 'bom', energia: 'alta', corpo: 'disposto' },
+    });
+
+    const resultado = recomendarDia(contexto, CATALOGO_DE_TESTE, { agora: MANHA });
+
+    expect(resultado.principal?.conteudo.duracaoMin).toBe(60);
+    expect(resultado.aviso).toBeUndefined();
+  });
+
+  it('prefere a prática que serve ao objetivo, mesmo sendo mais curta', () => {
+    // Com 45 minutos existe Hatha clássico (45 min, força 3), mas "Força e
+    // estabilidade" (30 min, força 5) atende melhor o objetivo — e ganha.
+    const contexto = contextoDeTeste({
+      perfil: { ...experiente, objetivoPrincipal: 'forca' },
+      checkin: { tempo: 45, sono: 'bom', energia: 'alta', corpo: 'disposto' },
+    });
+
+    const resultado = recomendarDia(contexto, CATALOGO_DE_TESTE, { agora: MANHA });
+    const escolhida = resultado.principal?.conteudo;
+
+    expect(escolhida?.objetivos.forca).toBe(5);
+    expect(escolhida?.duracaoMin).toBeLessThan(45);
+    // E a pessoa é avisada de que sobra tempo, em vez de ficar no escuro.
+    expect(resultado.aviso).toContain('45 minutos');
+  });
+});
+
 describe('Repetição e continuidade (MOT-07)', () => {
   it('praticar ontem derruba a pontuação do mesmo conteúdo', () => {
     const base = contextoDeTeste({

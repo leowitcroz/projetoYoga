@@ -132,6 +132,61 @@ describe('MOT-07 — modificadores', () => {
   });
 });
 
+describe('MOT-03 — aproveitamento do tempo', () => {
+  it('a prática do tamanho pedido não perde nada', () => {
+    const contexto = contextoDeTeste({ checkin: { tempo: 20 } });
+    // PRAT-001 dura 20 minutos.
+    const aplicados = aplicarModificadores(
+      conteudo('PRAT-001'),
+      'livre',
+      contexto,
+      CONFIG_V1,
+      HOJE,
+    );
+
+    expect(aplicados.map((item) => item.regra)).not.toContain('MOT-03');
+  });
+
+  it('a prática muito mais curta que o tempo perde pontos', () => {
+    const contexto = contextoDeTeste({ checkin: { tempo: 60 } });
+    // PRAT-003 dura 10 minutos: usa um sexto do tempo reservado.
+    const aplicados = aplicarModificadores(
+      conteudo('PRAT-003'),
+      'livre',
+      contexto,
+      CONFIG_V1,
+      HOJE,
+    );
+    const tempo = aplicados.find((item) => item.regra === 'MOT-03');
+
+    expect(tempo?.pontos).toBeLessThan(0);
+    expect(tempo?.motivo).toContain('60');
+  });
+
+  it('quanto mais curta, maior o desconto', () => {
+    const contexto = contextoDeTeste({ checkin: { tempo: 60 } });
+    const dez = aplicarModificadores(conteudo('PRAT-003'), 'livre', contexto, CONFIG_V1, HOJE);
+    const trinta = aplicarModificadores(conteudo('PRAT-006'), 'livre', contexto, CONFIG_V1, HOJE);
+
+    const pontosDez = dez.find((item) => item.regra === 'MOT-03')?.pontos ?? 0;
+    const pontosTrinta = trinta.find((item) => item.regra === 'MOT-03')?.pontos ?? 0;
+
+    expect(pontosDez).toBeLessThan(pontosTrinta);
+  });
+
+  it('o desconto nunca chega ao peso do estado do dia', () => {
+    const contexto = contextoDeTeste({ checkin: { tempo: 60 } });
+
+    for (const item of CATALOGO_DE_TESTE) {
+      const aplicados = aplicarModificadores(item, 'livre', contexto, CONFIG_V1, HOJE);
+      const pontos = aplicados.find((m) => m.regra === 'MOT-03')?.pontos ?? 0;
+      // Senão o relógio venceria a adequação, que é o contrário do que queremos.
+      expect(Math.abs(pontos)).toBeLessThan(CONFIG_V1.pesos.estado);
+      expect(Math.abs(pontos)).toBeLessThanOrEqual(CONFIG_V1.tempo.penalidadeMaxima);
+    }
+  });
+});
+
 describe('MOT-07 — descoberta', () => {
   const ordenados = CATALOGO_DE_TESTE.map((conteudo) => ({ conteudo }));
 
