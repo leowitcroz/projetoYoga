@@ -101,6 +101,15 @@ describe('Catálogo (e2e)', () => {
     expect(resposta.body.duracaoMin).toBe(20);
   });
 
+  it('a lista traz capa e professor, para a tela não ficar sem imagem', async () => {
+    const resposta = await pedir('/catalogo?duracaoMax=20').expect(200);
+    const aula = resposta.body[0];
+
+    // capaUrl pode vir vazia — aí o app desenha a capa pela modalidade.
+    expect(aula).toHaveProperty('capaUrl');
+    expect(aula.professor).toBeTruthy();
+  });
+
   it('SEG-R02: a biblioteca mostra o que o motor não recomendaria hoje', async () => {
     // PRAT-023 tem invertida e nível 5: raramente é recomendado, mas existe.
     const resposta = await pedir('/catalogo/PRAT-023').expect(200);

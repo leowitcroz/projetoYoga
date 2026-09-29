@@ -126,6 +126,11 @@ model Content {
   area          String
   aprovado      Boolean @default(false)
 
+  /// Imagem de capa escolhida pelo professor. Vazio = o app desenha a capa.
+  capaUrl   String?
+  /// Quem conduz a prática, como aparece para o aluno.
+  professor String?
+
   /// Objetivos atendidos, com peso: { "sono": 5, "estresse": 4 }.
   objetivos Json
   /// O quanto entrega de cada dimensão do estado do dia.

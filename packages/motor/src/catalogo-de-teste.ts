@@ -38,6 +38,9 @@ function pratica(atalho: Atalho): Conteudo {
   return {
     tipo: 'pratica',
     aprovado: true,
+    // No catálogo de verdade cada aula tem o seu professor, escolhido no
+    // painel. Aqui é sempre o mesmo, só para a tela ter o que mostrar.
+    professor: 'Marcos Crozetta',
     caracteristicas: efeito(caracteristicas),
     ...resto,
     ...extras,

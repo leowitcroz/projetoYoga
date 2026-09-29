@@ -140,9 +140,19 @@
           <p v-if="recomendacao.aviso" class="aviso-seguranca">{{ recomendacao.aviso }}</p>
 
           <article class="pratica">
+            <capa-da-pratica
+              :url="recomendacao.principal.conteudo.capaUrl"
+              :modalidade="recomendacao.principal.conteudo.modalidade"
+              :duracao-min="recomendacao.principal.conteudo.duracaoMin"
+              alta
+              class="capa"
+            />
+
             <p class="pratica-tipo">{{ recomendacao.principal.conteudo.modalidade }}</p>
             <h3 class="pratica-titulo">{{ recomendacao.principal.conteudo.titulo }}</h3>
-            <p class="pratica-tempo">{{ recomendacao.principal.conteudo.duracaoMin }} min</p>
+            <p v-if="recomendacao.principal.conteudo.professor" class="pratica-professor">
+              com {{ recomendacao.principal.conteudo.professor }}
+            </p>
             <p class="pratica-porque">{{ recomendacao.principal.explicacao }}</p>
             <button type="button" class="principal" @click="iniciarPratica">Iniciar prática</button>
           </article>
@@ -181,6 +191,7 @@ import { personOutline } from 'ionicons/icons';
 import { computed, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import lotus from '@/assets/lotus.png';
+import CapaDaPratica from '@/components/CapaDaPratica.vue';
 import {
   perguntas,
   regioesDaDor,
@@ -655,10 +666,14 @@ function escolherSozinho() {
   color: #14304f;
 }
 
-.pratica-tempo {
+.pratica-professor {
   margin: 0;
   font-size: 0.8rem;
   color: #7a8da0;
+}
+
+.capa {
+  margin-bottom: 12px;
 }
 
 .pratica-porque {

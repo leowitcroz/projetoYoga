@@ -46,13 +46,21 @@
         <ul v-else class="aulas">
           <li v-for="aula in aulas" :key="aula.id">
             <button type="button" class="aula" @click="abrir(aula.id)">
-              <span class="aula-modalidade">{{
-                NOME_DA_MODALIDADE[aula.modalidade] ?? aula.modalidade
-              }}</span>
-              <span class="aula-titulo">{{ aula.titulo }}</span>
-              <span class="aula-detalhes">
-                {{ aula.duracaoMin }} min · {{ nomeDoNivel(aula.nivelTecnico) }} ·
-                {{ nomeDaIntensidade(aula.demandaFisica) }}
+              <capa-da-pratica
+                :url="aula.capaUrl"
+                :modalidade="aula.modalidade"
+                class="aula-capa"
+              />
+
+              <span class="aula-texto">
+                <span class="aula-modalidade">{{
+                  NOME_DA_MODALIDADE[aula.modalidade] ?? aula.modalidade
+                }}</span>
+                <span class="aula-titulo">{{ aula.titulo }}</span>
+                <span class="aula-detalhes">
+                  {{ aula.duracaoMin }} min · {{ nomeDoNivel(aula.nivelTecnico) }} ·
+                  {{ nomeDaIntensidade(aula.demandaFisica) }}
+                </span>
               </span>
             </button>
           </li>
@@ -65,6 +73,7 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
 import { onMounted, reactive, ref } from 'vue';
+import CapaDaPratica from '@/components/CapaDaPratica.vue';
 import { useRouter } from 'vue-router';
 import {
   listarAulas,
@@ -204,14 +213,26 @@ function abrir(id: string) {
   width: 100%;
   min-width: 0;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
-  padding: 15px 16px;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 13px;
   background: #fff;
   border: 1px solid rgba(20, 48, 79, 0.08);
   border-radius: 14px;
   text-align: left;
+}
+
+.aula-capa {
+  flex: none;
+  width: 92px;
+}
+
+.aula-texto {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .aula-modalidade {

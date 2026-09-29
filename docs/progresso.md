@@ -29,6 +29,11 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ## Linha do tempo
 
+### 29/09/2026 (noite)
+
+- **Imagem de capa por prática:** campo `capaUrl` no conteúdo, escolhido pelo professor no painel (Fase 3). Aparece no cartão da prática de hoje, na lista da aba Praticar e na ficha da aula. Enquanto não houver imagem, o app **desenha a capa** a partir da modalidade — gradiente e símbolo próprios — em vez de mostrar um retângulo vazio.
+- **Professor na ficha:** campo `professor`, mostrado como "com Fulano".
+
 ### 29/09/2026 (tarde)
 
 - **Catálogo de demonstração no Render:** o seed passa a rodar a cada partida da API, mas só faz alguma coisa com `SEED_CATALOGO_DE_TESTE=1`. É idempotente (upsert) e, sem a variável, sai sem tocar no banco. Passo a passo em [hospedagem.md](hospedagem.md).

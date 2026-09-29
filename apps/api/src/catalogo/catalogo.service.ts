@@ -33,6 +33,8 @@ export class CatalogoService {
         duracaoMin: true,
         nivelTecnico: true,
         demandaFisica: true,
+        capaUrl: true,
+        professor: true,
         objetivos: true,
       },
     });
@@ -70,6 +72,8 @@ export class CatalogoService {
         nivelTecnico: true,
         demandaFisica: true,
         area: true,
+        capaUrl: true,
+        professor: true,
         objetivos: true,
         trilhaId: true,
         ordemTrilha: true,

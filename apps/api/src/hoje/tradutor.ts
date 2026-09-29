@@ -30,6 +30,8 @@ export interface LinhaDeConteudo {
   demandaFisica: number;
   area: string;
   aprovado: boolean;
+  capaUrl: string | null;
+  professor: string | null;
   objetivos: unknown;
   caracteristicas: unknown;
   seguranca: unknown;
@@ -69,6 +71,8 @@ export function paraConteudo(linha: LinhaDeConteudo): Conteudo {
     demandaFisica: linha.demandaFisica as Conteudo['demandaFisica'],
     area: linha.area as Conteudo['area'],
     aprovado: linha.aprovado,
+    capaUrl: linha.capaUrl ?? undefined,
+    professor: linha.professor ?? undefined,
     objetivos: comoObjeto(linha.objetivos) as Conteudo['objetivos'],
     caracteristicas: efeito,
     cargaCervical: seguranca.cargaCervical as Conteudo['cargaCervical'],
@@ -105,6 +109,8 @@ export function paraLinha(conteudo: Conteudo) {
     demandaFisica: conteudo.demandaFisica,
     area: conteudo.area,
     aprovado: conteudo.aprovado,
+    capaUrl: conteudo.capaUrl ?? null,
+    professor: conteudo.professor ?? null,
     // O Prisma só aceita objetos "chatos" nos campos Json; as interfaces do
     // motor não servem como estão.
     objetivos: { ...conteudo.objetivos } as Record<string, number>,

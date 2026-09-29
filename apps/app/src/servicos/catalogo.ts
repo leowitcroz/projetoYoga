@@ -14,6 +14,8 @@ export interface AulaDaLista {
   duracaoMin: number;
   nivelTecnico: number;
   demandaFisica: number;
+  capaUrl?: string | null;
+  professor?: string | null;
   objetivos: Record<string, number>;
 }
 

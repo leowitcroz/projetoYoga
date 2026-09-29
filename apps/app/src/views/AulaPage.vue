@@ -11,8 +11,17 @@
         <p v-else-if="erro" class="recado">{{ erro }}</p>
 
         <template v-else-if="aula">
+          <capa-da-pratica
+            :url="aula.capaUrl"
+            :modalidade="aula.modalidade"
+            :duracao-min="aula.duracaoMin"
+            alta
+            class="capa"
+          />
+
           <p class="modalidade">{{ NOME_DA_MODALIDADE[aula.modalidade] ?? aula.modalidade }}</p>
           <h1 class="titulo">{{ aula.titulo }}</h1>
+          <p v-if="aula.professor" class="professor">com {{ aula.professor }}</p>
 
           <dl class="ficha">
             <div class="item">
@@ -51,6 +60,7 @@
 import { IonContent, IonIcon, IonPage } from '@ionic/vue';
 import { chevronBackOutline } from 'ionicons/icons';
 import { computed, onMounted, ref } from 'vue';
+import CapaDaPratica from '@/components/CapaDaPratica.vue';
 import { useRoute, useRouter } from 'vue-router';
 import {
   buscarAula,
@@ -114,6 +124,16 @@ function voltar() {
   border: 0;
   color: #3f6b52;
   font-size: 0.85rem;
+}
+
+.capa {
+  margin-bottom: 16px;
+}
+
+.professor {
+  margin: -12px 0 18px;
+  font-size: 0.85rem;
+  color: #7a8da0;
 }
 
 .modalidade {

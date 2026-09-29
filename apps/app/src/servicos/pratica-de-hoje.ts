@@ -16,6 +16,8 @@ export interface PraticaRecomendada {
     modalidade: string;
     duracaoMin: number;
     demandaFisica: number;
+    capaUrl?: string | null;
+    professor?: string | null;
   };
   scoreFinal: number;
   explicacao: string;

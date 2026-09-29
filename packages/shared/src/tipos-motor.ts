@@ -74,6 +74,13 @@ export interface Conteudo {
   demandaFisica: 1 | 2 | 3 | 4 | 5;
   /** Área de experiência exigida, para o filtro de nível (PER-003). */
   area: AreaExperiencia;
+  /**
+   * Imagem de capa, escolhida pelo professor no painel. Sem ela, o app desenha
+   * uma capa a partir da modalidade — nunca um retângulo vazio.
+   */
+  capaUrl?: string;
+  /** Quem conduz a prática, como aparece para o aluno. */
+  professor?: string;
   /** Objetivos atendidos, com peso relativo (0 a 5). */
   objetivos: Partial<Record<Objetivo, number>>;
   /** O quanto a prática entrega de cada dimensão do estado do dia (0 a 5). */
