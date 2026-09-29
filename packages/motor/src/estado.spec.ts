@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
+import type { Conteudo } from '@life/shared';
 import { CONFIG_V1 } from './configuracao.js';
 import { CHECKIN_NEUTRO } from './contexto-de-teste.js';
 import { estadoFuncional, perfilDoDia, periodoDoDia, regrasAcionadas } from './estado.js';
-import { filtrarPorTempoENivel } from './filtros.js';
+import { filtrarPorTempoENivel, janelaDeTempo } from './filtros.js';
 import { CATALOGO_DE_TESTE } from './catalogo-de-teste.js';
 import { contextoDeTeste } from './contexto-de-teste.js';
 
@@ -108,41 +109,83 @@ describe('MOT-05 — estado funcional', () => {
 });
 
 describe('Etapas 2 e 3 — tempo e nível', () => {
-  it('MOT-03: não oferece prática mais longa que o tempo disponível', () => {
+  const todos = CATALOGO_DE_TESTE.filter((c) => c.aprovado).map((conteudo) => ({
+    conteudo,
+    status: 'livre' as const,
+  }));
+
+  it('MOT-03: o tempo escolhido é uma janela de ±5 min, não um teto', () => {
+    expect(janelaDeTempo(30, CONFIG_V1)).toEqual({ minimo: 25, maximo: 35 });
+    expect(janelaDeTempo(10, CONFIG_V1)).toEqual({ minimo: 5, maximo: 15 });
+  });
+
+  it('MOT-03: o degrau 60+ não tem teto', () => {
+    const janela = janelaDeTempo(60, CONFIG_V1);
+    expect(janela.minimo).toBe(55);
+    expect(janela.maximo).toBe(Number.POSITIVE_INFINITY);
+  });
+
+  it('MOT-03: quem pede 30 min não recebe prática de 10', () => {
     const contexto = contextoDeTeste({
-      checkin: { tempo: 20 },
-      perfil: { experiencia: { asanas: 'experiente', nidra: 'experiente' } },
+      checkin: { tempo: 30 },
+      perfil: {
+        experiencia: { asanas: 'experiente', nidra: 'experiente', pranayama: 'experiente' },
+      },
     });
-    const seguros = CATALOGO_DE_TESTE.filter((c) => c.aprovado).map((conteudo) => ({
-      conteudo,
-      statusSeguranca: 'livre' as const,
+
+    const { candidatos } = filtrarPorTempoENivel(todos, contexto, CONFIG_V1);
+
+    expect(candidatos.length).toBeGreaterThan(0);
+    for (const item of candidatos) {
+      expect(item.conteudo.duracaoMin).toBeGreaterThanOrEqual(25);
+      expect(item.conteudo.duracaoMin).toBeLessThanOrEqual(35);
+    }
+  });
+
+  it('MOT-03: não oferece 32 min para quem tem 30 — o exemplo da Matriz', () => {
+    const contexto = contextoDeTeste({
+      checkin: { tempo: 30 },
+      perfil: { experiencia: { asanas: 'experiente' } },
+    });
+    const longa = {
+      conteudo: { ...(CATALOGO_DE_TESTE[0] as Conteudo), id: 'LONGA', duracaoMin: 36 },
       status: 'livre' as const,
-    }));
+    };
 
-    const { candidatos, exclusoes } = filtrarPorTempoENivel(seguros, contexto);
+    const { candidatos } = filtrarPorTempoENivel([longa], contexto, CONFIG_V1);
+    expect(candidatos).toHaveLength(0);
+  });
 
-    expect(candidatos.every((item) => item.conteudo.duracaoMin <= 20)).toBe(true);
-    expect(exclusoes.some((item) => item.regra === 'MOT-03')).toBe(true);
+  it('MOT-03: sem nada do tamanho pedido, volta ao teto e avisa', () => {
+    // Iniciante com 60 min: no catálogo de teste não há aula longa de nível 1.
+    const contexto = contextoDeTeste({
+      checkin: { tempo: 60 },
+      perfil: { experiencia: { asanas: 'nunca', nidra: 'nunca', pranayama: 'nunca' } },
+    });
+
+    const { candidatos, ajusteDeTempo } = filtrarPorTempoENivel(todos, contexto, CONFIG_V1);
+
+    expect(candidatos.length).toBeGreaterThan(0);
+    expect(ajusteDeTempo).toContain('60');
+    for (const item of candidatos) {
+      expect(item.conteudo.duracaoMin).toBeLessThanOrEqual(60);
+    }
   });
 
   it('MOT-04: nível técnico é limitado pela experiência da área', () => {
     const iniciante = contextoDeTeste({ perfil: { experiencia: { asanas: 'nunca' } } });
-    const seguros = CATALOGO_DE_TESTE.filter((c) => c.area === 'asanas' && c.aprovado).map(
+    const asanas = CATALOGO_DE_TESTE.filter((c) => c.area === 'asanas' && c.aprovado).map(
       (conteudo) => ({ conteudo, status: 'livre' as const }),
     );
 
-    const { candidatos } = filtrarPorTempoENivel(seguros, iniciante);
+    const { candidatos } = filtrarPorTempoENivel(asanas, iniciante, CONFIG_V1);
     expect(candidatos.every((item) => item.conteudo.nivelTecnico <= 1)).toBe(true);
   });
 
   it('MOT-04: quem não respondeu sobre a área começa pelo nível 1', () => {
     const contexto = contextoDeTeste({ perfil: { experiencia: {} } });
-    const seguros = CATALOGO_DE_TESTE.filter((c) => c.aprovado).map((conteudo) => ({
-      conteudo,
-      status: 'livre' as const,
-    }));
 
-    const { candidatos } = filtrarPorTempoENivel(seguros, contexto);
+    const { candidatos } = filtrarPorTempoENivel(todos, contexto, CONFIG_V1);
     expect(candidatos.every((item) => item.conteudo.nivelTecnico === 1)).toBe(true);
   });
 });

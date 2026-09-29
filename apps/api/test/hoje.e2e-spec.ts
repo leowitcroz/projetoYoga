@@ -189,6 +189,66 @@ describe('Prática de hoje (e2e)', () => {
     expect(ids).not.toContain('PRAT-025'); // invertidas guiadas, carga cervical 3
   });
 
+  it('refazer o check-in não penaliza a aula recomendada minutos antes', async () => {
+    const checkin = {
+      dia: hoje,
+      sono: 'razoavel',
+      energia: 'media',
+      corpo: 'normal',
+      dor: 'nenhuma',
+      estresse: 'tranquilo',
+      digestao: 'normal',
+      humor: 'equilibrado',
+      tempo: 20,
+    };
+
+    await request(app.getHttpServer())
+      .put('/checkin')
+      .set('Authorization', `Bearer ${token}`)
+      .send(checkin)
+      .expect(200);
+
+    const primeira = await request(app.getHttpServer())
+      .get(`/hoje?dia=${hoje}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    // Mesmas respostas, pedidas de novo: o resultado tem de ser o mesmo.
+    const segunda = await request(app.getHttpServer())
+      .get(`/hoje?dia=${hoje}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(segunda.body.principal.conteudo.id).toBe(primeira.body.principal.conteudo.id);
+    expect(segunda.body.principal.scoreFinal).toBe(primeira.body.principal.scoreFinal);
+  });
+
+  it('MOT-03: a prática cabe na janela do tempo escolhido', async () => {
+    await request(app.getHttpServer())
+      .put('/checkin')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        dia: hoje,
+        sono: 'razoavel',
+        energia: 'media',
+        corpo: 'normal',
+        dor: 'nenhuma',
+        estresse: 'tranquilo',
+        digestao: 'normal',
+        humor: 'equilibrado',
+        tempo: 30,
+      })
+      .expect(200);
+
+    const resposta = await request(app.getHttpServer())
+      .get(`/hoje?dia=${hoje}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(resposta.body.principal.conteudo.duracaoMin).toBeGreaterThanOrEqual(25);
+    expect(resposta.body.principal.conteudo.duracaoMin).toBeLessThanOrEqual(35);
+  });
+
   it('não devolve recomendação para quem não está logado', async () => {
     await request(app.getHttpServer()).get(`/hoje?dia=${hoje}`).expect(401);
     await request(app.getHttpServer()).put('/checkin').send({ dia: hoje }).expect(401);

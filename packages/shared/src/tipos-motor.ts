@@ -235,6 +235,8 @@ export interface Auditoria {
   alerta?: string;
   /** Aviso de sintoma persistente (SEG-R03), se houver. */
   persistencia?: string;
+  /** Preenchido quando não havia prática do tamanho pedido (MOT-03). */
+  ajusteDeTempo?: string;
 }
 
 export interface PraticaRecomendada {

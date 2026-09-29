@@ -30,7 +30,7 @@ export class HojeService {
       this.prisma.onboardingProfile.findUnique({ where: { userId } }),
       this.buscarSaude(userId),
       this.prisma.content.findMany({ where: { aprovado: true } }),
-      this.buscarHistorico(userId),
+      this.buscarHistorico(userId, dia),
       this.checkins.diasSeguidosComDor(userId, dia),
     ]);
 
@@ -64,9 +64,22 @@ export class HojeService {
     return saude ? { condicoes: saude.condicoes } : null;
   }
 
-  private async buscarHistorico(userId: string): Promise<PraticaRealizada[]> {
+  /**
+   * O que a pessoa praticou nos últimos dias, para os modificadores de
+   * repetição e continuidade (MOT-07).
+   *
+   * Enquanto não existir o evento de conclusão (F2.18), usamos a recomendação
+   * de cada dia como aproximação do que foi praticado. Duas consequências
+   * disso, que valem lembrar:
+   *
+   * - só contam dias anteriores. Sem isso, refazer o check-in hoje penalizaria
+   *   a aula recomendada minutos antes, como se ela já tivesse sido feita;
+   * - recomendar não é praticar. Quando o evento de conclusão existir, esta
+   *   consulta passa a ler dele.
+   */
+  private async buscarHistorico(userId: string, dia: string): Promise<PraticaRealizada[]> {
     const recentes = await this.prisma.recommendation.findMany({
-      where: { userId, principalId: { not: null } },
+      where: { userId, principalId: { not: null }, dia: { lt: dia } },
       orderBy: { dia: 'desc' },
       take: 30,
       select: { principalId: true, dia: true },

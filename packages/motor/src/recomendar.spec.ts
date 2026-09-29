@@ -200,8 +200,11 @@ describe('Garantias do motor', () => {
   });
 
   it('quando nada sobra, o motor devolve vazio em vez de inventar', () => {
-    const semTempo = contextoDeTeste({ checkin: { tempo: 5 } });
-    const resultado = recomendarDia(semTempo, CATALOGO_DE_TESTE, { agora: MANHA });
+    // Iniciante diante de um catálogo só de conteúdo especializado.
+    const iniciante = contextoDeTeste({ perfil: { experiencia: { asanas: 'nunca' } } });
+    const soAvancado = CATALOGO_DE_TESTE.filter((item) => item.nivelTecnico >= 4);
+
+    const resultado = recomendarDia(iniciante, soAvancado, { agora: MANHA });
 
     expect(resultado.principal).toBeUndefined();
     expect(resultado.alternativa).toBeUndefined();
@@ -227,11 +230,11 @@ describe('Repetição e continuidade (MOT-07)', () => {
   it('praticar ontem derruba a pontuação do mesmo conteúdo', () => {
     const base = contextoDeTeste({
       perfil: { objetivoPrincipal: 'mobilidade', experiencia: { asanas: 'regular' } },
-      checkin: { tempo: 30 },
+      checkin: { tempo: 20 },
     });
     const comOntem = contextoDeTeste({
       perfil: { objetivoPrincipal: 'mobilidade', experiencia: { asanas: 'regular' } },
-      checkin: { tempo: 30 },
+      checkin: { tempo: 20 },
       historico: [{ conteudoId: 'PRAT-010', dia: '2026-09-27' }],
     });
 

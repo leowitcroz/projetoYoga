@@ -46,7 +46,7 @@ export function recomendarDia(
   const exclusoes: Exclusao[] = [...seguranca.exclusoes];
 
   // Etapas 2 e 3 — tempo e nível técnico.
-  const filtrados = filtrarPorTempoENivel(seguranca.seguros, contexto);
+  const filtrados = filtrarPorTempoENivel(seguranca.seguros, contexto, config);
   exclusoes.push(...filtrados.exclusoes);
 
   // Estado do dia, que alimenta o score.
@@ -85,13 +85,16 @@ export function recomendarDia(
     exclusoes,
     ranking,
     persistencia: avisoDePersistencia(contexto, config),
+    ajusteDeTempo: filtrados.ajusteDeTempo,
   };
 
   return {
     principal: principal ? montar(principal, contexto, estado) : undefined,
     alternativa: alternativa ? montar(alternativa, contexto, estado) : undefined,
     estadoFuncional: estado,
-    aviso: avisoDeDor(contexto),
+    // A pessoa precisa saber tanto da dor quanto de a prática ter vindo mais
+    // curta do que o tempo que ela reservou.
+    aviso: [avisoDeDor(contexto), filtrados.ajusteDeTempo].filter(Boolean).join(' ') || undefined,
     auditoria,
   };
 }

@@ -59,10 +59,22 @@ export interface Modificadores {
   fatiaDeDescoberta: number;
 }
 
+/** Como o tempo escolhido no check-in vira filtro (MOT-03). */
+export interface JanelaDeTempo {
+  /** Quantos minutos para mais ou para menos o tempo escolhido aceita. */
+  tolerancia: number;
+  /**
+   * A partir daqui o degrau é aberto: quem escolhe "60+" aceita 55 minutos ou
+   * qualquer coisa mais longa.
+   */
+  aberturaAPartirDe: number;
+}
+
 export interface EngineConfig {
   versao: string;
   pesos: PesosDoRanking;
   modificadores: Modificadores;
+  tempo: JanelaDeTempo;
   seguranca: RegraSeguranca[];
   estado: RegraEstado[];
   /** Demanda física máxima no modo conservador (MOT-12). */
@@ -338,6 +350,7 @@ export const CONFIG_V1: EngineConfig = {
     repeticaoTresDias: -8,
     fatiaDeDescoberta: 0.15,
   },
+  tempo: { tolerancia: 5, aberturaAPartirDe: 60 },
   seguranca,
   estado,
   demandaMaximaConservadora: 2,

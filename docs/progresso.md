@@ -29,6 +29,11 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ## Linha do tempo
 
+### 29/09/2026
+
+- **Corrigido:** o histórico que o motor usa vinha da tabela de recomendações **incluindo o dia de hoje** — então pedir a recomendação duas vezes no mesmo dia penalizava a aula sugerida minutos antes, como se já tivesse sido praticada. Agora só contam dias anteriores. A aproximação some quando existir o evento de conclusão (F2.18): recomendar não é praticar.
+- **MOT-03 virou janela:** o tempo escolhido no check-in deixou de ser um teto. Quem escolhe 30 recebe aulas de 25 a 35, e não mais uma de 10; o degrau 60+ vale de 55 em diante. Se nada couber na janela, o motor volta ao teto antigo e avisa na tela que a prática veio mais curta.
+
 ### 28/09/2026
 
 - **Aba Praticar (F2.15):** `GET /catalogo` com filtros de duração, modalidade e objetivo, mais `GET /catalogo/:id`. A tela lista as aulas, filtra por tempo e modalidade e abre a ficha com duração, nível, intensidade e o que a aula ajuda. "Iniciar prática" agora leva à ficha da aula recomendada.
