@@ -9,7 +9,10 @@ import { CatalogoModule } from './catalogo/catalogo.module.js';
 import { PainelModule } from './painel/painel.module.js';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { EmailModule } from './email/email.module.js';
+import { PrivacidadeModule } from './privacidade/privacidade.module.js';
+import { RegistroDeAcessoInterceptor } from './privacidade/registro-de-acesso.interceptor.js';
 
 @Module({
   imports: [
@@ -18,6 +21,7 @@ import { EmailModule } from './email/email.module.js';
     // bem mais apertados, declarados em cada uma.
     ThrottlerModule.forRoot([{ name: 'geral', ttl: 60_000, limit: 120 }]),
     PrismaModule,
+    PrivacidadeModule,
     EmailModule,
     AuthModule,
     OnboardingModule,
@@ -26,6 +30,10 @@ import { EmailModule } from './email/email.module.js';
     PainelModule,
   ],
   controllers: [HealthController],
-  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
+  providers: [
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
+    // PRIV-03: todo acesso fica registrado, sem exceção por esquecimento.
+    { provide: APP_INTERCEPTOR, useClass: RegistroDeAcessoInterceptor },
+  ],
 })
 export class AppModule {}

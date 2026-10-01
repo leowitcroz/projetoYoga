@@ -35,6 +35,25 @@ model User {
   tokens         AuthToken[]
 }
 
+/// Registro de acesso (PRIV-03).
+///
+/// Guarda só o necessário para investigar um incidente: quem, quando e de
+/// onde. Nada de corpo de requisição — e, por tabela, nada de dado de saúde.
+/// Some depois de 6 meses.
+model AccessLog {
+  id       String   @id @default(uuid())
+  /// Fica mesmo depois de a conta ser apagada: é o único vestígio que a lei
+  /// manda guardar (AUTH-07).
+  userId   String?
+  rota     String
+  metodo   String
+  ip       String?
+  criadoEm DateTime @default(now())
+
+  @@index([criadoEm])
+  @@index([userId])
+}
+
 /// Link de uso único enviado por e-mail (AUTH-02, AUTH-04).
 ///
 /// Guardamos só o hash: quem ler o banco não consegue entrar na conta de

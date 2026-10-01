@@ -111,6 +111,20 @@ export async function sair(): Promise<void> {
 }
 
 /**
+ * AUTH-07 — excluir a conta.
+ *
+ * Apaga tudo na API e limpa o aparelho. Não tem volta, e a tela precisa
+ * deixar isso claro antes de chamar aqui.
+ */
+export async function excluirConta(): Promise<void> {
+  await chamar<void>('/auth/conta', { metodo: 'DELETE' });
+
+  await esquecerCheckin();
+  await limparRespostas();
+  await limparSessao();
+}
+
+/**
  * Confere com a API se a sessão salva ainda vale. Usado ao abrir o app:
  * se valer, a pessoa entra direto, sem refazer o login.
  */

@@ -82,7 +82,7 @@
               </span>
               <span class="aceite-texto">
                 Li e aceito a
-                <a href="#" @click.prevent>política de privacidade</a>.
+                <a href="#" @click.prevent.stop="verPolitica">política de privacidade</a>.
               </span>
             </label>
             <span v-if="erros.aceite" class="erro erro-aceite">{{ erros.aceite }}</span>
@@ -165,6 +165,10 @@ async function criar() {
   } finally {
     salvando.value = false;
   }
+}
+
+function verPolitica() {
+  router.push('/politica-de-privacidade');
 }
 
 function irParaLogin() {

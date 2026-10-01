@@ -451,13 +451,13 @@ Pipeline conforme a aba 08 da Matriz.
 - [x] **F2.3** Configuração por variáveis de ambiente, validação de entrada (DTOs), formato padrão de erro, CORS.
 - [ ] **F2.4** Documentação automática da API (Swagger) em `/docs`, só em desenvolvimento.
 - [x] **F2.5** Logger que remove campos de saúde antes de gravar (PRIV-02), com teste.
-- [ ] **F2.6** Registro de acesso (IP e data/hora) e rotina que apaga registros com mais de 6 meses (PRIV-03).
+- [x] **F2.6** Registro de acesso (IP e data/hora) e rotina que apaga registros com mais de 6 meses (PRIV-03).
 - [x] **F2.7** Limite de tentativas nas rotas de login, cadastro e recuperação de senha.
 
 *Conta*
 - [x] **F2.8** Cadastro, verificação de e-mail, login, refresh, logout, recuperação de senha: AUTH-01 a AUTH-04.
 - [x] **F2.9** Envio de e-mail em desenvolvimento com Mailpit (caixa de e-mail local); provedor real fica para a Fase 7.
-- [ ] **F2.10** Excluir conta: AUTH-07.
+- [x] **F2.10** Excluir conta: AUTH-07.
 - [x] **F2.11** Registro de consentimentos: PRIV-01.
 
 *Aluno*

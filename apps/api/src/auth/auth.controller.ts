@@ -1,9 +1,10 @@
-import { Body, Controller, Get, HttpCode, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Post, Req, UseGuards } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service.js';
+import { PrivacidadeService } from '../privacidade/privacidade.service.js';
 import { RegistroDto } from './dto/registro.dto.js';
 import { EmailDto, LoginDto, RedefinirSenhaDto, RefreshDto, TokenDto } from './dto/login.dto.js';
-import { JwtGuard, UsuarioId } from './jwt.guard.js';
+import { JwtGuard, UsuarioId, type PedidoComUsuario } from './jwt.guard.js';
 
 /**
  * F2.7 — as rotas de conta são as mais atacadas: senha por tentativa e erro,
@@ -12,7 +13,10 @@ import { JwtGuard, UsuarioId } from './jwt.guard.js';
  */
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly auth: AuthService) {}
+  constructor(
+    private readonly auth: AuthService,
+    private readonly privacidade: PrivacidadeService,
+  ) {}
 
   /** AUTH-01 — cadastro no fim do onboarding, já com as respostas. */
   @Throttle({ geral: { ttl: 3600_000, limit: 5 } })
@@ -78,6 +82,27 @@ export class AuthController {
   async redefinirSenha(@Body() dados: RedefinirSenhaDto): Promise<{ redefinida: true }> {
     await this.auth.redefinirSenha(dados.token, dados.senha);
     return { redefinida: true };
+  }
+
+  /**
+   * AUTH-07 — excluir a conta.
+   *
+   * Apaga de uma vez, sem período de arrependimento: a pessoa pediu. Fica só
+   * o registro de acesso, sem dono, que é o que a lei manda guardar.
+   */
+  @Delete('conta')
+  @HttpCode(204)
+  @UseGuards(JwtGuard)
+  async excluirConta(
+    @UsuarioId() usuarioId: string,
+    @Req() pedido: PedidoComUsuario,
+  ): Promise<void> {
+    await this.privacidade.excluirConta(usuarioId);
+
+    // O registro de acesso é gravado depois da resposta (PRIV-03). Sem apagar
+    // o id daqui, o registro do próprio pedido de exclusão guardaria quem
+    // acabou de ser apagado.
+    pedido.usuarioId = undefined;
   }
 
   /** Quem sou eu: o app usa isso para saber se a sessão salva ainda vale. */

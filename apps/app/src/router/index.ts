@@ -18,6 +18,7 @@ const routes: RouteRecordRaw[] = [
   { path: '/verificar-email', component: () => import('@/views/VerificarEmailPage.vue') },
   { path: '/redefinir-senha', component: () => import('@/views/RecuperarSenhaPage.vue') },
   { path: '/esqueci-senha', component: () => import('@/views/RecuperarSenhaPage.vue') },
+  { path: '/politica-de-privacidade', component: () => import('@/views/PoliticaPage.vue') },
   {
     path: '/checkin',
     component: () => import('@/views/DailyCheckinPage.vue'),

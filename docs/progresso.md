@@ -9,8 +9,8 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 - **Fase atual:** 1 · Motor (núcleo pronto) + 2 · API base (conta e onboarding prontos). A Fase 0 só espera a CI verde no GitHub (F0.11).
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
-- **Falta para fechar a fase 2:** Swagger (F2.4), registro de acesso (F2.6), excluir conta (F2.10), pergunta adaptativa (F2.17) e eventos de uso (F2.18).
-- **Próximo passo:** excluir conta (F2.10, AUTH-07) e registro de acesso (F2.6) fecham a privacidade da Fase 2; o upload de vídeo (F3.5) continua esperando a escolha do provedor (P-03).
+- **Falta para fechar a fase 2:** Swagger (F2.4), pergunta adaptativa (F2.17) e eventos de uso e feedback (F2.18).
+- **Próximo passo:** Swagger em `/docs` (F2.4) e os eventos de uso e feedback pós-prática (F2.18); o upload de vídeo (F3.5) continua esperando a escolha do provedor (P-03).
 - **Commits locais ainda não enviados:** 4.
 
 ## Esperando resposta
@@ -28,6 +28,14 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ---
 
 ## Linha do tempo
+
+### 01/10/2026 (privacidade)
+
+- **Registro de acesso (PRIV-03, F2.6):** cada pedido fica anotado com rota, método, IP e quem chamou — e **só isso**. Corpo de requisição não entra, o que mantém dado de saúde fora do registro por construção, não por disciplina de quem escreve o código. Some sozinho depois de 6 meses.
+- **Excluir conta (AUTH-07, F2.10):** apaga a pessoa, as respostas, a saúde, os check-ins, as recomendações, os consentimentos e as sessões. Sobra o registro de acesso, sem dono, que é o que a lei manda guardar. A tela pede confirmação e avisa que não dá para desfazer.
+- **Política de privacidade no app (PRIV-04):** resumo em linguagem simples, com link no cadastro e na aba Eu. O texto completo continua em revisão jurídica, e a tela diz isso.
+- **Corrigido antes de virar problema:** o registro do próprio pedido de exclusão guardava o id de quem acabava de ser apagado. Agora sai sem dono.
+- **8 testes novos**; 65 ponta a ponta na API.
 
 ### 01/10/2026
 
