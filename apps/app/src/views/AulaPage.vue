@@ -11,7 +11,20 @@
         <p v-else-if="erro" class="recado">{{ erro }}</p>
 
         <template v-else-if="aula">
+          <!-- PRA-03: com vídeo, o player entra no lugar da capa. -->
+          <div v-if="urlDoVideo" class="player">
+            <iframe
+              :src="urlDoVideo"
+              :title="aula.titulo"
+              allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+            ></iframe>
+          </div>
+
           <capa-da-pratica
+            v-else
             :url="aula.capaUrl"
             :modalidade="aula.modalidade"
             :duracao-min="aula.duracaoMin"
@@ -47,8 +60,8 @@
             </ul>
           </section>
 
-          <p class="aviso">
-            O vídeo da prática entra quando o catálogo de verdade for cadastrado pelos professores.
+          <p v-if="!urlDoVideo" class="aviso">
+            Esta prática ainda não tem vídeo. O professor publica pelo painel.
           </p>
         </template>
       </div>
@@ -77,6 +90,20 @@ const router = useRouter();
 const aula = ref<Aula | null>(null);
 const carregando = ref(true);
 const erro = ref('');
+
+/**
+ * O endereço do player.
+ *
+ * Usamos o domínio sem cookies e desligamos os vídeos relacionados do fim:
+ * ninguém termina uma prática e cai num vídeo de terceiros.
+ */
+const urlDoVideo = computed(() => {
+  const aulaAtual = aula.value;
+  if (!aulaAtual?.videoId || aulaAtual.videoProvedor !== 'youtube') return null;
+
+  const parametros = new URLSearchParams({ rel: '0', modestbranding: '1', playsinline: '1' });
+  return `https://www.youtube-nocookie.com/embed/${aulaAtual.videoId}?${parametros.toString()}`;
+});
 
 /** Só os objetivos que a aula realmente atende, do mais forte para o mais fraco. */
 const objetivos = computed(() => {
@@ -128,6 +155,24 @@ function voltar() {
 
 .capa {
   margin-bottom: 16px;
+}
+
+.player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 16px;
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.player iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .professor {

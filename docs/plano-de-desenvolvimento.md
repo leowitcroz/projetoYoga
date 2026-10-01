@@ -251,7 +251,7 @@ Pipeline conforme a aba 08 da Matriz.
 | PRA-01 | Biblioteca | Āsanas, Prāṇāyāma, Meditação, Yoga Nidra, Relaxamento, Kriyās; filtros por modalidade, duração, nível e professor |
 | PRA-02 | Acesso livre | Conteúdo fora da recomendação automática continua acessível; mostra aviso educativo, sem dizer que é proibido (SEG-R02) |
 | PRA-03 | Player de vídeo | Streaming do provedor escolhido; pausa e retomada |
-| PRA-04 | Player de áudio em segundo plano | Continua com a tela bloqueada; controles na tela de bloqueio (título, play/pause); Android com serviço em primeiro plano |
+| PRA-04 | Player de áudio em segundo plano | Continua com a tela bloqueada; controles na tela de bloqueio (título, play/pause); Android com serviço em primeiro plano. **Bloqueado enquanto o vídeo for YouTube** (P-03): os Termos deles não permitem |
 | PRA-05 | Feedback pós-prática | Muito leve / Na medida / Intensa; Gostei; Melhor / Igual / Pior; opcional |
 | PRA-06 | Eventos de uso | Registra iniciou, concluiu, interrompeu (com tempo), repetiu, trocou |
 
@@ -731,7 +731,7 @@ Um requisito está pronto quando:
 |---|---|---|---|
 | P-01 | Idade mínima exata e regras para menores | AUTH-05, AUTH-06 | Fase 7 |
 | P-02 | Lista de sinais de alerta e limites de persistência (masters + profissional de saúde) | MOT-13, MOT-14 | Fase 7 (o mecanismo é feito na Fase 1) |
-| P-03 | Provedor de vídeo e áudio | ADM-04, PRA-03, PRA-04 | **Decidido em 01/10:** Mux, com Cloudflare Stream como segunda opção ([decisoes.md](decisoes.md)). Falta Leonardo abrir a conta. O áudio em segundo plano (PRA-04) não vem do provedor: é do app, e continua sendo o maior risco da Fase 4 |
+| P-03 | Provedor de vídeo e áudio | ADM-04, PRA-03, PRA-04 | **Decidido em 01/10:** começar com **YouTube** (vídeos não listados), por escolha de Leonardo; Mux quando sair do começo ([decisoes.md](decisoes.md)). **Consequência:** o PRA-04 (áudio com a tela bloqueada) fica impossível enquanto for YouTube — os Termos deles reservam isso ao Premium |
 | P-04 | Hospedagem da API e do banco | Fase 7 | **Parcial:** API e banco no Render para demonstração, descritos em [hospedagem.md](hospedagem.md) e no `render.yaml`. A hospedagem de produção, com banco pago e backup diário, continua na Fase 7 (F7.4) |
 | P-05 | Revisão jurídica da política de privacidade | Publicação | Fase 7 |
 | P-06 | "Minhas anotações" (aparece nas telas, mas não nos documentos): entra ou não? | — | Fase 5 |

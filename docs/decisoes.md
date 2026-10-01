@@ -83,7 +83,46 @@ ordenação, calendários), vale reavaliar — aí com a licença resolvida ante
 
 ## Provedor de vídeo e áudio (P-03)
 
-Decidido em 01/10/2026: **Mux**, com **Cloudflare Stream** como segunda opção.
+**Decisão vigente (01/10/2026): começar com o YouTube**, por escolha de Leonardo.
+Mux fica como o caminho para quando o app sair do começo.
+
+### Por que YouTube agora
+
+Custo zero, nada para configurar e o Marcos já sabe publicar vídeo lá. Para
+validar o produto com os primeiros alunos, isso vale mais do que a solução
+definitiva. A troca é barata: guardamos apenas o **identificador da mídia**,
+não a URL, então mudar de provedor é mexer no player e numa coluna.
+
+### O que o YouTube custa em troca
+
+1. **Áudio com a tela bloqueada não funciona.** Os Termos do YouTube reservam
+   isso ao Premium, no app deles. O **PRA-04 é requisito do produto** — prática
+   guiada por áudio com o celular no bolso — e fica **impossível** enquanto o
+   vídeo estiver no YouTube. É a razão mais forte para a troca, não o preço.
+2. **Duração não vem sozinha.** O ADM-04 previa a duração preenchida
+   automaticamente no upload; com link do YouTube, o professor digita. Resolve
+   com a API do YouTube (precisa de chave) se incomodar.
+3. **Privacidade.** Mesmo com `youtube-nocookie.com`, parte do tráfego do aluno
+   passa pelo Google. Precisa estar na política de privacidade antes de o app
+   ir para alunos de verdade.
+4. **Controle do conteúdo.** Vídeo não listado não aparece em busca, mas quem
+   tem o link assiste sem ter conta no LIFE.
+
+### Como catalogar enquanto for YouTube
+
+- Vídeos **não listados**, nunca públicos.
+- O player usa `youtube-nocookie.com`, sem vídeos relacionados no fim.
+- A duração é digitada pelo professor, como já é hoje.
+
+### Quando trocar
+
+Quando qualquer uma destas acontecer: o áudio em segundo plano virar prioridade
+(PRA-04), o conteúdo precisar ser realmente privado, ou o catálogo justificar o
+custo. Aí vale o que está escrito abaixo.
+
+---
+
+## Provedor definitivo, quando sair do começo: Mux
 
 ### O que o LIFE precisa
 
@@ -118,7 +157,7 @@ A tabela `Content` ganha o identificador da mídia no provedor, não a URL: assi
 
 ### Antes de assinar
 
-Leonardo confirma a conta e os preços do dia (eles mudam), e o Marcos decide se o conteúdo antigo, se houver, será migrado.
+Leonardo confirma a conta e os preços do dia (eles mudam), e o Marcos decide se o conteúdo antigo será migrado.
 
 ## Em aberto
 

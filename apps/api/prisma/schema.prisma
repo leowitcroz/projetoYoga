@@ -227,6 +227,10 @@ model Content {
 
   /// Imagem de capa escolhida pelo professor. Vazio = o app desenha a capa.
   capaUrl   String?
+  /// Onde o vídeo está hospedado: 'youtube' hoje, 'mux' quando trocarmos (P-03).
+  videoProvedor String?
+  /// Identificador da mídia no provedor — não a URL, para a troca ser barata.
+  videoId       String?
   /// Quem conduz a prática, como aparece para o aluno.
   professor String?
 

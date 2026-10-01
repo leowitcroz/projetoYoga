@@ -50,6 +50,15 @@
         </label>
 
         <label class="campo largo">
+          <span>Vídeo no YouTube</span>
+          <input v-model="ficha.videoUrl" type="text" placeholder="https://youtu.be/..." />
+          <small>
+            Cole o link do vídeo. Publique como <strong>não listado</strong> no YouTube: assim ele
+            não aparece em buscas, mas abre para quem está no app.
+          </small>
+        </label>
+
+        <label class="campo largo">
           <span>Imagem de capa (endereço)</span>
           <input v-model="ficha.capaUrl" type="url" placeholder="https://..." />
           <small>Opcional. Sem imagem, o app desenha uma capa pela modalidade.</small>
@@ -386,6 +395,8 @@ onMounted(async () => {
       demandaFisica: dados.demandaFisica as number,
       professor: (dados.professor as string) ?? '',
       capaUrl: (dados.capaUrl as string) ?? '',
+      // O banco guarda provedor + id; a tela mostra o link que o professor cola.
+      videoUrl: dados.videoId ? `https://youtu.be/${String(dados.videoId)}` : '',
       objetivos: (dados.objetivos as Record<string, number>) ?? {},
       caracteristicas: { ...branco.caracteristicas, ...(dados.caracteristicas as object) },
       seguranca: { ...branco.seguranca, ...(dados.seguranca as object) },
@@ -405,6 +416,7 @@ function paraEnvio(): FichaDaPratica {
   const copia: FichaDaPratica = JSON.parse(JSON.stringify(ficha.value));
   if (!copia.professor) delete copia.professor;
   if (!copia.capaUrl) delete copia.capaUrl;
+  if (!copia.videoUrl) delete copia.videoUrl;
   if (!copia.trilhaId) {
     delete copia.trilhaId;
     delete copia.ordemTrilha;

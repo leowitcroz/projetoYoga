@@ -7,6 +7,7 @@ import {
 import { PrismaService } from '../prisma/prisma.service.js';
 import type { Papel } from '../auth/papeis.guard.js';
 import type { ConteudoDto } from './dto/conteudo.dto.js';
+import { lerVideo } from './video.js';
 
 /**
  * Catálogo pelo lado de quem cataloga (ADM-02, ADM-03, ADM-06).
@@ -160,6 +161,15 @@ export class PainelService {
   }
 
   private paraColunas(dados: ConteudoDto) {
+    // O link do YouTube vira provedor + identificador. Link que não dá para
+    // ler é recusado na hora, em vez de virar uma prática sem vídeo.
+    const video = dados.videoUrl ? lerVideo(dados.videoUrl) : null;
+    if (dados.videoUrl && !video) {
+      throw new BadRequestException(
+        'Não reconheci esse link do YouTube. Cole o endereço do vídeo, como https://youtu.be/xxxxxxxxxxx',
+      );
+    }
+
     return {
       titulo: dados.titulo.trim(),
       modalidade: dados.modalidade,
@@ -169,6 +179,8 @@ export class PainelService {
       demandaFisica: dados.demandaFisica,
       professor: dados.professor?.trim() ?? null,
       capaUrl: dados.capaUrl?.trim() ?? null,
+      videoProvedor: video?.provedor ?? null,
+      videoId: video?.id ?? null,
       objetivos: this.somenteNumeros(dados.objetivos, 5),
       caracteristicas: { ...dados.caracteristicas } as Record<string, number>,
       // Sem chaves com `undefined`: o Prisma só aceita JSON de verdade.

@@ -108,6 +108,15 @@ export class ConteudoDto {
   @IsUrl({ require_tld: false }, { message: 'A capa precisa ser um endereço de imagem válido' })
   capaUrl?: string;
 
+  /**
+   * Link do vídeo no YouTube, em qualquer formato (watch, youtu.be, embed,
+   * Shorts) — ou o identificador puro. Vazio = prática sem vídeo ainda.
+   */
+  @IsOptional()
+  @IsString()
+  @Length(0, 200)
+  videoUrl?: string;
+
   /** Objetivos que a prática atende, com peso de 0 a 5. */
   @IsObject()
   objetivos!: Record<string, number>;

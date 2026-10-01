@@ -29,6 +29,14 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ## Linha do tempo
 
+### 01/10/2026 (vídeo)
+
+- **P-03 revisto: começamos pelo YouTube**, por escolha de Leonardo. O Mux continua registrado como o destino quando o app sair do começo.
+- **O professor cola o link no painel** (watch, youtu.be, embed, Shorts ou o identificador puro) e o banco guarda **provedor + identificador**, nunca a URL — é o que torna barata a troca depois.
+- **Player na ficha da aula**, em `youtube-nocookie.com` e sem vídeos relacionados no fim: ninguém termina uma prática e cai num vídeo de terceiros.
+- **Consequência registrada:** o **PRA-04 (áudio com a tela bloqueada) fica impossível enquanto for YouTube** — os Termos deles reservam isso ao Premium. É a razão mais forte para a troca futura, mais que o preço.
+- Links que não dão para ler são recusados na hora, em vez de virar prática sem vídeo. 7 testes da leitura do link.
+
 ### 01/10/2026 (Fase 2 fechada)
 
 - **Fase 2 concluída.** Faltavam seis tarefas; todas prontas.

@@ -21,6 +21,8 @@ export interface AulaDaLista {
 
 export interface Aula extends AulaDaLista {
   area: string;
+  videoProvedor?: string | null;
+  videoId?: string | null;
   trilhaId?: string | null;
   ordemTrilha?: number | null;
 }

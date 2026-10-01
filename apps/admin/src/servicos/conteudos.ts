@@ -25,6 +25,7 @@ export interface FichaDaPratica {
   demandaFisica: number;
   professor?: string;
   capaUrl?: string;
+  videoUrl?: string;
   objetivos: Record<string, number>;
   caracteristicas: {
     intensidade: number;

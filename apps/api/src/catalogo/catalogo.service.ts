@@ -74,6 +74,8 @@ export class CatalogoService {
         area: true,
         capaUrl: true,
         professor: true,
+        videoProvedor: true,
+        videoId: true,
         objetivos: true,
         trilhaId: true,
         ordemTrilha: true,

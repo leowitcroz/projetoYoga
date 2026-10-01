@@ -253,6 +253,35 @@ describe('Painel (e2e)', () => {
     await prisma.content.deleteMany({ where: { id } });
   });
 
+  it('P-03: aceita o link do YouTube e guarda só o identificador', async () => {
+    const criada = await request(app.getHttpServer())
+      .post('/painel/conteudos')
+      .set(como('professor'))
+      .send({
+        ...fichaValida,
+        titulo: 'Prática com vídeo',
+        videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=PL1',
+      })
+      .expect(201);
+
+    const conteudo = await prisma.content.findUnique({ where: { id: criada.body.id as string } });
+
+    // Guardamos provedor + id, nunca a URL: é o que torna barata a troca
+    // de provedor mais tarde.
+    expect(conteudo?.videoProvedor).toBe('youtube');
+    expect(conteudo?.videoId).toBe('dQw4w9WgXcQ');
+
+    await prisma.content.deleteMany({ where: { id: criada.body.id as string } });
+  });
+
+  it('P-03: recusa link que não dá para ler, em vez de gravar sem vídeo', async () => {
+    await request(app.getHttpServer())
+      .post('/painel/conteudos')
+      .set(como('professor'))
+      .send({ ...fichaValida, titulo: 'Link torto', videoUrl: 'https://vimeo.com/123456' })
+      .expect(400);
+  });
+
   it('F3.14: nenhuma rota do painel devolve dado de saúde de aluno', async () => {
     const lista = await request(app.getHttpServer())
       .get('/painel/conteudos')
