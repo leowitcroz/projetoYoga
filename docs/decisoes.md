@@ -81,6 +81,45 @@ escritas em HTML e CSS, com a mesma paleta do app.
 Removido. Se um dia o painel precisar de componentes prontos (tabelas com
 ordenação, calendários), vale reavaliar — aí com a licença resolvida antes.
 
+## Provedor de vídeo e áudio (P-03)
+
+Decidido em 01/10/2026: **Mux**, com **Cloudflare Stream** como segunda opção.
+
+### O que o LIFE precisa
+
+| Necessidade | De onde vem |
+|---|---|
+| Upload pelo painel, com a duração preenchida sozinha | ADM-04 |
+| Streaming adaptativo (a aluna pratica no 4G do celular) | PRA-03 |
+| **Áudio continuando com a tela bloqueada** | PRA-04 |
+| Vídeo privado, que só abre para quem tem conta | PRIV |
+| Conta brasileira, cobrança previsível | — |
+
+### Por que Mux
+
+- A API de upload é direta e devolve a duração assim que o vídeo é processado — que é exatamente o que o ADM-04 pede, sem o professor digitar nada.
+- Entrega HLS adaptativo, que é o que faz a prática não travar no 4G.
+- Os links são assinados e expiram: o vídeo não vaza para fora do app.
+- Cobra por minuto armazenado e por minuto assistido. Para um catálogo pequeno com poucos alunos — que é o começo do LIFE — isso custa pouco e cresce junto com o uso, em vez de cobrar um plano fixo desde o primeiro dia.
+
+### Por que não as outras
+
+- **YouTube/Vimeo não pagos:** vídeo público ou semi-público, com recomendações de terceiros no fim da prática. Não dá para um app com conteúdo de saúde.
+- **Cloudflare Stream:** muito parecido e um pouco mais barato no armazenamento. Fica como segunda opção — a troca é de poucos dias, porque o que guardamos é só um identificador de mídia.
+- **Guardar os vídeos nós mesmos** (S3 + player): mais barato no papel, mas significa cuidar de transcodificação, múltiplas resoluções e CDN. É trabalho de infraestrutura que não é o produto.
+
+### O que isso não resolve
+
+**O áudio com a tela bloqueada (PRA-04) não vem do provedor.** Ele é do aplicativo: no Capacitor, precisa de um plugin de áudio em segundo plano, com serviço em primeiro plano no Android e sessão de áudio no iOS. O provedor só entrega o arquivo; quem mantém tocando é o app. Isso continua sendo o maior risco técnico da Fase 4, e merece um teste cedo, antes de o catálogo estar pronto.
+
+### Como fica guardado
+
+A tabela `Content` ganha o identificador da mídia no provedor, não a URL: assim trocar de provedor é trocar uma coluna e o player, sem mexer no catálogo.
+
+### Antes de assinar
+
+Leonardo confirma a conta e os preços do dia (eles mudam), e o Marcos decide se o conteúdo antigo, se houver, será migrado.
+
 ## Em aberto
 
 - **Sinais de alerta e limites de persistência** (regras SEG-R03 e SEG-R04 da matriz): quem define? Proposta: os professores master redigem e, de preferência, um profissional de saúde valida.

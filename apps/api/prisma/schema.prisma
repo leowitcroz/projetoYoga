@@ -33,6 +33,38 @@ model User {
   recomendacoes  Recommendation[]
   conteudos      Content[]
   tokens         AuthToken[]
+  eventos        PracticeEvent[]
+}
+
+/// O que a pessoa fez com a prática (F2.18).
+///
+/// É daqui que sai o histórico que o motor usa: antes ele supunha que a
+/// prática recomendada tinha sido feita, o que nem sempre é verdade.
+model PracticeEvent {
+  id         String    @id @default(uuid())
+  userId     String
+  conteudoId String
+  tipo       EventType
+  /// Dia no fuso do aparelho (AAAA-MM-DD).
+  dia        String
+
+  /// Feedback de depois da prática. Só existe no evento de conclusão.
+  gostou               Boolean?
+  intensidadePercebida String?
+
+  criadoEm DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, dia])
+  @@index([userId, conteudoId])
+}
+
+enum EventType {
+  INICIADA
+  CONCLUIDA
+  /// A pessoa preferiu outra coisa: sinal de que a recomendação não serviu.
+  TROCADA
 }
 
 /// Registro de acesso (PRIV-03).
@@ -246,6 +278,8 @@ model DailyCheckin {
   digestao    String
   humor       String
   tempo       Int
+  /// Resposta da pergunta adaptativa sobre refeição recente (CTX-001).
+  refeicaoRecente Boolean?
 
   criadoEm     DateTime @default(now())
   atualizadoEm DateTime @updatedAt

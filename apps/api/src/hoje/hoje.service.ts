@@ -68,33 +68,27 @@ export class HojeService {
    * O que a pessoa praticou nos últimos dias, para os modificadores de
    * repetição e continuidade (MOT-07).
    *
-   * Enquanto não existir o evento de conclusão (F2.18), usamos a recomendação
-   * de cada dia como aproximação do que foi praticado. Duas consequências
-   * disso, que valem lembrar:
-   *
-   * - só contam dias anteriores. Sem isso, refazer o check-in hoje penalizaria
-   *   a aula recomendada minutos antes, como se ela já tivesse sido feita;
-   * - recomendar não é praticar. Quando o evento de conclusão existir, esta
-   *   consulta passa a ler dele.
+   * Vem dos eventos de conclusão (F2.18): recomendar não é praticar, e só o
+   * que foi feito deve contar como repetição.
    */
   private async buscarHistorico(userId: string, dia: string): Promise<PraticaRealizada[]> {
-    const recentes = await this.prisma.recommendation.findMany({
-      where: { userId, principalId: { not: null }, dia: { lt: dia } },
+    const concluidas = await this.prisma.practiceEvent.findMany({
+      where: { userId, tipo: 'CONCLUIDA', dia: { lte: dia } },
       orderBy: { dia: 'desc' },
       take: 30,
-      select: { principalId: true, dia: true },
+      select: { conteudoId: true, dia: true },
     });
 
-    const ids = recentes.map((item) => item.principalId as string);
+    const ids = concluidas.map((item) => item.conteudoId);
     const conteudos = await this.prisma.content.findMany({
       where: { id: { in: ids } },
       select: { id: true, trilhaId: true, ordemTrilha: true },
     });
 
-    return recentes.map((item) => {
-      const conteudo = conteudos.find((c) => c.id === item.principalId);
+    return concluidas.map((item) => {
+      const conteudo = conteudos.find((c) => c.id === item.conteudoId);
       return {
-        conteudoId: item.principalId as string,
+        conteudoId: item.conteudoId,
         dia: item.dia,
         trilhaId: conteudo?.trilhaId ?? undefined,
         ordemTrilha: conteudo?.ordemTrilha ?? undefined,

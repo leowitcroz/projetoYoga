@@ -91,6 +91,7 @@ export function paraConteudo(linha: LinhaDeConteudo): Conteudo {
     revisadoParaGestacao: seguranca.revisadoParaGestacao === true,
     temVersaoAdaptada: seguranca.temVersaoAdaptada === true,
     publicoEspecifico: seguranca.publicoEspecifico as Conteudo['publicoEspecifico'],
+    sensivelAposRefeicao: seguranca.sensivelAposRefeicao === true,
     ayurvedaTags: linha.ayurveda
       ? (comoObjeto(linha.ayurveda) as Conteudo['ayurvedaTags'])
       : undefined,
@@ -132,6 +133,7 @@ export function paraLinha(conteudo: Conteudo) {
       revisadoParaGestacao: conteudo.revisadoParaGestacao === true,
       temVersaoAdaptada: conteudo.temVersaoAdaptada === true,
       publicoEspecifico: conteudo.publicoEspecifico ?? null,
+      sensivelAposRefeicao: conteudo.sensivelAposRefeicao === true,
     },
     ayurveda: conteudo.ayurvedaTags
       ? ({ ...conteudo.ayurvedaTags } as Record<string, number>)
@@ -151,6 +153,7 @@ export interface LinhaDeCheckin {
   digestao: string;
   humor: string;
   tempo: number;
+  refeicaoRecente: boolean | null;
 }
 
 export function paraCheckin(linha: LinhaDeCheckin): Checkin {
@@ -164,6 +167,7 @@ export function paraCheckin(linha: LinhaDeCheckin): Checkin {
     digestao: linha.digestao as Checkin['digestao'],
     humor: linha.humor as Checkin['humor'],
     tempo: linha.tempo,
+    refeicaoRecente: linha.refeicaoRecente ?? undefined,
   };
 }
 

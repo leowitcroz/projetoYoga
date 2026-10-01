@@ -190,7 +190,7 @@ export const CATALOGO_DE_TESTE: Conteudo[] = [
     area: 'asanas',
     objetivos: { mobilidade: 5, flexibilidade: 4 },
     caracteristicas: { mobilidade: 5, intensidade: 3 },
-    extras: { cargaLombar: 3, cargaQuadril: 3 },
+    extras: { cargaLombar: 3, cargaQuadril: 3, sensivelAposRefeicao: true },
   }),
 
   // --- Hatha e Vinyasa de intensidade média e alta ---
@@ -246,7 +246,12 @@ export const CATALOGO_DE_TESTE: Conteudo[] = [
     area: 'asanas',
     objetivos: { forca: 5, pratica: 5 },
     caracteristicas: { intensidade: 5, ativacao: 5 },
-    extras: { demandaCardiovascular: 3, cargaPunhos: 3, invertida: true },
+    extras: {
+      demandaCardiovascular: 3,
+      cargaPunhos: 3,
+      invertida: true,
+      sensivelAposRefeicao: true,
+    },
   }),
   pratica({
     id: 'PRAT-024',
@@ -270,7 +275,13 @@ export const CATALOGO_DE_TESTE: Conteudo[] = [
     area: 'asanas',
     objetivos: { forca: 4, pratica: 5 },
     caracteristicas: { intensidade: 4, ativacao: 4 },
-    extras: { invertida: true, cargaCervical: 3, cargaOmbros: 3, riscoQueda: 3 },
+    extras: {
+      invertida: true,
+      cargaCervical: 3,
+      cargaOmbros: 3,
+      riscoQueda: 3,
+      sensivelAposRefeicao: true,
+    },
   }),
   pratica({
     id: 'PRAT-026',

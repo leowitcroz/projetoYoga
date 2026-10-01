@@ -7,10 +7,10 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ## Onde estamos agora
 
-- **Fase atual:** 1 · Motor (núcleo pronto) + 2 · API base (conta e onboarding prontos). A Fase 0 só espera a CI verde no GitHub (F0.11).
+- **Fase atual:** 3 · Painel (parcial). A **Fase 2 está concluída**; a Fase 1 só espera Aprenda/Ayurveda/Cozinha Hoje (F1.14) e o motor de jornada (F1.16). A Fase 0 espera a CI verde no GitHub (F0.11).
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
-- **Falta para fechar a fase 2:** Swagger (F2.4), pergunta adaptativa (F2.17) e eventos de uso e feedback (F2.18).
-- **Próximo passo:** Swagger em `/docs` (F2.4) e os eventos de uso e feedback pós-prática (F2.18); o upload de vídeo (F3.5) continua esperando a escolha do provedor (P-03).
+- **Falta para fechar a fase 3:** upload de vídeo (F3.5, agora destravado pela escolha do Mux), trilhas (F3.6), receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11).
+- **Próximo passo:** Leonardo abre a conta no Mux; com as chaves, o upload no painel (F3.5) sai. Antes disso, vale testar cedo o **áudio com a tela bloqueada** (PRA-04) — é o maior risco técnico da Fase 4 e não depende do provedor.
 - **Commits locais ainda não enviados:** 4.
 
 ## Esperando resposta
@@ -28,6 +28,17 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ---
 
 ## Linha do tempo
+
+### 01/10/2026 (Fase 2 fechada)
+
+- **Fase 2 concluída.** Faltavam seis tarefas; todas prontas.
+- **Swagger em `/docs` (F2.4)**, só fora de produção: a documentação descreve todas as rotas, inclusive as de conta, e não precisa estar no ar.
+- **Pergunta adaptativa (F1.15, F2.17, MOT-18/CTX-001):** o motor pergunta sobre refeição recente **só quando a resposta mudaria a escolha** — se a melhor prática fosse a mesma dos dois jeitos, ele cala e recomenda. Quem responde que comeu há pouco não recebe prática que pede estômago vazio.
+- **Eventos de uso e feedback (F2.18):** iniciada, concluída e trocada, mais a avaliação de depois da prática.
+- **Corrigido:** o histórico que o motor usa passou a vir dos **eventos de conclusão**. Antes ele supunha que a prática recomendada tinha sido feita; agora só conta o que a pessoa concluiu de verdade.
+- **Jornada completa testada (F2.19 a F2.21):** cadastro → confirmação do e-mail → onboarding → check-in → prática do dia → conclusão → feedback, mais a dor reaplicando a segurança e a garantia de que saúde não aparece nos logs.
+- **Provedor de vídeo escolhido (P-03): Mux**, com Cloudflare Stream como segunda opção. Razões e o que a decisão **não** resolve em [decisoes.md](decisoes.md).
+- **80 testes no motor, 77 ponta a ponta na API.**
 
 ### 01/10/2026 (privacidade)
 

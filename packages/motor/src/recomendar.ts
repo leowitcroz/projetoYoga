@@ -12,6 +12,7 @@ import { avisoDeDor, explicar } from './explicacao.js';
 import { duracaoIdealMinima, filtrarPorTempoENivel } from './filtros.js';
 import { aplicarModificadores } from './modificadores.js';
 import { avisoDePersistencia, filtrarPorSeguranca } from './seguranca.js';
+import { adiarSensiveisAposRefeicao, perguntaSobreRefeicao } from './pergunta-adaptativa.js';
 import { arredondar, calcularScoreBase } from './score.js';
 
 export interface OpcoesDoMotor {
@@ -72,9 +73,12 @@ export function recomendarDia(
     // Empate desempatado pelo id, para a saída nunca depender da ordem do catálogo.
     .sort((a, b) => b.scoreFinal - a.scoreFinal || a.conteudo.id.localeCompare(b.conteudo.id));
 
+  // CTX-001 — quem comeu há pouco não recebe prática que pede estômago vazio.
+  const elegiveis = adiarSensiveisAposRefeicao(ranking, contexto);
+
   // Etapa 6 — principal e alternativa de natureza diferente (MOT-08).
-  const principal = ranking[0];
-  const alternativa = principal ? escolherAlternativa(ranking, principal) : undefined;
+  const principal = elegiveis[0];
+  const alternativa = principal ? escolherAlternativa(elegiveis, principal) : undefined;
 
   const auditoria = {
     versaoConfig: config.versao,
@@ -95,6 +99,8 @@ export function recomendarDia(
     // A pessoa precisa saber tanto da dor quanto de a prática ter vindo mais
     // curta do que o tempo que ela reservou.
     aviso: [avisoDeDor(contexto), auditoria.ajusteDeTempo].filter(Boolean).join(' ') || undefined,
+    // MOT-18 — só quando a resposta mudaria a escolha.
+    perguntaPendente: perguntaSobreRefeicao(elegiveis, contexto),
     auditoria,
   };
 }

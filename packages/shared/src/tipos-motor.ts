@@ -105,6 +105,12 @@ export interface Conteudo {
    * recebe: uma aula para gestantes não serve para quem não está grávida.
    */
   publicoEspecifico?: 'gestacao';
+  /**
+   * Prática que pede estômago vazio — invertidas, torções profundas,
+   * compressões abdominais (CTX-001). Faz o motor perguntar sobre refeição
+   * recente, mas só quando a resposta mudar a escolha.
+   */
+  sensivelAposRefeicao?: boolean;
   /** Existe versão adaptada aprovada para usar no lugar (SEG-002). */
   temVersaoAdaptada?: boolean;
 
@@ -141,6 +147,11 @@ export interface Checkin {
   humor: RespostaHumor;
   /** Minutos disponíveis hoje. */
   tempo: number;
+  /**
+   * Resposta da pergunta adaptativa sobre refeição recente (CTX-001).
+   * `undefined` = ainda não foi perguntado.
+   */
+  refeicaoRecente?: boolean;
 }
 
 // --- Contexto do usuário ---
@@ -253,6 +264,19 @@ export interface PraticaRecomendada {
   explicacao: string;
 }
 
+/**
+ * Pergunta que o motor faz só quando a resposta muda a decisão (MOT-18).
+ *
+ * Perguntar por perguntar alonga o check-in sem melhorar a recomendação; por
+ * isso cada pergunta carrega o motivo pelo qual ela importa hoje.
+ */
+export interface PerguntaPendente {
+  id: 'refeicao-recente';
+  pergunta: string;
+  explicacao: string;
+  opcoes: { valor: boolean; rotulo: string }[];
+}
+
 export interface ResultadoDia {
   /** `undefined` quando nada sobrou depois dos filtros. */
   principal?: PraticaRecomendada;
@@ -261,5 +285,7 @@ export interface ResultadoDia {
   estadoFuncional: EstadoFuncional;
   /** Mensagem de segurança que a pessoa precisa ler antes de praticar. */
   aviso?: string;
+  /** MOT-18 — o motor quer saber mais uma coisa antes de decidir. */
+  perguntaPendente?: PerguntaPendente;
   auditoria: Auditoria;
 }

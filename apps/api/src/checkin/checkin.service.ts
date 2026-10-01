@@ -26,6 +26,15 @@ export class CheckinService {
     return { dia: checkin.dia, salvoEm: checkin.atualizadoEm };
   }
 
+  /** CTX-001 — guarda a resposta da pergunta adaptativa. */
+  async responderContexto(userId: string, dia: string, refeicaoRecente: boolean) {
+    return this.prisma.dailyCheckin.update({
+      where: { userId_dia: { userId, dia } },
+      data: { refeicaoRecente },
+      select: { dia: true },
+    });
+  }
+
   buscarDoDia(userId: string, dia: string) {
     return this.prisma.dailyCheckin.findUnique({ where: { userId_dia: { userId, dia } } });
   }

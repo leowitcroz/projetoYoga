@@ -335,3 +335,55 @@ describe('Repetição e continuidade (MOT-07)', () => {
     expect(depois?.modificadores.map((m) => m.regra)).toContain('MOD-repeticao-ontem');
   });
 });
+
+describe('MOT-18 — pergunta adaptativa (CTX-001)', () => {
+  const avancado = {
+    objetivoPrincipal: 'forca' as const,
+    experiencia: { asanas: 'experiente' as const },
+  };
+  const diaDisposto = { tempo: 30, sono: 'bom' as const, energia: 'alta' as const };
+
+  it('pergunta quando a prática que ganhou pede estômago vazio', () => {
+    const contexto = contextoDeTeste({ perfil: avancado, checkin: diaDisposto });
+    const resultado = recomendarDia(contexto, CATALOGO_DE_TESTE, { agora: MANHA });
+
+    if (resultado.principal?.conteudo.sensivelAposRefeicao) {
+      expect(resultado.perguntaPendente?.id).toBe('refeicao-recente');
+      expect(resultado.perguntaPendente?.opcoes).toHaveLength(2);
+    } else {
+      // Se a escolhida não é sensível, não há o que perguntar.
+      expect(resultado.perguntaPendente).toBeUndefined();
+    }
+  });
+
+  it('não pergunta duas vezes: quem já respondeu não é interrompido', () => {
+    const contexto = contextoDeTeste({
+      perfil: avancado,
+      checkin: { ...diaDisposto, refeicaoRecente: false },
+    });
+
+    expect(
+      recomendarDia(contexto, CATALOGO_DE_TESTE, { agora: MANHA }).perguntaPendente,
+    ).toBeUndefined();
+  });
+
+  it('quem comeu há pouco não recebe prática que pede estômago vazio', () => {
+    const contexto = contextoDeTeste({
+      perfil: avancado,
+      checkin: { ...diaDisposto, refeicaoRecente: true },
+    });
+
+    const resultado = recomendarDia(contexto, CATALOGO_DE_TESTE, { agora: MANHA });
+
+    expect(resultado.principal?.conteudo.sensivelAposRefeicao).not.toBe(true);
+    expect(resultado.alternativa?.conteudo.sensivelAposRefeicao).not.toBe(true);
+  });
+
+  it('não pergunta quando não existe alternativa: a resposta não mudaria nada', () => {
+    const soSensiveis = CATALOGO_DE_TESTE.filter((item) => item.sensivelAposRefeicao);
+    const contexto = contextoDeTeste({ perfil: avancado, checkin: { ...diaDisposto, tempo: 60 } });
+
+    const resultado = recomendarDia(contexto, soSensiveis, { agora: MANHA });
+    expect(resultado.perguntaPendente).toBeUndefined();
+  });
+});

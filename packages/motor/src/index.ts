@@ -19,4 +19,5 @@ export { filtrarPorTempoENivel, tetoTecnico } from './filtros.js';
 export { calcularScoreBase, notaDoEstado } from './score.js';
 export { aplicarModificadores, escolherDescoberta } from './modificadores.js';
 export { explicar, avisoDeDor } from './explicacao.js';
+export { adiarSensiveisAposRefeicao, perguntaSobreRefeicao } from './pergunta-adaptativa.js';
 export { CATALOGO_DE_TESTE } from './catalogo-de-teste.js';

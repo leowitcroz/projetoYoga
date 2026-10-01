@@ -385,7 +385,7 @@ Pipeline conforme a aba 08 da Matriz.
 
 ### Fase 1 · Motor
 
-**Status:** Em andamento — o núcleo da prática do dia está pronto (F1.1 a F1.13, F1.17 a F1.21). Faltam Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16)
+**Status:** Em andamento — a prática do dia e a pergunta adaptativa estão prontas (F1.1 a F1.13, F1.15, F1.17 a F1.21). Faltam Aprenda/Ayurveda/Cozinha Hoje (F1.14) e o motor de jornada (F1.16)
 
 **Objetivo:** construir o Motor LIFE completo em `packages/motor`, como função pura, provado pelos casos T01, T02 e T03, sem banco, API ou telas.
 
@@ -410,7 +410,7 @@ Pipeline conforme a aba 08 da Matriz.
 - [x] **F1.12** Explicação por templates, seguindo a seção 9: MOT-09.
 - [x] **F1.13** Objeto de auditoria completo: MOT-10.
 - [ ] **F1.14** Aprenda Hoje, Ayurveda Hoje e Cozinha Hoje: MOT-15, MOT-16, MOT-17.
-- [ ] **F1.15** Pergunta adaptativa: MOT-18. O motor devolve "pergunta pendente" quando a resposta muda a decisão.
+- [x] **F1.15** Pergunta adaptativa: MOT-18. O motor devolve "pergunta pendente" quando a resposta muda a decisão.
 - [ ] **F1.16** Jornada (objetivo estratégico, meta semanal, progressão, recuperação, diversidade): MOT-19.
 - [x] **F1.17** Função pública única: `recomendarDia(contexto, catalogo, config, { agora, semente })`.
 
@@ -435,7 +435,7 @@ Pipeline conforme a aba 08 da Matriz.
 
 ### Fase 2 · API base
 
-**Status:** Em andamento (recorte antecipado: conta e onboarding, veja a seção 12)
+**Status:** Concluída em 01/10/2026
 
 **Objetivo:** expor pela API tudo o que o app precisa para a jornada principal, com dados reais no banco e o motor ligado.
 
@@ -449,7 +449,7 @@ Pipeline conforme a aba 08 da Matriz.
 
 *Base da API*
 - [x] **F2.3** Configuração por variáveis de ambiente, validação de entrada (DTOs), formato padrão de erro, CORS.
-- [ ] **F2.4** Documentação automática da API (Swagger) em `/docs`, só em desenvolvimento.
+- [x] **F2.4** Documentação automática da API (Swagger) em `/docs`, só em desenvolvimento.
 - [x] **F2.5** Logger que remove campos de saúde antes de gravar (PRIV-02), com teste.
 - [x] **F2.6** Registro de acesso (IP e data/hora) e rotina que apaga registros com mais de 6 meses (PRIV-03).
 - [x] **F2.7** Limite de tentativas nas rotas de login, cadastro e recuperação de senha.
@@ -466,13 +466,13 @@ Pipeline conforme a aba 08 da Matriz.
 - [x] **F2.14** Check-in diário: CHK-01 a CHK-04.
 - [x] **F2.15** Catálogo para o app: listar e detalhar conteúdos aprovados, com filtros.
 - [x] **F2.16** `GET /hoje`: carrega contexto, chama o motor, salva a `Recommendation` com auditoria e devolve o resultado.
-- [ ] **F2.17** Resposta de pergunta adaptativa, que recalcula a recomendação.
-- [ ] **F2.18** Eventos de uso e feedback pós-prática.
+- [x] **F2.17** Resposta de pergunta adaptativa, que recalcula a recomendação.
+- [x] **F2.18** Eventos de uso e feedback pós-prática.
 
 *Testes*
-- [ ] **F2.19** Teste ponta a ponta: cadastro → verificação → onboarding → check-in → `/hoje` → evento de conclusão → feedback.
-- [ ] **F2.20** Teste: check-in com dor reaplica a segurança (CHK-03).
-- [ ] **F2.21** Teste: nenhum dado de saúde aparece nos logs.
+- [x] **F2.19** Teste ponta a ponta: cadastro → verificação → onboarding → check-in → `/hoje` → evento de conclusão → feedback.
+- [x] **F2.20** Teste: check-in com dor reaplica a segurança (CHK-03).
+- [x] **F2.21** Teste: nenhum dado de saúde aparece nos logs.
 
 **Entregáveis:** API rodando localmente com Swagger; banco com seed.
 
@@ -731,7 +731,7 @@ Um requisito está pronto quando:
 |---|---|---|---|
 | P-01 | Idade mínima exata e regras para menores | AUTH-05, AUTH-06 | Fase 7 |
 | P-02 | Lista de sinais de alerta e limites de persistência (masters + profissional de saúde) | MOT-13, MOT-14 | Fase 7 (o mecanismo é feito na Fase 1) |
-| P-03 | Provedor de vídeo e áudio | ADM-04, PRA-03, PRA-04 | Fase 3 |
+| P-03 | Provedor de vídeo e áudio | ADM-04, PRA-03, PRA-04 | **Decidido em 01/10:** Mux, com Cloudflare Stream como segunda opção ([decisoes.md](decisoes.md)). Falta Leonardo abrir a conta. O áudio em segundo plano (PRA-04) não vem do provedor: é do app, e continua sendo o maior risco da Fase 4 |
 | P-04 | Hospedagem da API e do banco | Fase 7 | **Parcial:** API e banco no Render para demonstração, descritos em [hospedagem.md](hospedagem.md) e no `render.yaml`. A hospedagem de produção, com banco pago e backup diário, continua na Fase 7 (F7.4) |
 | P-05 | Revisão jurídica da política de privacidade | Publicação | Fase 7 |
 | P-06 | "Minhas anotações" (aparece nas telas, mas não nos documentos): entra ou não? | — | Fase 5 |
