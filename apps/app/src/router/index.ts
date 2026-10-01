@@ -15,6 +15,9 @@ const routes: RouteRecordRaw[] = [
   { path: '/onboarding/ayurveda', component: () => import('@/views/AyurvedaPage.vue') },
   { path: '/onboarding/preferencias', component: () => import('@/views/PreferenciasPage.vue') },
   { path: '/criar-conta', component: () => import('@/views/CriarContaPage.vue') },
+  { path: '/verificar-email', component: () => import('@/views/VerificarEmailPage.vue') },
+  { path: '/redefinir-senha', component: () => import('@/views/RecuperarSenhaPage.vue') },
+  { path: '/esqueci-senha', component: () => import('@/views/RecuperarSenhaPage.vue') },
   {
     path: '/checkin',
     component: () => import('@/views/DailyCheckinPage.vue'),

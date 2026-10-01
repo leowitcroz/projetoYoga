@@ -9,8 +9,8 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 - **Fase atual:** 1 · Motor (núcleo pronto) + 2 · API base (conta e onboarding prontos). A Fase 0 só espera a CI verde no GitHub (F0.11).
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
-- **Falta para fechar a fase 2:** verificação de e-mail (AUTH-02), recuperação de senha (AUTH-04), limite de tentativas (F2.7), Swagger (F2.4), check-in e catálogo.
-- **Próximo passo:** upload de vídeo no painel (F3.5, depende de decidir o provedor — P-03) ou a segurança da conta (AUTH-02, AUTH-04, F2.7), obrigatória antes de aluno real.
+- **Falta para fechar a fase 2:** Swagger (F2.4), registro de acesso (F2.6), excluir conta (F2.10), pergunta adaptativa (F2.17) e eventos de uso (F2.18).
+- **Próximo passo:** excluir conta (F2.10, AUTH-07) e registro de acesso (F2.6) fecham a privacidade da Fase 2; o upload de vídeo (F3.5) continua esperando a escolha do provedor (P-03).
 - **Commits locais ainda não enviados:** 4.
 
 ## Esperando resposta
@@ -28,6 +28,16 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ---
 
 ## Linha do tempo
+
+### 01/10/2026
+
+- **Segurança da conta (AUTH-02, AUTH-04, F2.7, F2.9):** verificação de e-mail, recuperação de senha e limite de tentativas nas rotas de conta.
+- **O cadastro deixou de abrir sessão.** Sem confirmar o e-mail ninguém entra, como manda o AUTH-02. A tela de "confirme o seu e-mail" tem o reenvio do link.
+- **"Esqueci minha senha" deixou de ser enfeite:** a tela existia e não fazia nada; agora pede o link e, com ele, troca a senha — o que também **derruba as sessões abertas**, que é o que torna a redefinição útil quando alguém mais tinha acesso à conta.
+- **Links de uso único:** no banco fica só o hash, como já era com o refresh token. Vencem em 24 h (confirmação) e 1 h (senha); pedir um novo invalida o anterior.
+- **Respostas iguais para e-mail que existe e que não existe** em "esqueci a senha" e no reenvio: a API não vira uma lista de quem tem conta aqui.
+- **Mailpit no `docker compose`:** os e-mails de desenvolvimento ficam em http://localhost:8025 e não saem para o mundo.
+- **13 testes novos** de segurança da conta; 57 ponta a ponta na API no total.
 
 ### 29/09/2026 (Fase 3)
 

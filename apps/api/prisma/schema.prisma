@@ -20,6 +20,8 @@ model User {
   senhaHash    String
   /// Quem pode o quê (ADM-01, ADM-10). Todo cadastro pelo app nasce ALUNO.
   papel        Role     @default(ALUNO)
+  /// Quando a pessoa confirmou o e-mail (AUTH-02). Nulo = ainda não confirmou.
+  emailVerificadoEm DateTime?
   criadoEm     DateTime @default(now())
   atualizadoEm DateTime @updatedAt
 
@@ -30,6 +32,32 @@ model User {
   checkins       DailyCheckin[]
   recomendacoes  Recommendation[]
   conteudos      Content[]
+  tokens         AuthToken[]
+}
+
+/// Link de uso único enviado por e-mail (AUTH-02, AUTH-04).
+///
+/// Guardamos só o hash: quem ler o banco não consegue entrar na conta de
+/// ninguém, do mesmo jeito que acontece com o refresh token.
+model AuthToken {
+  id        String        @id @default(uuid())
+  userId    String
+  tipo      AuthTokenType
+  tokenHash String        @unique
+  expiraEm  DateTime
+  usadoEm   DateTime?
+  criadoEm  DateTime      @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, tipo])
+}
+
+enum AuthTokenType {
+  /// Confirmação de e-mail, válida por 24 h (AUTH-02).
+  VERIFICACAO_EMAIL
+  /// Redefinição de senha, válida por 1 h (AUTH-04).
+  REDEFINICAO_SENHA
 }
 
 /// Papéis do sistema (ADM-01, ADM-10).

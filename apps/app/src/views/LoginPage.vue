@@ -49,7 +49,9 @@
               <span v-if="erros.senha" class="erro">{{ erros.senha }}</span>
             </label>
 
-            <button type="button" class="link esqueci">Esqueci minha senha</button>
+            <button type="button" class="link esqueci" @click="irParaRecuperacao">
+              Esqueci minha senha
+            </button>
 
             <p v-if="erroDaApi" class="erro erro-api">{{ erroDaApi }}</p>
 
@@ -95,6 +97,10 @@ const mostrarSenha = ref(false);
 const erros = ref<ErrosLogin>({});
 const entrando = ref(false);
 const erroDaApi = ref('');
+
+function irParaRecuperacao() {
+  router.push('/esqueci-senha');
+}
 
 function criarConta() {
   router.push('/onboarding');

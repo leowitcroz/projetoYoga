@@ -4,6 +4,7 @@ import request from 'supertest';
 import type { App } from 'supertest/types.js';
 import { AppModule } from './../src/app.module.js';
 import { PrismaService } from './../src/prisma/prisma.service.js';
+import { criarContaVerificada } from './conta-de-teste.js';
 
 /**
  * Painel dos professores: quem pode o quê (ADM-01, ADM-06, ADM-10) e o
@@ -57,17 +58,8 @@ describe('Painel (e2e)', () => {
   };
 
   async function cadastrar(email: string): Promise<string> {
-    const resposta = await request(app.getHttpServer())
-      .post('/auth/registro')
-      .send({
-        nome: `Pessoa ${email}`,
-        email,
-        telefone: '(11) 91234-5678',
-        senha,
-        aceitePrivacidade: true,
-      })
-      .expect(201);
-    return resposta.body.accessToken as string;
+    const conta = await criarContaVerificada(app, { nome: `Pessoa ${email}`, email, senha });
+    return conta.accessToken;
   }
 
   beforeAll(async () => {

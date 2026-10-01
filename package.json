@@ -24,7 +24,7 @@
     "format:check": "prettier --check .",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "db:up": "docker compose up -d db",
+    "db:up": "docker compose up -d db mailpit",
     "db:down": "docker compose down"
   },
   "devDependencies": {

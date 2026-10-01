@@ -17,5 +17,15 @@ services:
       timeout: 5s
       retries: 10
 
+  # Caixa de e-mail local (F2.9): a API manda os e-mails para cá em vez de
+  # mandar para o mundo. Veja o que foi enviado em http://localhost:8025
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - '1025:1025'
+      - '8025:8025'
+    environment:
+      MP_MAX_MESSAGES: 200
+
 volumes:
   db-data:

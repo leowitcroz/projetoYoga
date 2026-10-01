@@ -174,7 +174,7 @@ projetoYoga/
 | ID | Requisito | Critérios de aceite |
 |---|---|---|
 | AUTH-01 | Cadastro com **nome completo, e-mail, telefone e senha** | Acontece **no fim do onboarding** (depois das perguntas), na tela "Seu perfil está pronto!"; senha com mínimo de 8 caracteres; e-mail único; senha salva apenas como hash argon2; telefone com DDD; aceite da política registrado em `Consent`. Data de nascimento depende de P-01 |
-| AUTH-02 | Verificação de e-mail | Link com validade de 24 h; conta não verificada não acessa o app |
+| AUTH-02 | Verificação de e-mail | Link com validade de 24 h; conta não verificada não acessa o app. **O cadastro não abre sessão**: devolve `precisaVerificarEmail`. Pode ser desligado com `EXIGIR_EMAIL_VERIFICADO=0` em ambientes sem provedor de e-mail |
 | AUTH-03 | Login e sessão | Token de acesso de 15 min + refresh de 30 dias; logout invalida o refresh |
 | AUTH-04 | Recuperação de senha | Link por e-mail com validade de 1 h; resposta igual para e-mail existente ou não |
 | AUTH-05 | Idade mínima | Bloqueia cadastro abaixo da idade mínima (**valor pendente**, P-01); menores de 18 seguem o fluxo AUTH-06 |
@@ -452,11 +452,11 @@ Pipeline conforme a aba 08 da Matriz.
 - [ ] **F2.4** Documentação automática da API (Swagger) em `/docs`, só em desenvolvimento.
 - [x] **F2.5** Logger que remove campos de saúde antes de gravar (PRIV-02), com teste.
 - [ ] **F2.6** Registro de acesso (IP e data/hora) e rotina que apaga registros com mais de 6 meses (PRIV-03).
-- [ ] **F2.7** Limite de tentativas nas rotas de login, cadastro e recuperação de senha.
+- [x] **F2.7** Limite de tentativas nas rotas de login, cadastro e recuperação de senha.
 
 *Conta*
-- [~] **F2.8** Cadastro, verificação de e-mail, login, refresh, logout, recuperação de senha: AUTH-01 a AUTH-04. **Parcial:** cadastro, login, refresh e logout prontos; verificação de e-mail (AUTH-02) e recuperação de senha (AUTH-04) continuam pendentes.
-- [ ] **F2.9** Envio de e-mail em desenvolvimento com Mailpit (caixa de e-mail local); provedor real fica para a Fase 7.
+- [x] **F2.8** Cadastro, verificação de e-mail, login, refresh, logout, recuperação de senha: AUTH-01 a AUTH-04.
+- [x] **F2.9** Envio de e-mail em desenvolvimento com Mailpit (caixa de e-mail local); provedor real fica para a Fase 7.
 - [ ] **F2.10** Excluir conta: AUTH-07.
 - [x] **F2.11** Registro de consentimentos: PRIV-01.
 

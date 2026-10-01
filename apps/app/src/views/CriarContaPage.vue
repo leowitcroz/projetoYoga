@@ -145,13 +145,19 @@ async function criar() {
   erroDaApi.value = '';
   try {
     // Cria a conta e manda junto tudo o que foi respondido nos 5 passos (AUTH-01).
-    await criarConta({
+    const resultado = await criarConta({
       nome: nome.value,
       email: email.value,
       telefone: telefone.value,
       senha: senha.value,
       aceitePrivacidade: aceite.value,
     });
+
+    // AUTH-02: sem confirmar o e-mail não há sessão.
+    if (resultado.precisaVerificarEmail) {
+      router.replace({ path: '/verificar-email', query: { email: resultado.email } });
+      return;
+    }
     router.replace('/tabs/hoje');
   } catch (erro) {
     erroDaApi.value =

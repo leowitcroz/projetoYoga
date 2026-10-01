@@ -1,8 +1,17 @@
 import { randomBytes, createHash } from 'node:crypto';
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { EmailService } from '../email/email.service.js';
+import { TokensService } from './tokens.service.js';
 import type { RegistroDto } from './dto/registro.dto.js';
 import type { LoginDto } from './dto/login.dto.js';
 
@@ -19,14 +28,37 @@ export interface Sessao {
   usuario: { id: string; nome: string; email: string };
 }
 
+/**
+ * O que o cadastro devolve.
+ *
+ * Quando a confirmação de e-mail está exigida (AUTH-02), o cadastro **não**
+ * abre sessão: a pessoa precisa provar que o e-mail é dela antes de entrar.
+ * Com a exigência desligada, a sessão vem junto e ela entra direto.
+ */
+export type ResultadoDoCadastro =
+  { precisaVerificarEmail: true; email: string } | ({ precisaVerificarEmail: false } & Sessao);
+
 @Injectable()
 export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwt: JwtService,
+    private readonly tokens: TokensService,
+    private readonly email: EmailService,
+    private readonly config: ConfigService,
   ) {}
 
-  async registrar(dados: RegistroDto): Promise<Sessao> {
+  /**
+   * AUTH-02 — conta sem e-mail confirmado não entra no app.
+   *
+   * Dá para desligar com EXIGIR_EMAIL_VERIFICADO=0 em ambientes sem provedor
+   * de e-mail, como a demonstração: sem isso, ninguém conseguiria entrar.
+   */
+  private get exigeEmailVerificado(): boolean {
+    return this.config.get<string>('EXIGIR_EMAIL_VERIFICADO') !== '0';
+  }
+
+  async registrar(dados: RegistroDto): Promise<ResultadoDoCadastro> {
     const email = dados.email.trim().toLowerCase();
 
     const jaExiste = await this.prisma.user.findUnique({ where: { email } });
@@ -62,7 +94,83 @@ export class AuthService {
       select: { id: true, nome: true, email: true },
     });
 
-    return this.abrirSessao(usuario);
+    await this.mandarVerificacao(usuario);
+
+    if (this.exigeEmailVerificado) {
+      return { precisaVerificarEmail: true, email: usuario.email };
+    }
+    return { precisaVerificarEmail: false, ...(await this.abrirSessao(usuario)) };
+  }
+
+  /** Cria o link de confirmação e manda por e-mail (AUTH-02). */
+  private async mandarVerificacao(usuario: {
+    id: string;
+    nome: string;
+    email: string;
+  }): Promise<void> {
+    const token = await this.tokens.criar(usuario.id, 'VERIFICACAO_EMAIL');
+    await this.email.enviarVerificacao(usuario.email, usuario.nome, token);
+  }
+
+  /** AUTH-02 — confirma o e-mail a partir do link recebido. */
+  async verificarEmail(token: string): Promise<{ verificado: true }> {
+    const userId = await this.tokens.usar(token, 'VERIFICACAO_EMAIL');
+    if (!userId) {
+      throw new BadRequestException('Link inválido ou vencido. Peça um novo e-mail de confirmação');
+    }
+
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { emailVerificadoEm: new Date() },
+    });
+
+    return { verificado: true };
+  }
+
+  /**
+   * Reenvia a confirmação.
+   *
+   * Responde igual para e-mail que existe e para e-mail que não existe: quem
+   * tenta adivinhar não descobre quem tem conta aqui.
+   */
+  async reenviarVerificacao(email: string): Promise<void> {
+    const usuario = await this.prisma.user.findUnique({
+      where: { email: email.trim().toLowerCase() },
+      select: { id: true, nome: true, email: true, emailVerificadoEm: true },
+    });
+
+    if (!usuario || usuario.emailVerificadoEm) return;
+    await this.mandarVerificacao(usuario);
+  }
+
+  /** AUTH-04 — primeiro passo: pedir o link de redefinição. */
+  async pedirRedefinicaoDeSenha(email: string): Promise<void> {
+    const usuario = await this.prisma.user.findUnique({
+      where: { email: email.trim().toLowerCase() },
+      select: { id: true, nome: true, email: true },
+    });
+    if (!usuario) return; // mesma resposta de sempre
+
+    const token = await this.tokens.criar(usuario.id, 'REDEFINICAO_SENHA');
+    await this.email.enviarRedefinicaoDeSenha(usuario.email, usuario.nome, token);
+  }
+
+  /** AUTH-04 — segundo passo: trocar a senha e derrubar as sessões abertas. */
+  async redefinirSenha(token: string, novaSenha: string): Promise<void> {
+    const userId = await this.tokens.usar(token, 'REDEFINICAO_SENHA');
+    if (!userId) {
+      throw new BadRequestException('Link inválido ou vencido. Peça a redefinição de novo');
+    }
+
+    const senhaHash = await argon2.hash(novaSenha, { type: argon2.argon2id });
+    await this.prisma.user.update({ where: { id: userId }, data: { senhaHash } });
+
+    // Trocar a senha encerra as sessões antigas: é o que torna a redefinição
+    // útil quando alguém mais tinha acesso à conta.
+    await this.prisma.refreshToken.updateMany({
+      where: { userId, revogadoEm: null },
+      data: { revogadoEm: new Date() },
+    });
   }
 
   async entrar(dados: LoginDto): Promise<Sessao> {
@@ -79,6 +187,12 @@ export class AuthService {
 
     const confere = await argon2.verify(usuario.senhaHash, dados.senha);
     if (!confere) throw erro;
+
+    if (this.exigeEmailVerificado && !usuario.emailVerificadoEm) {
+      throw new ForbiddenException(
+        'Confirme o seu e-mail para entrar. Veja a mensagem que enviamos a você',
+      );
+    }
 
     return this.abrirSessao({ id: usuario.id, nome: usuario.nome, email: usuario.email });
   }

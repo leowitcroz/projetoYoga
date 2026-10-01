@@ -4,6 +4,7 @@ import request from 'supertest';
 import type { App } from 'supertest/types.js';
 import { AppModule } from './../src/app.module.js';
 import { PrismaService } from './../src/prisma/prisma.service.js';
+import { criarContaVerificada } from './conta-de-teste.js';
 
 /**
  * Caminho completo da conta: cadastro com as respostas do onboarding,
@@ -55,18 +56,24 @@ describe('Conta e onboarding (e2e)', () => {
     await app.close();
   });
 
-  it('cadastra e já devolve a sessão (AUTH-01)', async () => {
+  it('cadastra e pede a confirmação do e-mail (AUTH-01, AUTH-02)', async () => {
     const resposta = await request(app.getHttpServer())
       .post('/auth/registro')
       .send(cadastro)
       .expect(201);
 
-    expect(resposta.body.accessToken).toBeTruthy();
-    expect(resposta.body.refreshToken).toBeTruthy();
-    expect(resposta.body.usuario.nome).toBe('Júlia de Teste');
-    // A resposta do cadastro nunca devolve a senha nem os dados de saúde.
+    // Sem confirmar o e-mail não há sessão: ninguém entra só por se cadastrar.
+    expect(resposta.body.precisaVerificarEmail).toBe(true);
+    expect(resposta.body.accessToken).toBeUndefined();
+    // A resposta nunca devolve a senha nem os dados de saúde.
     expect(JSON.stringify(resposta.body)).not.toContain('segredo123');
     expect(JSON.stringify(resposta.body)).not.toContain('ansiedade');
+
+    // Daqui para a frente, os testes falam de quem já confirmou.
+    await prisma.user.update({
+      where: { email },
+      data: { emailVerificadoEm: new Date() },
+    });
   });
 
   it('recusa e-mail repetido', async () => {
@@ -151,17 +158,15 @@ describe('Conta e onboarding (e2e)', () => {
   });
 
   it('só aceita dados de saúde com consentimento de saúde (ONB-03)', async () => {
-    const semSaude = await request(app.getHttpServer())
-      .post('/auth/registro')
-      .send({
-        ...cadastro,
-        email: emailSemSaude,
-        aceiteSaude: false,
-        saude: { condicoes: ['gestacao'] },
-      })
-      .expect(201);
+    const conta = await criarContaVerificada(app, {
+      nome: cadastro.nome,
+      email: emailSemSaude,
+      senha,
+      aceiteSaude: false,
+      saude: { condicoes: ['gestacao'] },
+    });
 
-    const token = semSaude.body.accessToken as string;
+    const token = conta.accessToken;
     await request(app.getHttpServer())
       .put('/onboarding/saude')
       .set('Authorization', `Bearer ${token}`)

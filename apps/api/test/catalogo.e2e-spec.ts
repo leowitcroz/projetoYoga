@@ -6,6 +6,7 @@ import { CATALOGO_DE_TESTE } from '@life/motor';
 import { AppModule } from './../src/app.module.js';
 import { PrismaService } from './../src/prisma/prisma.service.js';
 import { paraLinha } from './../src/hoje/tradutor.js';
+import { criarContaVerificada } from './conta-de-teste.js';
 
 describe('Catálogo (e2e)', () => {
   let app: INestApplication<App>;
@@ -31,18 +32,8 @@ describe('Catálogo (e2e)', () => {
       await prisma.content.upsert({ where: { id: linha.id }, create: linha, update: linha });
     }
 
-    const cadastro = await request(app.getHttpServer())
-      .post('/auth/registro')
-      .send({
-        nome: 'Curioso de Teste',
-        email,
-        telefone: '(11) 91234-5678',
-        senha: 'segredo123',
-        aceitePrivacidade: true,
-      })
-      .expect(201);
-
-    token = cadastro.body.accessToken as string;
+    const conta = await criarContaVerificada(app, { nome: 'Curioso de Teste', email });
+    token = conta.accessToken;
   });
 
   afterAll(async () => {

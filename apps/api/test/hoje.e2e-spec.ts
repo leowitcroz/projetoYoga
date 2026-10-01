@@ -6,6 +6,7 @@ import { CATALOGO_DE_TESTE } from '@life/motor';
 import { AppModule } from './../src/app.module.js';
 import { PrismaService } from './../src/prisma/prisma.service.js';
 import { paraLinha } from './../src/hoje/tradutor.js';
+import { criarContaVerificada } from './conta-de-teste.js';
 
 /**
  * Caminho completo: cadastro → check-in → recomendação.
@@ -40,28 +41,23 @@ describe('Prática de hoje (e2e)', () => {
       await prisma.content.upsert({ where: { id: linha.id }, create: linha, update: linha });
     }
 
-    const cadastro = await request(app.getHttpServer())
-      .post('/auth/registro')
-      .send({
-        nome: 'Ana de Teste',
-        email,
-        telefone: '(11) 91234-5678',
-        senha,
-        aceitePrivacidade: true,
-        aceiteSaude: true,
-        onboarding: {
-          objetivoPrincipal: 'estresse',
-          objetivosSecundarios: ['sono'],
-          experiencia: { asanas: 'comecando', pranayama: 'comecando', nidra: 'comecando' },
-          estilos: ['Hatha'],
-          passoConcluido: 5,
-        },
-        saude: { condicoes: [] },
-      })
-      .expect(201);
+    const conta = await criarContaVerificada(app, {
+      nome: 'Ana de Teste',
+      email,
+      senha,
+      aceiteSaude: true,
+      onboarding: {
+        objetivoPrincipal: 'estresse',
+        objetivosSecundarios: ['sono'],
+        experiencia: { asanas: 'comecando', pranayama: 'comecando', nidra: 'comecando' },
+        estilos: ['Hatha'],
+        passoConcluido: 5,
+      },
+      saude: { condicoes: [] },
+    });
 
-    token = cadastro.body.accessToken as string;
-    userId = cadastro.body.usuario.id as string;
+    token = conta.accessToken;
+    userId = conta.id;
   });
 
   afterAll(async () => {
