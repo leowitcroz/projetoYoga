@@ -34,6 +34,7 @@ model User {
   conteudos      Content[]
   tokens         AuthToken[]
   eventos        PracticeEvent[]
+  trilhas        Track[]
 }
 
 /// O que a pessoa fez com a prática (F2.18).
@@ -243,17 +244,53 @@ model Content {
   /// Tags ayurvédicas, quando houver.
   ayurveda Json?
 
+  /// Trilha a que a prática pertence, se pertencer a alguma (ADM-05).
   trilhaId    String?
+  /// Posição dentro da trilha, de 1 em diante. Quem manda nela é a trilha:
+  /// o painel reordena a lista inteira, ninguém digita o número.
   ordemTrilha Int?
 
   criadoEm     DateTime @default(now())
   atualizadoEm DateTime @updatedAt
 
-  autor User? @relation(fields: [autorId], references: [id], onDelete: SetNull)
+  autor  User?  @relation(fields: [autorId], references: [id], onDelete: SetNull)
+  trilha Track? @relation(fields: [trilhaId], references: [id], onDelete: SetNull)
 
   @@index([status])
   @@index([autorId])
   @@index([trilhaId, ordemTrilha])
+}
+
+/// Trilha: práticas feitas para serem percorridas em ordem (ADM-05).
+///
+/// Antes a trilha era só um texto repetido em cada prática. Um erro de
+/// digitação tirava a aula da sequência sem avisar ninguém, e o bônus que o
+/// motor dá à próxima aula (PER-008) simplesmente deixava de acontecer.
+model Track {
+  id        String  @id
+  nome      String
+  descricao String?
+
+  /// Quantas aulas a trilha terá quando estiver pronta. É um alvo, não um
+  /// limite: serve para o painel mostrar "3 de 8" e cobrar o que falta.
+  totalAulas Int
+
+  /// Trilha que convém ter sido feita antes desta. Vazio = abre sozinha.
+  preRequisitoId String?
+
+  /// Quem criou. Vazio quando o autor some do sistema.
+  autorId String?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  preRequisito Track?    @relation("PreRequisitoDaTrilha", fields: [preRequisitoId], references: [id], onDelete: SetNull)
+  dependentes  Track[]   @relation("PreRequisitoDaTrilha")
+  autor        User?     @relation(fields: [autorId], references: [id], onDelete: SetNull)
+  aulas        Content[]
+
+  @@index([autorId])
+  @@index([preRequisitoId])
 }
 
 /// Fluxo de aprovação do conteúdo (ADM-06).

@@ -9,6 +9,7 @@
       <nav>
         <router-link to="/">Início</router-link>
         <router-link to="/conteudos">Práticas</router-link>
+        <router-link to="/trilhas">Trilhas</router-link>
         <router-link to="/revisao">Aguardando revisão</router-link>
         <router-link to="/alunos">Alunos</router-link>
       </nav>

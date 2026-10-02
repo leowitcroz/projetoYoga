@@ -215,15 +215,18 @@
           </label>
         </div>
 
-        <label class="campo">
+        <label class="campo largo">
           <span>Trilha</span>
-          <input v-model="ficha.trilhaId" type="text" placeholder="TRILHA-MOB-01" />
-          <small>Deixe vazio se a prática for avulsa.</small>
-        </label>
-
-        <label class="campo">
-          <span>Posição na trilha</span>
-          <input v-model.number="ficha.ordemTrilha" type="number" min="1" max="99" />
+          <select v-model="ficha.trilhaId">
+            <option value="">Prática avulsa — fora de trilha</option>
+            <option v-for="trilha in trilhas" :key="trilha.id" :value="trilha.id">
+              {{ trilha.nome }}
+            </option>
+          </select>
+          <small>
+            A prática entra no fim da trilha. Para mudar a ordem, abra a trilha em
+            <router-link to="/trilhas">Trilhas</router-link>.
+          </small>
         </label>
       </fieldset>
 
@@ -262,6 +265,7 @@ import {
   type FichaDaPratica,
   type StatusDoConteudo,
 } from '../servicos/conteudos.js';
+import { listarTrilhas, type TrilhaNaLista } from '../servicos/trilhas.js';
 
 const rota = useRoute();
 const router = useRouter();
@@ -274,6 +278,7 @@ const carregando = ref(false);
 const salvando = ref(false);
 const erro = ref('');
 const recado = ref('');
+const trilhas = ref<TrilhaNaLista[]>([]);
 
 const MODALIDADES = [
   { valor: 'hatha', nome: 'Hatha' },
@@ -376,6 +381,7 @@ function alternarPublicoGestacao(evento: Event) {
 }
 
 onMounted(async () => {
+  trilhas.value = await listarTrilhas();
   if (ehNova.value) return;
 
   carregando.value = true;
@@ -402,7 +408,6 @@ onMounted(async () => {
       seguranca: { ...branco.seguranca, ...(dados.seguranca as object) },
       ayurveda: (dados.ayurveda as Record<string, number>) ?? {},
       trilhaId: (dados.trilhaId as string) ?? '',
-      ordemTrilha: (dados.ordemTrilha as number) ?? undefined,
     };
   } catch (problema) {
     erro.value = problema instanceof Error ? problema.message : 'Não foi possível abrir a prática';
@@ -417,10 +422,7 @@ function paraEnvio(): FichaDaPratica {
   if (!copia.professor) delete copia.professor;
   if (!copia.capaUrl) delete copia.capaUrl;
   if (!copia.videoUrl) delete copia.videoUrl;
-  if (!copia.trilhaId) {
-    delete copia.trilhaId;
-    delete copia.ordemTrilha;
-  }
+  if (!copia.trilhaId) delete copia.trilhaId;
   return copia;
 }
 

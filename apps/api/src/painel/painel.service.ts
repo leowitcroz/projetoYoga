@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -8,6 +9,14 @@ import { PrismaService } from '../prisma/prisma.service.js';
 import type { Papel } from '../auth/papeis.guard.js';
 import type { ConteudoDto } from './dto/conteudo.dto.js';
 import { lerVideo } from './video.js';
+
+/** Quantas vezes insistir quando dois cadastros disputam o mesmo número. */
+const TENTATIVAS_DE_ID = 5;
+
+/** P2002 é o código do Prisma para chave única repetida. */
+function ehIdRepetido(problema: unknown): boolean {
+  return (problema as { code?: string })?.code === 'P2002';
+}
 
 /**
  * Catálogo pelo lado de quem cataloga (ADM-02, ADM-03, ADM-06).
@@ -41,6 +50,8 @@ export class PainelService {
         comentarioRevisao: true,
         atualizadoEm: true,
         autor: { select: { nome: true } },
+        trilha: { select: { id: true, nome: true } },
+        ordemTrilha: true,
       },
     });
   }
@@ -72,18 +83,32 @@ export class PainelService {
   }
 
   async criar(usuarioId: string, dados: ConteudoDto) {
-    const id = await this.gerarId();
+    const trilha = await this.lugarNaTrilha(dados.trilhaId, null, null);
+    const colunas = this.paraColunas(dados);
 
-    return this.prisma.content.create({
-      data: {
-        id,
-        autorId: usuarioId,
-        status: 'RASCUNHO',
-        tipo: 'pratica',
-        ...this.paraColunas(dados),
-      },
-      select: { id: true, titulo: true, status: true },
-    });
+    // O id vem de "o último PRAT- mais um", então dois professores clicando
+    // em "Nova prática" no mesmo instante escolhem o mesmo número e um deles
+    // esbarra na chave duplicada. Em vez de devolver erro a quem não fez nada
+    // de errado, pegamos o próximo livre e tentamos de novo.
+    for (let tentativa = 0; tentativa < TENTATIVAS_DE_ID; tentativa++) {
+      try {
+        return await this.prisma.content.create({
+          data: {
+            id: await this.gerarId(),
+            autorId: usuarioId,
+            status: 'RASCUNHO',
+            tipo: 'pratica',
+            ...colunas,
+            ...trilha,
+          },
+          select: { id: true, titulo: true, status: true },
+        });
+      } catch (problema) {
+        if (!ehIdRepetido(problema)) throw problema;
+      }
+    }
+
+    throw new ConflictException('Muita gente cadastrando ao mesmo tempo. Salve de novo');
   }
 
   async atualizar(id: string, usuarioId: string, papel: Papel, dados: ConteudoDto) {
@@ -93,10 +118,11 @@ export class PainelService {
     // está no ar continua valendo até o master aprovar a mudança — por isso o
     // status volta para "em revisão", e não para rascunho.
     const status = atual.status === 'APROVADO' ? 'EM_REVISAO' : atual.status;
+    const trilha = await this.lugarNaTrilha(dados.trilhaId, atual.trilhaId, atual.ordemTrilha);
 
     return this.prisma.content.update({
       where: { id },
-      data: { ...this.paraColunas(dados), status },
+      data: { ...this.paraColunas(dados), ...trilha, status },
       select: { id: true, titulo: true, status: true },
     });
   }
@@ -186,9 +212,39 @@ export class PainelService {
       // Sem chaves com `undefined`: o Prisma só aceita JSON de verdade.
       seguranca: JSON.parse(JSON.stringify(dados.seguranca)) as Record<string, number | boolean>,
       ayurveda: dados.ayurveda ? this.somenteNumeros(dados.ayurveda, 3) : undefined,
-      trilhaId: dados.trilhaId?.trim() || null,
-      ordemTrilha: dados.ordemTrilha ?? null,
     };
+  }
+
+  /**
+   * Onde a prática entra na trilha (ADM-05).
+   *
+   * A posição não é digitada: quem muda de trilha vai para o fim da fila, e
+   * quem continua na mesma fica onde estava — salvar a ficha para corrigir o
+   * título não pode reembaralhar a sequência que o professor montou.
+   */
+  private async lugarNaTrilha(
+    escolhida: string | undefined,
+    trilhaAtual: string | null,
+    ordemAtual: number | null,
+  ): Promise<{ trilhaId: string | null; ordemTrilha: number | null }> {
+    const trilhaId = escolhida?.trim() || null;
+
+    if (!trilhaId) return { trilhaId: null, ordemTrilha: null };
+    if (trilhaId === trilhaAtual) return { trilhaId, ordemTrilha: ordemAtual };
+
+    const trilha = await this.prisma.track.findUnique({
+      where: { id: trilhaId },
+      select: { id: true },
+    });
+    if (!trilha) throw new BadRequestException('Essa trilha não existe mais');
+
+    const ultima = await this.prisma.content.findFirst({
+      where: { trilhaId },
+      orderBy: { ordemTrilha: 'desc' },
+      select: { ordemTrilha: true },
+    });
+
+    return { trilhaId, ordemTrilha: (ultima?.ordemTrilha ?? 0) + 1 };
   }
 
   /** Descarta o que não é número e o que está fora da escala. */

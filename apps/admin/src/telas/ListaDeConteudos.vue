@@ -33,6 +33,9 @@
               {{ conteudo.modalidade }}
               <template v-if="conteudo.autor"> · {{ conteudo.autor.nome }}</template>
             </span>
+            <span v-if="conteudo.trilha" class="detalhe">
+              {{ conteudo.trilha.nome }} · aula {{ conteudo.ordemTrilha }}
+            </span>
             <span v-if="conteudo.comentarioRevisao" class="devolucao">
               Devolvida: {{ conteudo.comentarioRevisao }}
             </span>

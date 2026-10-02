@@ -14,6 +14,8 @@ export interface ConteudoNaLista {
   comentarioRevisao: string | null;
   atualizadoEm: string;
   autor: { nome: string } | null;
+  trilha: { id: string; nome: string } | null;
+  ordemTrilha: number | null;
 }
 
 export interface FichaDaPratica {
@@ -52,8 +54,8 @@ export interface FichaDaPratica {
     publicoEspecifico?: string;
   };
   ayurveda?: Record<string, number>;
+  /** A posição dentro da trilha é da tela da trilha, não desta ficha. */
   trilhaId?: string;
-  ordemTrilha?: number;
 }
 
 export function listarConteudos(): Promise<ConteudoNaLista[]> {

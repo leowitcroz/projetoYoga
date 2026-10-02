@@ -20,6 +20,21 @@ const rotas: RouteRecordRaw[] = [
     meta: { protegida: true },
   },
   {
+    path: '/trilhas',
+    component: () => import('./telas/ListaDeTrilhas.vue'),
+    meta: { protegida: true },
+  },
+  {
+    path: '/trilhas/nova',
+    component: () => import('./telas/FichaDaTrilha.vue'),
+    meta: { protegida: true },
+  },
+  {
+    path: '/trilhas/:id',
+    component: () => import('./telas/FichaDaTrilha.vue'),
+    meta: { protegida: true },
+  },
+  {
     path: '/alunos',
     component: () => import('./telas/ListaDeAlunos.vue'),
     meta: { protegida: true },

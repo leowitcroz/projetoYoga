@@ -488,7 +488,7 @@ Pipeline conforme a aba 08 da Matriz.
 
 ### Fase 3 · Painel
 
-**Status:** Em andamento — papéis, login do painel, cadastro de prática com a ficha do motor e painel do master (F3.1 a F3.5, F3.8 a F3.10, F3.12 a F3.15). Faltam trilhas (F3.6), receitas (F3.7) e o editor de pesos (F3.11)
+**Status:** Em andamento — papéis, login do painel, cadastro de prática com a ficha do motor, trilhas e painel do master (F3.1 a F3.6, F3.8 a F3.10, F3.12 a F3.15). Faltam receitas (F3.7) e o editor de pesos (F3.11)
 
 **Objetivo:** permitir que os professores cataloguem conteúdo real, que o master aprove e que o admin ajuste o motor. **Ao final desta fase, os professores já podem começar a catalogar** enquanto o app é terminado.
 
@@ -506,7 +506,7 @@ Pipeline conforme a aba 08 da Matriz.
 - [x] **F3.3** Cadastro de conteúdo com a ficha completa e validação: ADM-02.
 - [x] **F3.4** Tags de segurança com marcação obrigatória para casos sensíveis: ADM-03.
 - [x] **F3.5** Upload de mídia para o provedor escolhido, com duração preenchida automaticamente: ADM-04. *Enquanto for YouTube (P-03), o professor cola o link e digita a duração; a duração automática volta a valer com o Mux.*
-- [ ] **F3.6** Trilhas: criar, definir número de aulas, ordem e pré-requisitos: ADM-05.
+- [x] **F3.6** Trilhas: criar, definir número de aulas, ordem e pré-requisitos: ADM-05. A ordem é a lista da tela da trilha, não um número digitado em cada ficha.
 - [ ] **F3.7** Receitas e orientações ayurvédicas: ADM-07.
 
 *Aprovação*

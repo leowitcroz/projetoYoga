@@ -134,16 +134,17 @@ export class ConteudoDto {
   @IsObject()
   ayurveda?: Record<string, number>;
 
+  /**
+   * Trilha a que a prática pertence (ADM-05). Vazio = prática avulsa.
+   *
+   * A posição dentro da trilha não vem daqui: quem a define é a tela da
+   * trilha, que manda a lista inteira na ordem. Uma prática que entra por
+   * esta ficha vai para o fim da fila.
+   */
   @IsOptional()
   @IsString()
   @Length(1, 60)
   trilhaId?: string;
-
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  @Max(99)
-  ordemTrilha?: number;
 }
 
 export class DevolverDto {

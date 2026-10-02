@@ -9,9 +9,9 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 - **Fase atual:** 3 · Painel (parcial). A **Fase 2 está concluída**; a Fase 1 só espera Aprenda/Ayurveda/Cozinha Hoje (F1.14) e o motor de jornada (F1.16). A Fase 0 espera a CI verde no GitHub (F0.11).
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
-- **Falta para fechar a fase 3:** trilhas (F3.6), receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11). O **F3.5 está resolvido enquanto for YouTube**: o professor cola o link e digita a duração, como a decisão de 01/10 previu; ele volta a abrir quando a troca pelo Mux acontecer.
-- **Próximo passo:** **trilhas (F3.6)**. O motor já dá +10 para a próxima aula da trilha (PER-008) e o banco já guarda `trilhaId` e `ordemTrilha`, mas no painel a trilha é um texto solto que o professor digita: um erro de digitação apaga o bônus sem avisar ninguém.
-- **Commits locais ainda não enviados:** 11.
+- **Falta para fechar a fase 3:** receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11). O **F3.5 está resolvido enquanto for YouTube**: o professor cola o link e digita a duração, como a decisão de 01/10 previu; ele volta a abrir quando a troca pelo Mux acontecer.
+- **Próximo passo:** **receitas e orientações ayurvédicas (F3.7)**, que andam junto com a aba Cozinha (F1.14, da Fase 1) — vale fazer as duas de uma vez. O editor de pesos (F3.11) fica por último: serve para o Marcos ajustar o motor, e ele ainda não validou os pesos atuais.
+- **Commits locais ainda não enviados:** 14.
 
 ## Esperando resposta
 
@@ -28,6 +28,16 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ---
 
 ## Linha do tempo
+
+### 02/10/2026 (trilhas)
+
+- **Trilha virou tabela (F3.6, ADM-05).** Era um texto que o professor digitava em cada ficha: `TRILHA-MOB-1` em vez de `TRILHA-MOB-01` tirava a aula da sequência sem erro, sem aviso e sem ninguém perceber — o motor simplesmente deixava de oferecer a continuação (PER-008). Agora a trilha tem nome, descrição, número de aulas e pré-requisito, e a ficha da prática escolhe numa lista.
+- **A posição deixou de ser digitada.** A tela da trilha manda a lista inteira na ordem e a API numera de 1 em diante, então buraco e repetição deixaram de ser possíveis. Salvar a ficha de uma aula para corrigir o título não reembaralha mais a sequência.
+- **Pré-requisito não fecha ciclo:** "A exige B" e "B exige A" entravam as duas sem reclamar, e nenhuma das trilhas abriria nunca. A lista de pré-requisitos já nem oferece quem fecharia o círculo.
+- **A trilha cobra o que falta:** quantas aulas faltam para o total e quantas ainda não foram aprovadas — aula não aprovada não chega ao aluno.
+- **Corrida no gerador de id (achada pelo teste novo).** O id saía de "o último `PRAT-` mais um": dois professores clicando em "Nova prática" no mesmo instante escolhiam o mesmo número e um levava erro 500. Agora pega o próximo livre e tenta de novo.
+- **Migração sem perder nada:** a trilha que já existia no catálogo virou registro com as duas aulas na ordem, e o seed passou a criar as trilhas antes das práticas — sem isso, repovoar um banco limpo quebraria na chave estrangeira.
+- 17 testes novos; 100 ponta a ponta na API.
 
 ### 01/10/2026 (limite de tentativas)
 
