@@ -16,6 +16,8 @@ export interface AulaDaLista {
   demandaFisica: number;
   capaUrl?: string | null;
   professor?: string | null;
+  /** Já tem vídeo publicado pelo professor? */
+  temVideo?: boolean;
   objetivos: Record<string, number>;
 }
 

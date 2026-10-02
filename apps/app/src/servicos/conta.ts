@@ -1,7 +1,14 @@
 import { chamar } from './api.js';
 import { esquecerCheckin } from './checkin-do-dia.js';
 import { limparRespostas, respostas } from './respostas.js';
-import { carregarSessaoSalva, limparSessao, salvarSessao, sessao, type Sessao } from './sessao.js';
+import {
+  carregarSessaoSalva,
+  ehContaDeEquipe,
+  limparSessao,
+  salvarSessao,
+  sessao,
+  type Sessao,
+} from './sessao.js';
 
 export interface DadosDoCadastro {
   nome: string;
@@ -78,12 +85,24 @@ export function redefinirSenha(token: string, senha: string): Promise<{ redefini
 }
 
 /** AUTH-03 — login de quem já tem conta. */
+export class ContaDeEquipe extends Error {
+  constructor() {
+    super(
+      'Esta é uma conta de professor. O acesso de vocês é pelo painel, no computador — este aplicativo é dos alunos.',
+    );
+    this.name = 'ContaDeEquipe';
+  }
+}
+
 export async function entrar(email: string, senha: string): Promise<Sessao> {
   const nova = await chamar<Sessao>('/auth/login', {
     metodo: 'POST',
     publica: true,
     corpo: { email, senha },
   });
+
+  // Conta de equipe não vira sessão no app de aluno (ADM-01).
+  if (ehContaDeEquipe(nova.usuario.papel)) throw new ContaDeEquipe();
 
   await salvarSessao(nova);
   // Entrou: as respostas do cadastro já estão na conta, podem sair do aparelho.

@@ -43,7 +43,7 @@ async function acessar() {
   erro.value = '';
   try {
     await entrar(email.value, senha.value);
-    await router.replace('/conteudos');
+    await router.replace('/');
   } catch (problema) {
     erro.value = problema instanceof ErroDaApi ? problema.message : 'Não foi possível entrar agora';
   } finally {

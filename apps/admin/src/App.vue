@@ -7,12 +7,15 @@
       <p class="marca">LIFE · Painel</p>
 
       <nav>
+        <router-link to="/">Início</router-link>
         <router-link to="/conteudos">Práticas</router-link>
         <router-link to="/revisao">Aguardando revisão</router-link>
+        <router-link to="/alunos">Alunos</router-link>
       </nav>
 
       <div class="rodape">
         <p class="quem">{{ sessao.usuario.nome }}</p>
+        <p class="papel">{{ NOME_DO_PAPEL[sessao.usuario.papel ?? ''] ?? 'Equipe' }}</p>
         <button type="button" class="sair" @click="sair">Sair</button>
       </div>
     </aside>
@@ -26,6 +29,12 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { limparSessao, sessao } from './servicos/api.js';
+
+const NOME_DO_PAPEL: Record<string, string> = {
+  PROFESSOR: 'Professor',
+  MASTER: 'Professor master',
+  ADMIN: 'Administração',
+};
 
 const router = useRouter();
 
@@ -85,8 +94,14 @@ nav a.router-link-active {
   border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
+.papel {
+  margin: 0 0 8px;
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.52);
+}
+
 .quem {
-  margin: 0 0 6px;
+  margin: 0 0 2px;
   font-size: 0.82rem;
   color: rgba(255, 255, 255, 0.72);
 }

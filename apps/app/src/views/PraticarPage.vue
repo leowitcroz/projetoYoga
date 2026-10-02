@@ -61,6 +61,10 @@
                   {{ aula.duracaoMin }} min · {{ nomeDoNivel(aula.nivelTecnico) }} ·
                   {{ nomeDaIntensidade(aula.demandaFisica) }}
                 </span>
+                <span v-if="aula.temVideo" class="aula-video">
+                  <ion-icon :icon="playCircleOutline" />
+                  com vídeo
+                </span>
               </span>
             </button>
           </li>
@@ -71,7 +75,8 @@
 </template>
 
 <script setup lang="ts">
-import { IonContent, IonPage } from '@ionic/vue';
+import { IonContent, IonIcon, IonPage } from '@ionic/vue';
+import { playCircleOutline } from 'ionicons/icons';
 import { onMounted, reactive, ref } from 'vue';
 import CapaDaPratica from '@/components/CapaDaPratica.vue';
 import { useRouter } from 'vue-router';
@@ -253,5 +258,14 @@ function abrir(id: string) {
 .aula-detalhes {
   font-size: 0.76rem;
   color: var(--life-texto-suave);
+}
+
+.aula-video {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  font-size: 0.72rem;
+  color: var(--life-verde);
 }
 </style>

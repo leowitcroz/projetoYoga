@@ -15,7 +15,7 @@ const CHAVE = 'life.painel.sessao';
 export interface Sessao {
   accessToken: string;
   refreshToken: string;
-  usuario: { id: string; nome: string; email: string };
+  usuario: { id: string; nome: string; email: string; papel?: string };
 }
 
 export const sessao = ref<Sessao | null>(lerSessaoSalva());

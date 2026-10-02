@@ -25,7 +25,8 @@ export interface Sessao {
   accessToken: string;
   refreshToken: string;
   expiraEm: number;
-  usuario: { id: string; nome: string; email: string };
+  /** O papel vem junto para o app saber que aquela conta não é de aluno. */
+  usuario: { id: string; nome: string; email: string; papel: string };
 }
 
 /**
@@ -91,7 +92,7 @@ export class AuthService {
         // Sem consentimento de saúde ativo, as respostas do passo 3 são descartadas (ONB-03).
         ...(salvaSaude ? { saude: { create: { ...dados.saude! } } } : {}),
       },
-      select: { id: true, nome: true, email: true },
+      select: { id: true, nome: true, email: true, papel: true },
     });
 
     await this.mandarVerificacao(usuario);
@@ -194,14 +195,19 @@ export class AuthService {
       );
     }
 
-    return this.abrirSessao({ id: usuario.id, nome: usuario.nome, email: usuario.email });
+    return this.abrirSessao({
+      id: usuario.id,
+      nome: usuario.nome,
+      email: usuario.email,
+      papel: usuario.papel,
+    });
   }
 
   /** Troca um refresh válido por um par novo e invalida o antigo (rotação). */
   async renovar(refreshToken: string): Promise<Sessao> {
     const guardado = await this.prisma.refreshToken.findUnique({
       where: { tokenHash: this.hashDoToken(refreshToken) },
-      include: { user: { select: { id: true, nome: true, email: true } } },
+      include: { user: { select: { id: true, nome: true, email: true, papel: true } } },
     });
 
     if (!guardado || guardado.revogadoEm !== null || guardado.expiraEm < new Date()) {
@@ -227,13 +233,18 @@ export class AuthService {
   async buscarUsuario(id: string) {
     const usuario = await this.prisma.user.findUnique({
       where: { id },
-      select: { id: true, nome: true, email: true, telefone: true, criadoEm: true },
+      select: { id: true, nome: true, email: true, telefone: true, papel: true, criadoEm: true },
     });
     if (!usuario) throw new UnauthorizedException('Conta não encontrada');
     return usuario;
   }
 
-  private async abrirSessao(usuario: { id: string; nome: string; email: string }): Promise<Sessao> {
+  private async abrirSessao(usuario: {
+    id: string;
+    nome: string;
+    email: string;
+    papel: string;
+  }): Promise<Sessao> {
     const accessToken = await this.jwt.signAsync(
       { sub: usuario.id, email: usuario.email },
       { expiresIn: `${MINUTOS_DO_ACESSO}m` },

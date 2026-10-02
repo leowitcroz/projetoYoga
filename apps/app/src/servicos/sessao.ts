@@ -5,6 +5,8 @@ export interface Usuario {
   id: string;
   nome: string;
   email: string;
+  /** ALUNO, PROFESSOR, MASTER ou ADMIN. Só aluno usa este aplicativo. */
+  papel?: string;
 }
 
 export interface Sessao {
@@ -44,4 +46,13 @@ export async function limparSessao(): Promise<void> {
 
 export function estaLogado(): boolean {
   return sessao.value !== null;
+}
+
+/**
+ * Professor, master e admin trabalham no painel, não aqui. O app de aluno
+ * pergunta sobre sono, dor e humor — nada disso faz sentido para quem entra
+ * para catalogar aulas.
+ */
+export function ehContaDeEquipe(papel?: string): boolean {
+  return papel !== undefined && papel !== 'ALUNO';
 }

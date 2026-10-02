@@ -87,7 +87,7 @@ import { useRouter } from 'vue-router';
 import logo from '@/assets/logo.png';
 import lotus from '@/assets/lotus.png';
 import { temErro, validarLogin, type ErrosLogin } from '@/utils/validacao';
-import { entrar as entrarNaConta } from '@/servicos/conta';
+import { ContaDeEquipe, entrar as entrarNaConta } from '@/servicos/conta';
 import { ErroDaApi } from '@/servicos/api';
 
 const router = useRouter();
@@ -117,6 +117,10 @@ async function entrar() {
     await entrarNaConta(email.value, senha.value);
     router.replace('/tabs/hoje');
   } catch (erro) {
+    if (erro instanceof ContaDeEquipe) {
+      erroDaApi.value = erro.message;
+      return;
+    }
     erroDaApi.value = erro instanceof ErroDaApi ? erro.message : 'Não foi possível entrar agora';
   } finally {
     entrando.value = false;

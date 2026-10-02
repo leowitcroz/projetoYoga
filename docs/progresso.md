@@ -29,6 +29,14 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 ## Linha do tempo
 
+### 01/10/2026 (painel do master)
+
+- **Conta de equipe não entra mais no app de aluno.** O Marcos entrava e via o check-in de sono, dor e humor — perguntas que não fazem sentido para quem cataloga aulas. Agora o login do app recusa professor, master e admin e explica que o acesso deles é pelo painel.
+- **Painel ganhou o Início:** o que precisa da atenção do master (práticas esperando revisão, aprovadas sem vídeo, devolvidas) e os números do catálogo e dos alunos.
+- **Lista de alunos (ADM-10):** nome, inscrição, se confirmou o e-mail e quantas práticas fez. **Nada de saúde** — nem condições, nem dor, nem check-in; a própria tela diz isso, e um teste garante.
+- **Aulas com vídeo são marcadas na lista do app.** O vídeo não aparecia porque as 22 práticas do catálogo de teste não têm nenhum; agora dá para ver quais têm antes de abrir.
+- 4 testes novos; 83 ponta a ponta na API.
+
 ### 01/10/2026 (vídeo)
 
 - **P-03 revisto: começamos pelo YouTube**, por escolha de Leonardo. O Mux continua registrado como o destino quando o app sair do começo.

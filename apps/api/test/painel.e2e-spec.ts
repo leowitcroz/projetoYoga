@@ -282,6 +282,53 @@ describe('Painel (e2e)', () => {
       .expect(400);
   });
 
+  it('ADM-10: o master vê os alunos, mas nenhum dado de saúde (PRIV-02)', async () => {
+    const resposta = await request(app.getHttpServer())
+      .get('/painel/alunos')
+      .set(como('master'))
+      .expect(200);
+
+    expect(Array.isArray(resposta.body)).toBe(true);
+
+    const texto = JSON.stringify(resposta.body);
+    for (const proibido of ['condicoes', 'regiaoDaDor', 'dor', 'humor', 'estresse', 'senhaHash']) {
+      expect(texto).not.toContain(proibido);
+    }
+  });
+
+  it('ADM-10: professor não vê a lista de alunos', async () => {
+    await request(app.getHttpServer()).get('/painel/alunos').set(como('professor')).expect(403);
+    await request(app.getHttpServer()).get('/painel/resumo').set(como('professor')).expect(403);
+  });
+
+  it('o resumo conta o que precisa de atenção', async () => {
+    const resposta = await request(app.getHttpServer())
+      .get('/painel/resumo')
+      .set(como('master'))
+      .expect(200);
+
+    for (const campo of [
+      'alunos',
+      'rascunhos',
+      'emRevisao',
+      'aprovadas',
+      'devolvidas',
+      'semVideo',
+    ]) {
+      expect(typeof resposta.body[campo]).toBe('number');
+    }
+  });
+
+  it('ADM-01: conta de equipe não entra no aplicativo de aluno', async () => {
+    // O app recusa pelo papel que vem no login; aqui conferimos que ele vem.
+    const login = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send({ email: contas.master, senha })
+      .expect(200);
+
+    expect(login.body.usuario.papel).toBe('MASTER');
+  });
+
   it('F3.14: nenhuma rota do painel devolve dado de saúde de aluno', async () => {
     const lista = await request(app.getHttpServer())
       .get('/painel/conteudos')

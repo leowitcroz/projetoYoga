@@ -35,16 +35,24 @@ export class CatalogoService {
         demandaFisica: true,
         capaUrl: true,
         professor: true,
+        videoId: true,
         objetivos: true,
       },
     });
 
+    // A lista diz se há vídeo, mas não entrega o identificador: quem está só
+    // navegando não precisa dele.
+    const comMarca = conteudos.map(({ videoId, ...resto }) => ({
+      ...resto,
+      temVideo: videoId !== null,
+    }));
+
     // Filtrar por objetivo em JSON dá consulta complicada; com o catálogo
     // limitado a 100 itens, é mais simples (e rápido) filtrar aqui.
-    if (!filtros.objetivo) return conteudos;
+    if (!filtros.objetivo) return comMarca;
 
     const objetivo = filtros.objetivo;
-    return conteudos.filter((conteudo) => {
+    return comMarca.filter((conteudo) => {
       const objetivos = conteudo.objetivos as Record<string, number> | null;
       return (objetivos?.[objetivo] ?? 0) > 0;
     });
