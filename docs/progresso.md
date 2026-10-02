@@ -9,8 +9,8 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 
 - **Fase atual:** 3 · Painel (parcial). A **Fase 2 está concluída**; a Fase 1 só espera Aprenda/Ayurveda/Cozinha Hoje (F1.14) e o motor de jornada (F1.16). A Fase 0 espera a CI verde no GitHub (F0.11).
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
-- **Falta para fechar a fase 3:** upload de vídeo (F3.5, agora destravado pela escolha do Mux), trilhas (F3.6), receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11).
-- **Próximo passo:** Leonardo abre a conta no Mux; com as chaves, o upload no painel (F3.5) sai. Antes disso, vale testar cedo o **áudio com a tela bloqueada** (PRA-04) — é o maior risco técnico da Fase 4 e não depende do provedor.
+- **Falta para fechar a fase 3:** trilhas (F3.6), receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11). O **F3.5 está resolvido enquanto for YouTube**: o professor cola o link e digita a duração, como a decisão de 01/10 previu; ele volta a abrir quando a troca pelo Mux acontecer.
+- **Próximo passo:** **trilhas (F3.6)**. O motor já dá +10 para a próxima aula da trilha (PER-008) e o banco já guarda `trilhaId` e `ordemTrilha`, mas no painel a trilha é um texto solto que o professor digita: um erro de digitação apaga o bônus sem avisar ninguém.
 - **Commits locais ainda não enviados:** 11.
 
 ## Esperando resposta
