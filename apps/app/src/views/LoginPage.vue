@@ -65,7 +65,6 @@
             <button type="button" class="link" @click="criarConta">Criar conta</button>
           </p>
 
-          <p class="aviso">Protótipo visual. O login de verdade é ligado à API na Fase 2.</p>
 
           <footer class="rodape">
             <span class="linha"></span>
@@ -322,13 +321,6 @@ input.invalido {
   text-align: center;
   font-size: 0.9rem;
   color: var(--life-texto-medio);
-}
-
-.aviso {
-  margin: 10px 0 0;
-  text-align: center;
-  font-size: 0.75rem;
-  color: var(--life-texto-suave);
 }
 
 .rodape {
