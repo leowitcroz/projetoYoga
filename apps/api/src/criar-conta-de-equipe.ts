@@ -36,7 +36,12 @@ async function main(): Promise<void> {
     if (jaExiste) {
       await prisma.user.update({
         where: { id: jaExiste.id },
-        data: { papel: papel as never },
+        data: {
+          papel: papel as never,
+          // Conta de equipe é criada por quem já conhece a pessoa: não faz
+          // sentido mandar e-mail de confirmação para ela mesma.
+          emailVerificadoEm: jaExiste.emailVerificadoEm ?? new Date(),
+        },
       });
       console.log(`Conta de ${jaExiste.nome} agora é ${papel}. A senha continua a mesma.`);
       return;
@@ -51,6 +56,9 @@ async function main(): Promise<void> {
         telefone: '',
         senhaHash: await argon2.hash(senha, { type: argon2.argon2id }),
         papel: papel as never,
+        // Quem cria a conta é a administração, que já sabe de quem é o
+        // e-mail. Sem isso, o professor não conseguiria entrar no painel.
+        emailVerificadoEm: new Date(),
         consentimentos: {
           create: { tipo: 'PRIVACIDADE', aceito: true, versao: 'equipe' },
         },

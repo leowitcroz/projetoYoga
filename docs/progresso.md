@@ -36,6 +36,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Player na ficha da aula**, em `youtube-nocookie.com` e sem vídeos relacionados no fim: ninguém termina uma prática e cai num vídeo de terceiros.
 - **Consequência registrada:** o **PRA-04 (áudio com a tela bloqueada) fica impossível enquanto for YouTube** — os Termos deles reservam isso ao Premium. É a razão mais forte para a troca futura, mais que o preço.
 - Links que não dão para ler são recusados na hora, em vez de virar prática sem vídeo. 7 testes da leitura do link.
+- **Corrigido:** desde o AUTH-02, as contas de equipe criadas pelo comando nasciam sem e-mail confirmado — e **nenhum professor conseguia entrar no painel**. Agora nascem confirmadas: quem cria a conta é a administração, que já sabe de quem é o e-mail.
 
 ### 01/10/2026 (Fase 2 fechada)
 
