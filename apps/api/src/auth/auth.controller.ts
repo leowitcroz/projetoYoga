@@ -18,8 +18,16 @@ export class AuthController {
     private readonly privacidade: PrivacidadeService,
   ) {}
 
-  /** AUTH-01 — cadastro no fim do onboarding, já com as respostas. */
-  @Throttle({ geral: { ttl: 3600_000, limit: 5 } })
+  /**
+   * AUTH-01 — cadastro no fim do onboarding, já com as respostas.
+   *
+   * O limite conta toda tentativa, inclusive a que nem chega ao banco (senha
+   * curta, e-mail já usado). Com 5 por hora, quem errasse três vezes ficava
+   * trancado para fora do próprio cadastro, e numa rede compartilhada — o wi-fi
+   * do estúdio — as pessoas gastavam as tentativas umas das outras. Dez segura
+   * do mesmo jeito quem cria contas em massa.
+   */
+  @Throttle({ geral: { ttl: 3600_000, limit: 10 } })
   @Post('registro')
   registrar(@Body() dados: RegistroDto) {
     return this.auth.registrar(dados);

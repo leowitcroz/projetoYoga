@@ -11,7 +11,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
 - **Falta para fechar a fase 3:** upload de vídeo (F3.5, agora destravado pela escolha do Mux), trilhas (F3.6), receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11).
 - **Próximo passo:** Leonardo abre a conta no Mux; com as chaves, o upload no painel (F3.5) sai. Antes disso, vale testar cedo o **áudio com a tela bloqueada** (PRA-04) — é o maior risco técnico da Fase 4 e não depende do provedor.
-- **Commits locais ainda não enviados:** 4.
+- **Commits locais ainda não enviados:** 11.
 
 ## Esperando resposta
 
@@ -28,6 +28,12 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ---
 
 ## Linha do tempo
+
+### 01/10/2026 (limite de tentativas)
+
+- **A tela mostrava `ThrottlerException: Too Many Requests`.** Era a mensagem crua do NestJS, em inglês e com o nome da classe dentro, chegando inteira ao aluno. Agora o F2.7 responde em português e diz quanto falta: *"Muitas tentativas em pouco tempo. Tente de novo em 12 minutos."*
+- **Cadastro passou de 5 para 10 tentativas por hora.** O limite conta toda tentativa, inclusive a que nem chega ao banco (senha curta, e-mail já usado), então quem errasse três vezes ficava trancado para fora do próprio cadastro — e numa rede compartilhada as pessoas gastavam as tentativas umas das outras.
+- 4 testes novos.
 
 ### 01/10/2026 (painel do master)
 

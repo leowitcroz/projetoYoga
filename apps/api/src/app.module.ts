@@ -8,7 +8,8 @@ import { HojeModule } from './hoje/hoje.module.js';
 import { CatalogoModule } from './catalogo/catalogo.module.js';
 import { PainelModule } from './painel/painel.module.js';
 import { APP_GUARD } from '@nestjs/core';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { LimiteDeTentativasGuard } from './comum/limite-de-tentativas.guard.js';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { EmailModule } from './email/email.module.js';
 import { PrivacidadeModule } from './privacidade/privacidade.module.js';
@@ -31,7 +32,7 @@ import { RegistroDeAcessoInterceptor } from './privacidade/registro-de-acesso.in
   ],
   controllers: [HealthController],
   providers: [
-    { provide: APP_GUARD, useClass: ThrottlerGuard },
+    { provide: APP_GUARD, useClass: LimiteDeTentativasGuard },
     // PRIV-03: todo acesso fica registrado, sem exceção por esquecimento.
     { provide: APP_INTERCEPTOR, useClass: RegistroDeAcessoInterceptor },
   ],

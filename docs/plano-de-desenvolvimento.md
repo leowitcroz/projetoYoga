@@ -452,7 +452,7 @@ Pipeline conforme a aba 08 da Matriz.
 - [x] **F2.4** Documentação automática da API (Swagger) em `/docs`, só em desenvolvimento.
 - [x] **F2.5** Logger que remove campos de saúde antes de gravar (PRIV-02), com teste.
 - [x] **F2.6** Registro de acesso (IP e data/hora) e rotina que apaga registros com mais de 6 meses (PRIV-03).
-- [x] **F2.7** Limite de tentativas nas rotas de login, cadastro e recuperação de senha.
+- [x] **F2.7** Limite de tentativas nas rotas de login, cadastro e recuperação de senha. A recusa fala português e diz quanto falta para tentar de novo (seção 9).
 
 *Conta*
 - [x] **F2.8** Cadastro, verificação de e-mail, login, refresh, logout, recuperação de senha: AUTH-01 a AUTH-04.
