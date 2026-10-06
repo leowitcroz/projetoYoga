@@ -13,10 +13,27 @@ const MODALIDADES = [
   'mobilidade',
 ];
 
+/** As seis áreas da biblioteca, mais as de leitura (PRA-01). */
+const AREAS = [
+  'asanas',
+  'pranayama',
+  'meditacao',
+  'nidra',
+  'relaxamento',
+  'kriyas',
+  'filosofia',
+  'ayurveda',
+];
+
 export class FiltrosDoCatalogoDto {
   @IsOptional()
   @IsIn(MODALIDADES)
   modalidade?: string;
+
+  /** Área da biblioteca: é por aqui que entram os cartões do Praticar. */
+  @IsOptional()
+  @IsIn(AREAS)
+  area?: string;
 
   /** Duração máxima em minutos: quem tem 20 não quer ver aula de 60. */
   @IsOptional()

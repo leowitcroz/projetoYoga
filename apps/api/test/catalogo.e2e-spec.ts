@@ -115,4 +115,104 @@ describe('Catálogo (e2e)', () => {
   it('exige login', async () => {
     await request(app.getHttpServer()).get('/catalogo').expect(401);
   });
+
+  describe('biblioteca do Praticar (PRA-01)', () => {
+    it('conta quantas aulas há em cada área e objetivo', async () => {
+      const resposta = await pedir('/catalogo/biblioteca').expect(200);
+
+      expect(resposta.body.total).toBeGreaterThan(10);
+      expect(resposta.body.areas.asanas).toBeGreaterThan(0);
+      expect(Object.keys(resposta.body.objetivos).length).toBeGreaterThan(3);
+    });
+
+    it('a contagem não inclui o que não foi aprovado', async () => {
+      const resposta = await pedir('/catalogo/biblioteca').expect(200);
+      const aprovadas = await prisma.content.count({ where: { status: 'APROVADO' } });
+
+      expect(resposta.body.total).toBe(aprovadas);
+    });
+
+    it('filtra por área', async () => {
+      const resposta = await pedir('/catalogo?area=pranayama').expect(200);
+
+      expect(resposta.body.length).toBeGreaterThan(0);
+      for (const aula of resposta.body) {
+        const gravada = await prisma.content.findUnique({
+          where: { id: aula.id as string },
+          select: { area: true },
+        });
+        expect(gravada?.area).toBe('pranayama');
+      }
+    });
+
+    it('aceita relaxamento como área, que faltava na lista', async () => {
+      // Antes isto dava 400: o PRA-01 lista a área, mas ela não existia no
+      // filtro nem na ficha, então a biblioteca teria uma porta sem nada atrás.
+      await pedir('/catalogo?area=relaxamento').expect(200);
+    });
+
+    it('recusa área inventada', async () => {
+      await pedir('/catalogo?area=cafezinho').expect(400);
+    });
+  });
+
+  describe('"Para você" (PRA-01)', () => {
+    it('usa o objetivo que a pessoa declarou no cadastro', async () => {
+      const conta = await criarContaVerificada(app, {
+        nome: 'Quem quer dormir',
+        email: `paravoce-sono-${Date.now()}@life.local`,
+        onboarding: { objetivoPrincipal: 'sono', objetivosSecundarios: ['estresse'] },
+      });
+
+      const resposta = await request(app.getHttpServer())
+        .get('/catalogo/para-voce')
+        .set('Authorization', `Bearer ${conta.accessToken}`)
+        .expect(200);
+
+      expect(resposta.body.objetivo).toBe('sono');
+      expect(resposta.body.aulas.length).toBeGreaterThan(0);
+
+      // Toda aula oferecida tem de servir a algum objetivo declarado: um
+      // "para você" com aula que não atende nada seria só uma lista qualquer.
+      for (const aula of resposta.body.aulas) {
+        const gravada = await prisma.content.findUnique({
+          where: { id: aula.id as string },
+          select: { objetivos: true },
+        });
+        const objetivos = gravada?.objetivos as Record<string, number>;
+        expect((objetivos.sono ?? 0) + (objetivos.estresse ?? 0)).toBeGreaterThan(0);
+      }
+
+      await prisma.user.delete({ where: { id: conta.id } });
+    });
+
+    it('o objetivo principal pesa mais que o secundário', async () => {
+      const conta = await criarContaVerificada(app, {
+        nome: 'Quem quer força',
+        email: `paravoce-forca-${Date.now()}@life.local`,
+        onboarding: { objetivoPrincipal: 'forca', objetivosSecundarios: ['sono'] },
+      });
+
+      const resposta = await request(app.getHttpServer())
+        .get('/catalogo/para-voce')
+        .set('Authorization', `Bearer ${conta.accessToken}`)
+        .expect(200);
+
+      const primeira = await prisma.content.findUnique({
+        where: { id: resposta.body.aulas[0].id as string },
+        select: { objetivos: true },
+      });
+      const objetivos = primeira?.objetivos as Record<string, number>;
+      expect(objetivos.forca ?? 0).toBeGreaterThan(0);
+
+      await prisma.user.delete({ where: { id: conta.id } });
+    });
+
+    it('sem perfil preenchido não inventa uma lista "para você"', async () => {
+      const resposta = await pedir('/catalogo/para-voce').expect(200);
+
+      expect(resposta.body.objetivo).toBeNull();
+      expect(resposta.body.aulas).toEqual([]);
+    });
+  });
 });

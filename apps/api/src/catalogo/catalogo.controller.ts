@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
-import { JwtGuard } from '../auth/jwt.guard.js';
+import { JwtGuard, UsuarioId } from '../auth/jwt.guard.js';
 import { CatalogoService } from './catalogo.service.js';
 import { FiltrosDoCatalogoDto } from './dto/filtros.dto.js';
 
@@ -17,6 +17,18 @@ export class CatalogoController {
   @Get('modalidades')
   modalidades() {
     return this.catalogo.modalidades();
+  }
+
+  /** Áreas e objetivos que existem no catálogo, com a contagem (PRA-01). */
+  @Get('biblioteca')
+  biblioteca() {
+    return this.catalogo.biblioteca();
+  }
+
+  /** Práticas que atendem o objetivo declarado no cadastro (PRA-01). */
+  @Get('para-voce')
+  paraVoce(@UsuarioId() usuarioId: string) {
+    return this.catalogo.paraVoce(usuarioId);
   }
 
   @Get(':id')

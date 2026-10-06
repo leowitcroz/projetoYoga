@@ -27,7 +27,23 @@ const MODALIDADES = [
   'mobilidade',
 ];
 
-const AREAS = ['asanas', 'pranayama', 'meditacao', 'nidra', 'kriyas', 'filosofia', 'ayurveda'];
+/**
+ * As áreas da biblioteca (PRA-01).
+ *
+ * `relaxamento` estava faltando desde o começo: o PRA-01 lista as seis áreas
+ * e essa é uma delas, mas sem ela na lista nenhuma prática podia ser
+ * cadastrada como relaxamento, e a biblioteca teria uma porta sem nada atrás.
+ */
+const AREAS = [
+  'asanas',
+  'pranayama',
+  'meditacao',
+  'nidra',
+  'relaxamento',
+  'kriyas',
+  'filosofia',
+  'ayurveda',
+];
 
 /** Os blocos que uma prática pode ter, na linguagem da biblioteca (PRA-01). */
 const BLOCOS = [

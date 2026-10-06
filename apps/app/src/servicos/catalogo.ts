@@ -40,18 +40,43 @@ export interface Aula extends AulaDaLista {
 
 export interface FiltrosDoCatalogo {
   modalidade?: string;
+  area?: string;
   duracaoMax?: number;
   objetivo?: string;
+  busca?: string;
+}
+
+/** O que a biblioteca tem, para a tela não oferecer porta vazia (PRA-01). */
+export interface Biblioteca {
+  total: number;
+  areas: Record<string, number>;
+  objetivos: Record<string, number>;
+}
+
+export interface ParaVoce {
+  /** O objetivo que a pessoa declarou no cadastro. Nulo = perfil sem resposta. */
+  objetivo: string | null;
+  aulas: AulaDaLista[];
 }
 
 export function listarAulas(filtros: FiltrosDoCatalogo = {}): Promise<AulaDaLista[]> {
   const parametros = new URLSearchParams();
   if (filtros.modalidade) parametros.set('modalidade', filtros.modalidade);
   if (filtros.duracaoMax) parametros.set('duracaoMax', String(filtros.duracaoMax));
+  if (filtros.area) parametros.set('area', filtros.area);
   if (filtros.objetivo) parametros.set('objetivo', filtros.objetivo);
+  if (filtros.busca) parametros.set('busca', filtros.busca);
 
   const busca = parametros.toString();
   return chamar<AulaDaLista[]>(`/catalogo${busca ? `?${busca}` : ''}`);
+}
+
+export function buscarBiblioteca(): Promise<Biblioteca> {
+  return chamar<Biblioteca>('/catalogo/biblioteca');
+}
+
+export function buscarParaVoce(): Promise<ParaVoce> {
+  return chamar<ParaVoce>('/catalogo/para-voce');
 }
 
 export function listarModalidades(): Promise<string[]> {
@@ -89,6 +114,23 @@ export const NOME_DO_OBJETIVO: Record<string, string> = {
   pratica: 'Aprofundar a prática',
   formacao: 'Formação',
 };
+
+/**
+ * As seis áreas da biblioteca, na ordem do PRA-01.
+ *
+ * Esta lista é fixa: ela é o vocabulário do Yoga, não o retrato do catálogo
+ * de hoje. Quantas aulas cada uma tem vem da API, e a tela usa isso para
+ * marcar as que ainda estão vazias em vez de levar a pessoa a uma lista sem
+ * nada.
+ */
+export const AREAS_DA_BIBLIOTECA = [
+  { valor: 'asanas', nome: 'Āsanas' },
+  { valor: 'pranayama', nome: 'Prāṇāyāma' },
+  { valor: 'meditacao', nome: 'Meditação' },
+  { valor: 'nidra', nome: 'Yoga Nidra' },
+  { valor: 'relaxamento', nome: 'Relaxamento' },
+  { valor: 'kriyas', nome: 'Kriyās' },
+];
 
 /** 1 a 5 vira uma palavra que a pessoa entende. */
 export function nomeDoNivel(nivel: number): string {

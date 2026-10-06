@@ -347,6 +347,10 @@ const AREAS = [
   { valor: 'pranayama', nome: 'Pranáyama' },
   { valor: 'meditacao', nome: 'Meditação' },
   { valor: 'nidra', nome: 'Yoga Nidra' },
+  // O PRA-01 lista relaxamento entre as seis áreas da biblioteca, mas ela
+  // nunca entrou aqui: sem isso nenhuma prática podia ser cadastrada como
+  // relaxamento, e a biblioteca ficava com uma porta sem nada atrás.
+  { valor: 'relaxamento', nome: 'Relaxamento' },
   { valor: 'kriyas', nome: 'Kriyās' },
   { valor: 'filosofia', nome: 'Filosofia' },
   { valor: 'ayurveda', nome: 'Ayurveda' },
