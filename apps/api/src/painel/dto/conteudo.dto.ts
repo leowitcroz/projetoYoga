@@ -1,5 +1,7 @@
 import { Type } from 'class-transformer';
 import {
+  ArrayMaxSize,
+  IsArray,
   IsBoolean,
   IsIn,
   IsInt,
@@ -26,6 +28,17 @@ const MODALIDADES = [
 ];
 
 const AREAS = ['asanas', 'pranayama', 'meditacao', 'nidra', 'kriyas', 'filosofia', 'ayurveda'];
+
+/** Os blocos que uma prática pode ter, na linguagem da biblioteca (PRA-01). */
+const BLOCOS = [
+  'preparacao',
+  'asanas',
+  'pranayama',
+  'meditacao',
+  'nidra',
+  'relaxamento',
+  'kriyas',
+];
 
 /**
  * O quanto a prática entrega de cada coisa (0 a 5).
@@ -69,6 +82,23 @@ export class SegurancaDto {
   @IsOptional() @IsBoolean() temVersaoAdaptada?: boolean;
   /** Aula feita para um público específico; quem está fora dele não recebe. */
   @IsOptional() @IsIn(['gestacao']) publicoEspecifico?: string;
+}
+
+/**
+ * Os blocos que compõem a prática (PRA-07).
+ *
+ * A lista é a ordem: o primeiro bloco é o primeiro que a pessoa faz. Os tipos
+ * são os da biblioteca (PRA-01), mais a preparação, que não é um conteúdo em
+ * si mas ocupa minutos de verdade na aula.
+ */
+export class BlocoDaPraticaDto {
+  @IsIn(BLOCOS)
+  tipo!: string;
+
+  @IsInt()
+  @Min(1)
+  @Max(180)
+  minutos!: number;
 }
 
 export class ConteudoDto {
@@ -133,6 +163,20 @@ export class ConteudoDto {
   @IsOptional()
   @IsObject()
   ayurveda?: Record<string, number>;
+
+  /**
+   * A prática em blocos, na ordem (PRA-07).
+   *
+   * Vazio é permitido — o professor pode ainda não ter descrito — e nesse caso
+   * a tela do aluno simplesmente não mostra a seção, em vez de inventar uma
+   * divisão que ninguém conferiu.
+   */
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(12)
+  @ValidateNested({ each: true })
+  @Type(() => BlocoDaPraticaDto)
+  estrutura?: BlocoDaPraticaDto[];
 
   /**
    * Trilha a que a prática pertence (ADM-05). Vazio = prática avulsa.

@@ -340,4 +340,93 @@ describe('Painel (e2e)', () => {
       expect(texto).not.toContain(proibido);
     }
   });
+
+  describe('estrutura da prática (PRA-07)', () => {
+    const comBlocos = (blocos: { tipo: string; minutos: number }[], duracaoMin = 25) => ({
+      ...fichaValida,
+      titulo: `Estrutura ${Date.now()}${Math.random()}`,
+      duracaoMin,
+      estrutura: blocos,
+    });
+
+    it('recusa blocos que não somam a duração', async () => {
+      const resposta = await request(app.getHttpServer())
+        .post('/painel/conteudos')
+        .set('Authorization', `Bearer ${tokens.professor}`)
+        .send(
+          comBlocos([
+            { tipo: 'preparacao', minutos: 4 },
+            { tipo: 'asanas', minutos: 14 },
+          ]),
+        )
+        .expect(400);
+
+      expect(String(resposta.body.message)).toContain('somam 18');
+    });
+
+    it('aceita quando a soma bate', async () => {
+      const resposta = await request(app.getHttpServer())
+        .post('/painel/conteudos')
+        .set('Authorization', `Bearer ${tokens.professor}`)
+        .send(
+          comBlocos([
+            { tipo: 'preparacao', minutos: 4 },
+            { tipo: 'asanas', minutos: 14 },
+            { tipo: 'pranayama', minutos: 3 },
+            { tipo: 'relaxamento', minutos: 4 },
+          ]),
+        )
+        .expect(201);
+
+      const gravada = await prisma.content.findUnique({
+        where: { id: resposta.body.id as string },
+        select: { estrutura: true },
+      });
+      expect(gravada?.estrutura).toEqual([
+        { tipo: 'preparacao', minutos: 4 },
+        { tipo: 'asanas', minutos: 14 },
+        { tipo: 'pranayama', minutos: 3 },
+        { tipo: 'relaxamento', minutos: 4 },
+      ]);
+
+      await prisma.content.delete({ where: { id: resposta.body.id as string } });
+    });
+
+    it('recusa o mesmo bloco duas vezes', async () => {
+      await request(app.getHttpServer())
+        .post('/painel/conteudos')
+        .set('Authorization', `Bearer ${tokens.professor}`)
+        .send(
+          comBlocos([
+            { tipo: 'asanas', minutos: 12 },
+            { tipo: 'asanas', minutos: 13 },
+          ]),
+        )
+        .expect(400);
+    });
+
+    it('recusa bloco que não é da biblioteca', async () => {
+      await request(app.getHttpServer())
+        .post('/painel/conteudos')
+        .set('Authorization', `Bearer ${tokens.professor}`)
+        .send(comBlocos([{ tipo: 'cafezinho', minutos: 25 }]))
+        .expect(400);
+    });
+
+    it('prática sem estrutura continua valendo', async () => {
+      const resposta = await request(app.getHttpServer())
+        .post('/painel/conteudos')
+        .set('Authorization', `Bearer ${tokens.professor}`)
+        .send({ ...fichaValida, titulo: `Sem estrutura ${Date.now()}` })
+        .expect(201);
+
+      const gravada = await prisma.content.findUnique({
+        where: { id: resposta.body.id as string },
+        select: { estrutura: true },
+      });
+      expect(gravada?.estrutura).toBeNull();
+
+      await prisma.content.delete({ where: { id: resposta.body.id as string } });
+    });
+  });
 });

@@ -28,6 +28,43 @@ const NOMES_DAS_TRILHAS: Record<string, string> = {
   'TRILHA-MOB-01': 'Mobilidade da coluna',
 };
 
+/**
+ * Estrutura fictícia para as práticas de teste (PRA-07).
+ *
+ * Numa prática de verdade quem divide os minutos é o professor, na ficha do
+ * painel: ninguém consegue deduzir da duração quanto tempo de prāṇāyāma uma
+ * aula tem. Aqui o catálogo inteiro é inventado, e esta divisão também é —
+ * ela existe só para a tela do aluno ter o que mostrar em desenvolvimento.
+ */
+function estruturaDeTeste(
+  modalidade: string,
+  duracaoMin: number,
+): { tipo: string; minutos: number }[] {
+  // Modalidades de uma coisa só não têm divisão que faça sentido.
+  const inteiras: Record<string, string> = {
+    nidra: 'nidra',
+    pranayama: 'pranayama',
+    meditacao: 'meditacao',
+  };
+  const inteira = inteiras[modalidade];
+  if (inteira) return [{ tipo: inteira, minutos: duracaoMin }];
+
+  const preparacao = Math.max(2, Math.round(duracaoMin * 0.15));
+  const relaxamento = Math.max(2, Math.round(duracaoMin * 0.15));
+  const respiracao = duracaoMin >= 30 ? Math.max(2, Math.round(duracaoMin * 0.12)) : 0;
+  const asanas = duracaoMin - preparacao - relaxamento - respiracao;
+
+  // Sem minutos para o miolo, a prática é curta demais para dividir.
+  if (asanas < 3) return [{ tipo: 'asanas', minutos: duracaoMin }];
+
+  return [
+    { tipo: 'preparacao', minutos: preparacao },
+    { tipo: 'asanas', minutos: asanas },
+    ...(respiracao > 0 ? [{ tipo: 'pranayama', minutos: respiracao }] : []),
+    { tipo: 'relaxamento', minutos: relaxamento },
+  ];
+}
+
 async function main(): Promise<void> {
   const ehProducao = process.env.NODE_ENV === 'production';
   const autorizado = process.env.SEED_CATALOGO_DE_TESTE === '1';
@@ -61,7 +98,10 @@ async function main(): Promise<void> {
     }
 
     for (const conteudo of CATALOGO_DE_TESTE) {
-      const linha = paraLinha(conteudo);
+      const linha = {
+        ...paraLinha(conteudo),
+        estrutura: estruturaDeTeste(conteudo.modalidade, conteudo.duracaoMin),
+      };
       await prisma.content.upsert({ where: { id: linha.id }, create: linha, update: linha });
     }
     const total = await prisma.content.count();

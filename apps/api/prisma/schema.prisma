@@ -244,6 +244,11 @@ model Content {
   /// Tags ayurvédicas, quando houver.
   ayurveda Json?
 
+  /// Os blocos da prática em ordem, com os minutos de cada um (PRA-07):
+  /// [{ "tipo": "preparacao", "minutos": 4 }, { "tipo": "asanas", "minutos": 14 }].
+  /// Vazio = o professor ainda não descreveu, e a tela não inventa.
+  estrutura Json?
+
   /// Trilha a que a prática pertence, se pertencer a alguma (ADM-05).
   trilhaId    String?
   /// Posição dentro da trilha, de 1 em diante. Quem manda nela é a trilha:

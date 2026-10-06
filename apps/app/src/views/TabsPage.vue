@@ -45,3 +45,20 @@ const tabs = [
   { path: 'eu', label: 'Eu', icon: personOutline },
 ];
 </script>
+
+<style scoped>
+/* A barra segue a paleta da marca: fundo claro e o item atual em verde. */
+ion-tab-bar {
+  --background: #fff;
+  --color: var(--life-texto-suave);
+  --color-selected: var(--life-verde);
+  border-top: 1px solid var(--life-borda);
+  padding-bottom: var(--ion-safe-area-bottom, 0px);
+}
+
+ion-tab-button {
+  --padding-top: 7px;
+  --padding-bottom: 5px;
+  font-size: 0.7rem;
+}
+</style>

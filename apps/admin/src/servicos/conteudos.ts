@@ -54,9 +54,27 @@ export interface FichaDaPratica {
     publicoEspecifico?: string;
   };
   ayurveda?: Record<string, number>;
+  /** Os blocos da prática, na ordem, somando a duração (PRA-07). */
+  estrutura?: BlocoDaPratica[];
   /** A posição dentro da trilha é da tela da trilha, não desta ficha. */
   trilhaId?: string;
 }
+
+export interface BlocoDaPratica {
+  tipo: string;
+  minutos: number;
+}
+
+/** Os blocos possíveis, com o nome que o professor lê. */
+export const BLOCOS_DA_PRATICA = [
+  { valor: 'preparacao', nome: 'Preparação' },
+  { valor: 'asanas', nome: 'Āsanas' },
+  { valor: 'pranayama', nome: 'Prāṇāyāma' },
+  { valor: 'meditacao', nome: 'Meditação' },
+  { valor: 'nidra', nome: 'Yoga Nidra' },
+  { valor: 'relaxamento', nome: 'Relaxamento' },
+  { valor: 'kriyas', nome: 'Kriyās' },
+];
 
 export function listarConteudos(): Promise<ConteudoNaLista[]> {
   return chamar<ConteudoNaLista[]>('/painel/conteudos');
@@ -125,6 +143,7 @@ export function fichaEmBranco(): FichaDaPratica {
       temVersaoAdaptada: false,
     },
     ayurveda: {},
+    estrutura: [],
   };
 }
 

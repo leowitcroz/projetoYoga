@@ -212,7 +212,39 @@ export class PainelService {
       // Sem chaves com `undefined`: o Prisma só aceita JSON de verdade.
       seguranca: JSON.parse(JSON.stringify(dados.seguranca)) as Record<string, number | boolean>,
       ayurveda: dados.ayurveda ? this.somenteNumeros(dados.ayurveda, 3) : undefined,
+      estrutura: this.conferirEstrutura(dados),
     };
+  }
+
+  /**
+   * Os blocos da prática têm de somar a duração (PRA-07).
+   *
+   * A tela do aluno mostra "Āsanas — 14 min" antes de ele começar. Se os
+   * blocos somarem 25 numa prática de 28, a tela passa a mentir sobre a
+   * própria aula, e é o tipo de erro que ninguém percebe olhando a ficha.
+   */
+  private conferirEstrutura(dados: ConteudoDto) {
+    const blocos = dados.estrutura ?? [];
+    if (blocos.length === 0) return undefined;
+
+    const soma = blocos.reduce((total, bloco) => total + bloco.minutos, 0);
+    if (soma !== dados.duracaoMin) {
+      throw new BadRequestException(
+        `Os blocos somam ${soma} min e a prática dura ${dados.duracaoMin} min. ` +
+          'Ajuste os blocos ou a duração para os dois baterem.',
+      );
+    }
+
+    const repetido = blocos.find(
+      (bloco, indice) => blocos.findIndex((item) => item.tipo === bloco.tipo) !== indice,
+    );
+    if (repetido) {
+      throw new BadRequestException(
+        'Cada bloco aparece uma vez só. Some os minutos num bloco único',
+      );
+    }
+
+    return blocos.map((bloco) => ({ tipo: bloco.tipo, minutos: bloco.minutos }));
   }
 
   /**

@@ -85,8 +85,10 @@ export class CatalogoService {
         videoProvedor: true,
         videoId: true,
         objetivos: true,
+        estrutura: true,
         trilhaId: true,
         ordemTrilha: true,
+        trilha: { select: { nome: true } },
       },
     });
 

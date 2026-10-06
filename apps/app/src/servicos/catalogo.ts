@@ -21,8 +21,17 @@ export interface AulaDaLista {
   objetivos: Record<string, number>;
 }
 
+/** Um bloco da prática, como o professor descreveu na ficha (PRA-07). */
+export interface BlocoDaPratica {
+  tipo: string;
+  minutos: number;
+}
+
 export interface Aula extends AulaDaLista {
   area: string;
+  /** Vazio quando o professor ainda não descreveu a estrutura. */
+  estrutura?: BlocoDaPratica[] | null;
+  trilha?: { nome: string } | null;
   videoProvedor?: string | null;
   videoId?: string | null;
   trilhaId?: string | null;

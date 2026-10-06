@@ -22,15 +22,14 @@ import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 
 /**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
+ * Tema escuro do Ionic: desligado de propósito.
+ *
+ * As telas do LIFE usam as cores da marca direto (`--life-*`), e não existe
+ * versão escura delas. Com o `dark.system.css` ligado, um celular no modo
+ * escuro escurecia só a barra de abas — o resto continuava claro, e a barra
+ * destoava da tela inteira. Quando houver um tema escuro de verdade, ele
+ * volta junto com as telas.
  */
-
-/* @import '@ionic/vue/css/palettes/dark.always.css'; */
-/* @import '@ionic/vue/css/palettes/dark.class.css'; */
-import '@ionic/vue/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';

@@ -1,6 +1,6 @@
 # LIFE 1.0 — Plano de Desenvolvimento (SDD)
 
-**Versão do documento:** 1.9 · **Data:** 10/09/2026
+**Versão do documento:** 2.9 · **Data:** 06/10/2026
 **Fontes:** Documento Mestre Motor LIFE 1.0 · Matriz Técnica 1.1 · Storytelling (Ana e Júlia) · telas de referência · [decisoes.md](decisoes.md)
 
 ---
@@ -252,6 +252,7 @@ Pipeline conforme a aba 08 da Matriz.
 | PRA-02 | Acesso livre | Conteúdo fora da recomendação automática continua acessível; mostra aviso educativo, sem dizer que é proibido (SEG-R02) |
 | PRA-03 | Player de vídeo | Streaming do provedor escolhido; pausa e retomada |
 | PRA-04 | Player de áudio em segundo plano | Continua com a tela bloqueada; controles na tela de bloqueio (título, play/pause); Android com serviço em primeiro plano. **Bloqueado enquanto o vídeo for YouTube** (P-03): os Termos deles não permitem |
+| PRA-07 | Tela da prática | Antes de começar: capa com o play, título, professor, modalidade e nível, a estrutura em blocos com os minutos de cada um, e o porquê da indicação quando a prática for a recomendada do dia |
 | PRA-05 | Feedback pós-prática | Muito leve / Na medida / Intensa; Gostei; Melhor / Igual / Pior; opcional |
 | PRA-06 | Eventos de uso | Registra iniciou, concluiu, interrompeu (com tempo), repetiu, trocou |
 
@@ -303,7 +304,7 @@ Pipeline conforme a aba 08 da Matriz.
 | ID | Requisito | Critérios de aceite |
 |---|---|---|
 | ADM-01 | Login do painel | Somente professor, master e admin |
-| ADM-02 | Cadastro de conteúdo | Ficha completa da aba 07 da Matriz, com campos obrigatórios validados |
+| ADM-02 | Cadastro de conteúdo | Ficha completa da aba 07 da Matriz, com campos obrigatórios validados. Inclui a **estrutura da prática**: os blocos em ordem (preparação, āsanas, prāṇāyāma, meditação, yoga nidra, relaxamento, kriyās) com os minutos de cada um, somando a duração total |
 | ADM-03 | Tags de segurança | Todos os campos de `ContentSafety`; conteúdo com invertida, retenção, demanda alta ou gestação exige marcação explícita |
 | ADM-04 | Upload de mídia | Envio para o provedor de streaming; duração preenchida automaticamente |
 | ADM-05 | Trilhas | Professor cria trilha, define número de aulas, ordem e pré-requisitos |
@@ -503,7 +504,7 @@ Pipeline conforme a aba 08 da Matriz.
 - [x] **F3.2** Layout do painel: menu lateral, lista, formulário, estados vazio e de erro.
 
 *Catálogo*
-- [x] **F3.3** Cadastro de conteúdo com a ficha completa e validação: ADM-02.
+- [x] **F3.3** Cadastro de conteúdo com a ficha completa e validação: ADM-02. Inclui a estrutura da prática em blocos, que precisa somar a duração.
 - [x] **F3.4** Tags de segurança com marcação obrigatória para casos sensíveis: ADM-03.
 - [x] **F3.5** Upload de mídia para o provedor escolhido, com duração preenchida automaticamente: ADM-04. *Enquanto for YouTube (P-03), o professor cola o link e digita a duração; a duração automática volta a valer com o Mux.*
 - [x] **F3.6** Trilhas: criar, definir número de aulas, ordem e pré-requisitos: ADM-05. A ordem é a lista da tela da trilha, não um número digitado em cada ficha.
@@ -564,6 +565,7 @@ Pipeline conforme a aba 08 da Matriz.
 *Praticar*
 - [ ] **F4.10** Biblioteca com filtros e aviso educativo para conteúdos fora das sugestões: PRA-01, PRA-02.
 - [ ] **F4.11** Player de vídeo: PRA-03.
+- [x] **F4.14** Tela da prática antes de começar, com a estrutura em blocos: PRA-07. *Antecipada da Fase 4 (seção 12).*
 - [ ] **F4.12** Escolher, instalar e configurar o plugin de áudio em segundo plano; controles na tela de bloqueio: PRA-04.
 - [ ] **F4.13** Feedback pós-prática e envio de eventos: PRA-05, PRA-06.
 
@@ -753,6 +755,7 @@ Toda ideia nova entra aqui antes de virar código.
 | 18/09/2026 | Hospedar a **API no Render** (com Postgres) para o cliente testar o cadastro e o login no celular dele | Baixo para o código: a API é a mesma, só ganha `render.yaml` e a variável `VITE_API_URL` no app. O plano gratuito dorme quando fica parado e o banco tem prazo de validade — serve para demonstração, não para dados de aluno | **Aprovado** por Leonardo em 18/09. Guia em [hospedagem.md](hospedagem.md) |
 | 18/09/2026 | Refazer a aba **Hoje**: saudação pela hora do dia com o nome e a foto da pessoa, frase de acolhimento, o check-in como **carrossel de uma pergunta por vez com 3 opções** (sono, energia, corpo, estresse, digestão e **humor**), a escolha do tempo, o botão "Atualizar minha prática", um **ditado do Yoga que troca todo dia** e o rodapé da marca | **Alto.** Muda o CHK-01: a escala de sono, energia e estresse cai de 1–5 para 3 opções, corpo e digestão caem de 5 para 3, entra **humor** (era pendência com o cliente) e **sai a pergunta de dor**. As faixas da Matriz Técnica (Bloco 1 e CTX-002) foram escritas para 1–5 e para a dor, então o motor precisa ser reescrito nessas partes | **Aprovado** por Leonardo em 18/09 para a tela. **Corrigido no mesmo dia:** Leonardo pediu a dor de volta. O check-in tem 7 perguntas (dor: nenhuma/leve/forte) e, havendo dor, uma pergunta extra de região. **Pendências:** (a) a lista de regiões da dor precisa da confirmação do cliente, e a intensidade virou leve/forte em vez da escala 0–10 do CHK-03; (b) o cliente precisa confirmar a tradução das 3 opções para as faixas da Matriz; (c) fotos de perfil (Cloudinary?) ainda não decididas |
 | 29/09/2026 | Cada prática tem uma **imagem de capa**, escolhida pelo professor no painel | Baixo no app: um campo novo no conteúdo e a capa nas telas. No painel (Fase 3) vira parte do cadastro de conteúdo, e a hospedagem das imagens precisa ser decidida (Cloudinary é a hipótese). Enquanto não houver imagem, a tela mostra uma capa desenhada por modalidade, em vez de um retângulo vazio | **Aprovado** por Leonardo em 29/09 |
+| 06/10/2026 | A tela que abre ao **escolher uma prática** passa a mostrar, antes de começar: capa com o play, título, professor, modalidade e nível, **a estrutura da prática em blocos** (preparação, āsanas, prāṇāyāma, relaxamento...) com os minutos de cada um, o botão "Iniciar prática" e o porquê da indicação. Vira o PRA-07 | **Médio.** A estrutura é informação nova: ninguém a tem hoje, e não dá para calcular a partir da duração — quem sabe é o professor. Entra como campo da ficha (ADM-02, F3.3) e a soma dos blocos tem de bater com a duração total, senão a tela mente. A tela em si é da Fase 4, antecipada aqui | **Aprovado** por Leonardo em 06/10, a partir de tela de referência. **Ressalva registrada:** o "por que esta prática?" só aparece quando a prática é a recomendada do dia; quem escolhe sozinho na aba Praticar não recebeu indicação nenhuma, e dizer que recebeu seria falso |
 | 29/09/2026 | O tempo escolhido deixa de ser só um teto e passa a pesar no ranking, **sem nunca vencer a adequação**: quem tem 60 minutos e está cansado recebe a prática suave de 30, não uma intensa de 60 | Médio. Reescreve o MOT-03. A prática mais curta perde no máximo 15 pontos (o estado do dia vale 30), então a adequação ganha sempre que a diferença for real; quando a escolhida é mais curta, a tela explica. Junto, o critério de perfil deixou de premiar tanto o nível alto: experiência amplia repertório, não obriga a praticar o mais difícil (SEG-R01) | **Aprovado** por Leonardo em 29/09 ("a qualidade tem que vencer o tempo"). Precisa da validação do Marcos |
 
 ---
@@ -764,6 +767,8 @@ Toda ideia nova entra aqui antes de virar código.
 | 1.0 | 10/09/2026 | Primeira versão |
 | 1.1 | 10/09/2026 | Fases detalhadas com tarefas (F0.1 a F7.14), dependências, entregáveis e critérios de saída; novo requisito MOT-20 (aprendizado); nova pendência P-07; EU-02 movido para a Fase 6; módulos Aprender e Ayurveda renomeados para EDU e AYV |
 | 1.2 | 11/09/2026 | Fase 0: TypeScript 6.0 (limite do typescript-eslint), Vitest também na API (Nest 12), NestJS 12 em ESM e Prisma 7; banco local decidido (Docker, porta 5433); API na porta 3100 |
+| 2.9 | 06/10/2026 | Tela da prática antes de começar (PRA-07, novo) com a estrutura em blocos; a estrutura vira campo da ficha no painel (ADM-02) e precisa somar a duração (seção 12) |
+| 2.8 | 02/10/2026 | Trilhas como entidade própria (F3.6): a ordem passa a ser da trilha, não um número digitado em cada ficha |
 | 2.7 | 29/09/2026 | Imagem de capa por prática, escolhida pelo professor (seção 12) |
 | 2.6 | 29/09/2026 | MOT-03 reescrito: o tempo pesa no ranking mas não vence a adequação; o critério de perfil para de premiar o nível alto (seção 12) |
 | 2.5 | 28/09/2026 | Aba Praticar com o catálogo (F2.15): lista com filtros de tempo e modalidade, e ficha da aula. As três portas que davam em tela vazia agora levam a algum lugar |

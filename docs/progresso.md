@@ -11,7 +11,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
 - **Falta para fechar a fase 3:** receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11). O **F3.5 está resolvido enquanto for YouTube**: o professor cola o link e digita a duração, como a decisão de 01/10 previu; ele volta a abrir quando a troca pelo Mux acontecer.
 - **Próximo passo:** **receitas e orientações ayurvédicas (F3.7)**, que andam junto com a aba Cozinha (F1.14, da Fase 1) — vale fazer as duas de uma vez. O editor de pesos (F3.11) fica por último: serve para o Marcos ajustar o motor, e ele ainda não validou os pesos atuais.
-- **Commits locais ainda não enviados:** 14.
+- **Commits locais ainda não enviados:** 15.
 
 ## Esperando resposta
 
@@ -28,6 +28,16 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ---
 
 ## Linha do tempo
+
+### 06/10/2026 (tela da prática)
+
+- **A tela que abre ao escolher uma prática foi refeita (PRA-07, novo).** Capa com o play, título, professor, modalidade e nível, a prática dividida em blocos com os minutos de cada um, o botão "Iniciar prática" e o rodapé da marca. Veio de tela de referência do Leonardo.
+- **A divisão em blocos é informação nova.** Não dá para deduzir da duração quanto tempo de prāṇāyāma uma aula tem — quem sabe é o professor. Virou campo da ficha no painel, e **a API recusa blocos que não somem a duração**: a tela diria ao aluno uma coisa que a aula não cumpre.
+- **O "por que esta prática?" só aparece quando a prática é a recomendada do dia.** Quem escolhe sozinho na aba Praticar não recebeu indicação nenhuma; nesse caso a tela mostra o que a prática trabalha, sem fingir que foi escolhida para a pessoa.
+- **O vídeo só é carregado quando a pessoa toca no play** — antes o iframe do YouTube subia junto com a tela, contatando o Google mesmo de quem só estava olhando a aula.
+- **Tema escuro do Ionic desligado.** Nenhuma tela do LIFE tem versão escura: num celular no modo escuro, só a barra de abas escurecia e destoava de todo o resto. A barra passou a seguir a paleta da marca, com o item atual em verde.
+- **Teste que apodrecia pelo calendário:** o MOT-07 da jornada usava datas fixas de 01/10, e o motor conta os dias a partir do relógio — a "prática de ontem" virou "cinco dias atrás" e o teste passou a falhar sozinho. Agora as datas são relativas a hoje.
+- 8 testes novos; 105 ponta a ponta na API.
 
 ### 02/10/2026 (trilhas)
 

@@ -23,7 +23,21 @@ describe('Jornada completa (e2e)', () => {
   const marca = Date.now();
   const email = `jornada-${marca}@life.local`;
   const senha = 'segredo123';
-  const hoje = '2026-10-01';
+  /**
+   * As datas são relativas ao dia de hoje, de propósito.
+   *
+   * Com datas fixas, o teste da repetição (MOT-07) passou a falhar sozinho
+   * quando o calendário andou: o motor conta há quantos dias a prática foi
+   * feita a partir do relógio, e uma "ontem" escrita em 2026-10-01 vira
+   * "cinco dias atrás" assim que a semana passa.
+   */
+  function diaRelativo(deslocamento: number): string {
+    const data = new Date();
+    data.setDate(data.getDate() + deslocamento);
+    return data.toISOString().slice(0, 10);
+  }
+
+  const hoje = diaRelativo(0);
   let token = '';
   let userId = '';
   let praticaDoDia = '';
@@ -159,7 +173,7 @@ describe('Jornada completa (e2e)', () => {
   });
 
   it('MOT-07: no dia seguinte, a prática concluída conta como repetição', async () => {
-    const amanha = '2026-10-02';
+    const amanha = diaRelativo(1);
     await autenticado('put', '/checkin')
       .send({
         dia: amanha,
@@ -185,7 +199,7 @@ describe('Jornada completa (e2e)', () => {
   });
 
   it('F2.20: check-in com dor reaplica a segurança (CHK-03, SEG-R05)', async () => {
-    const dia = '2026-10-03';
+    const dia = diaRelativo(2);
     await autenticado('put', '/checkin')
       .send({
         dia,

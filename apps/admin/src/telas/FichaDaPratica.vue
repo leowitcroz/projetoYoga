@@ -197,6 +197,39 @@
         </div>
       </fieldset>
 
+      <!-- PRA-07: a estrutura que o aluno vê antes de começar -->
+      <fieldset class="bloco">
+        <legend>Estrutura da prática</legend>
+
+        <p class="explicacao largo">
+          O aluno vê esta divisão antes de começar. Os minutos precisam somar a duração da prática
+          — se não baterem, a tela passa a mentir sobre a aula. Pode deixar vazio enquanto não
+          souber: aí a seção simplesmente não aparece para ele.
+        </p>
+
+        <div class="partes largo">
+          <div v-for="(parte, indice) in estrutura" :key="indice" class="parte">
+            <select v-model="parte.tipo">
+              <option v-for="opcao in BLOCOS_DA_PRATICA" :key="opcao.valor" :value="opcao.valor">
+                {{ opcao.nome }}
+              </option>
+            </select>
+            <input v-model.number="parte.minutos" type="number" min="1" max="180" />
+            <span class="unidade">min</span>
+            <button type="button" class="tirar" title="Tirar" @click="tirarBloco(indice)">×</button>
+          </div>
+        </div>
+
+        <div class="largo soma-area">
+          <button type="button" class="acrescentar" @click="acrescentarBloco">
+            + Acrescentar bloco
+          </button>
+          <span v-if="estrutura.length" class="soma" :class="{ bate: somaDosBlocos === ficha.duracaoMin }">
+            {{ somaDosBlocos }} de {{ ficha.duracaoMin }} min
+          </span>
+        </div>
+      </fieldset>
+
       <!-- Ayurveda e trilha -->
       <fieldset class="bloco">
         <legend>Ayurveda e trilha</legend>
@@ -265,6 +298,7 @@ import {
   type FichaDaPratica,
   type StatusDoConteudo,
 } from '../servicos/conteudos.js';
+import { BLOCOS_DA_PRATICA, type BlocoDaPratica } from '../servicos/conteudos.js';
 import { listarTrilhas, type TrilhaNaLista } from '../servicos/trilhas.js';
 
 const rota = useRoute();
@@ -279,6 +313,22 @@ const salvando = ref(false);
 const erro = ref('');
 const recado = ref('');
 const trilhas = ref<TrilhaNaLista[]>([]);
+
+/** Os blocos da prática. Ligados à ficha pelo paraEnvio, não por v-model. */
+const estrutura = ref<BlocoDaPratica[]>([]);
+const somaDosBlocos = computed(() =>
+  estrutura.value.reduce((total, parte) => total + (parte.minutos || 0), 0),
+);
+
+function acrescentarBloco() {
+  const usados = new Set(estrutura.value.map((parte) => parte.tipo));
+  const livre = BLOCOS_DA_PRATICA.find((opcao) => !usados.has(opcao.valor));
+  estrutura.value.push({ tipo: livre?.valor ?? 'asanas', minutos: 5 });
+}
+
+function tirarBloco(indice: number) {
+  estrutura.value.splice(indice, 1);
+}
 
 const MODALIDADES = [
   { valor: 'hatha', nome: 'Hatha' },
@@ -409,6 +459,7 @@ onMounted(async () => {
       ayurveda: (dados.ayurveda as Record<string, number>) ?? {},
       trilhaId: (dados.trilhaId as string) ?? '',
     };
+    estrutura.value = (dados.estrutura as BlocoDaPratica[]) ?? [];
   } catch (problema) {
     erro.value = problema instanceof Error ? problema.message : 'Não foi possível abrir a prática';
   } finally {
@@ -423,6 +474,11 @@ function paraEnvio(): FichaDaPratica {
   if (!copia.capaUrl) delete copia.capaUrl;
   if (!copia.videoUrl) delete copia.videoUrl;
   if (!copia.trilhaId) delete copia.trilhaId;
+
+  // Lista vazia e campo ausente são a mesma coisa aqui: prática sem estrutura
+  // descrita. Mandar [] faria a API gravar um array vazio sem motivo.
+  if (estrutura.value.length > 0) copia.estrutura = estrutura.value;
+  else delete copia.estrutura;
   return copia;
 }
 
@@ -464,6 +520,89 @@ async function mandarParaRevisao() {
 </script>
 
 <style scoped>
+.explicacao {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--texto-suave);
+}
+
+.partes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.parte {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.parte select {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--borda-forte);
+  border-radius: 8px;
+  font: inherit;
+  color: var(--texto);
+  background: #fff;
+}
+
+.parte input {
+  width: 72px;
+  padding: 8px 10px;
+  border: 1px solid var(--borda-forte);
+  border-radius: 8px;
+  font: inherit;
+  color: var(--texto);
+}
+
+.unidade {
+  font-size: 0.82rem;
+  color: var(--texto-suave);
+}
+
+.tirar {
+  width: 28px;
+  height: 28px;
+  background: #f7fafb;
+  border: 1px solid var(--borda-forte);
+  border-radius: 6px;
+  color: var(--texto-medio);
+  cursor: pointer;
+}
+
+.soma-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.acrescentar {
+  padding: 8px 12px;
+  background: none;
+  border: 1px dashed var(--borda-forte);
+  border-radius: 8px;
+  color: var(--azul);
+  font-size: 0.84rem;
+  cursor: pointer;
+}
+
+.soma {
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: #fbe9e9;
+  font-size: 0.78rem;
+  color: #a33;
+}
+
+.soma.bate {
+  background: #e6efea;
+  color: var(--verde);
+}
+
 .pagina {
   max-width: 54rem;
 }
