@@ -23,8 +23,17 @@
   --life-texto-medio: #4d627a;
   --life-texto-suave: #7a8da0;
 
-  /* Fundos e traços. */
-  --life-fundo: #f2f7f9;
+  /*
+   * Fundos e traços.
+   *
+   * As três primeiras vieram da tela de referência do cliente (06/10): o fundo
+   * é quase branco, e as superfícies cheias — cartões e fichas — são um cinza
+   * de leve quente, sem borda. Antes eram brancas com contorno, e o contorno
+   * pesava mais que o conteúdo.
+   */
+  --life-fundo: #f8fcff;
+  --life-cartao: #f1f3ee;
+  --life-ficha: #ecf1ed;
   --life-borda: rgba(20, 48, 79, 0.08);
   --life-atencao-fundo: #fbf3ea;
   --life-atencao-borda: #e0c9a8;

@@ -22,16 +22,9 @@
 
           <ul class="areas">
             <li v-for="area in AREAS_DA_BIBLIOTECA" :key="area.valor">
-              <button
-                type="button"
-                class="area"
-                :class="{ vazia: quantasNaArea(area.valor) === 0 }"
-                :disabled="quantasNaArea(area.valor) === 0"
-                @click="filtrarPorArea(area.valor)"
-              >
-                <icone-da-area :area="area.valor" />
+              <button type="button" class="area" @click="filtrarPorArea(area.valor)">
+                <span class="area-simbolo"><icone-da-area :area="area.valor" /></span>
                 <span class="area-nome">{{ area.nome }}</span>
-                <span v-if="quantasNaArea(area.valor) === 0" class="area-aviso">em breve</span>
               </button>
             </li>
           </ul>
@@ -191,10 +184,6 @@ const objetivos = computed(() => {
     .slice(0, 8);
 });
 
-function quantasNaArea(area: string): number {
-  return biblioteca.value?.areas[area] ?? 0;
-}
-
 onMounted(async () => {
   try {
     const [dados, recomendadas] = await Promise.all([buscarBiblioteca(), buscarParaVoce()]);
@@ -280,10 +269,10 @@ function abrir(id: string) {
   align-items: center;
   gap: 8px;
   margin-bottom: 18px;
-  padding: 11px 14px;
+  padding: 12px 14px;
   background: #fff;
   border: 1px solid var(--life-borda);
-  border-radius: 12px;
+  border-radius: 14px;
   color: var(--life-texto-suave);
 }
 
@@ -314,32 +303,23 @@ function abrir(id: string) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 14px 6px;
-  background: #fff;
-  border: 1px solid var(--life-borda);
-  border-radius: 12px;
-  color: var(--life-azul-profundo);
-  font-size: 1.9rem;
+  gap: 8px;
+  padding: 14px 6px 12px;
+  background: var(--life-cartao);
+  border: 0;
+  border-radius: 14px;
   cursor: pointer;
 }
 
+.area-simbolo {
+  width: 42px;
+  height: 36px;
+}
+
 .area-nome {
-  font-size: 0.78rem;
-  color: var(--life-texto-medio);
+  font-size: 0.8rem;
+  color: var(--life-azul-profundo);
   text-align: center;
-}
-
-.area.vazia {
-  opacity: 0.55;
-  cursor: default;
-}
-
-.area-aviso {
-  font-size: 0.64rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--life-texto-suave);
 }
 
 /* Blocos */
@@ -366,7 +346,7 @@ function abrir(id: string) {
   padding: 0;
   background: none;
   border: 0;
-  color: var(--life-verde);
+  color: var(--life-azul);
   font-size: 0.82rem;
   cursor: pointer;
 }
@@ -441,11 +421,11 @@ function abrir(id: string) {
 }
 
 .ficha {
-  padding: 9px 16px;
-  background: #fff;
-  border: 1px solid var(--life-borda);
+  padding: 10px 18px;
+  background: var(--life-ficha);
+  border: 0;
   border-radius: 999px;
-  color: var(--life-texto-medio);
+  color: var(--life-azul-profundo);
   font-size: 0.84rem;
   cursor: pointer;
 }
@@ -490,9 +470,9 @@ function abrir(id: string) {
   display: flex;
   gap: 12px;
   padding: 10px;
-  background: #fff;
-  border: 1px solid var(--life-borda);
-  border-radius: 12px;
+  background: var(--life-cartao);
+  border: 0;
+  border-radius: 14px;
   text-align: left;
   cursor: pointer;
 }
