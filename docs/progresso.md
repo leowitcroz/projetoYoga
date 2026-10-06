@@ -11,7 +11,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
 - **Falta para fechar a fase 3:** receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11). O **F3.5 está resolvido enquanto for YouTube**: o professor cola o link e digita a duração, como a decisão de 01/10 previu; ele volta a abrir quando a troca pelo Mux acontecer.
 - **Próximo passo:** **receitas e orientações ayurvédicas (F3.7)**, que andam junto com a aba Cozinha (F1.14, da Fase 1) — vale fazer as duas de uma vez. O editor de pesos (F3.11) fica por último: serve para o Marcos ajustar o motor, e ele ainda não validou os pesos atuais.
-- **Commits locais ainda não enviados:** 22.
+- **Commits locais ainda não enviados:** 23.
 
 ## Esperando resposta
 
@@ -28,6 +28,12 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ---
 
 ## Linha do tempo
+
+### 06/10/2026 (carrossel do "Para você")
+
+- **A faixa parou de se comportar como slide.** O `scroll-snap` puxava sozinho para a borda do cartão mais próximo a cada movimento: arrastar um pouco saltava para o cartão inteiro. Saiu — agora ela para onde a pessoa soltou.
+- **No computador dá para arrastar com o mouse.** Área de rolagem não se arrasta com ponteiro, só com a roda; quem olha um carrossel tenta puxar e nada acontece. Agora o ponteiro puxa, e no toque o navegador continua cuidando sozinho.
+- **Arrastar não abre mais a aula que estava embaixo do dedo**, e clique parado continua abrindo. A captura do ponteiro só entra depois que vira arraste: capturada no apertar, o clique seguinte chegava na faixa em vez do cartão e nenhuma aula abria.
 
 ### 06/10/2026 (paleta e símbolos do modelo)
 
