@@ -11,7 +11,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
 - **Falta para fechar a fase 3:** receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11). O **F3.5 está resolvido enquanto for YouTube**: o professor cola o link e digita a duração, como a decisão de 01/10 previu; ele volta a abrir quando a troca pelo Mux acontecer.
 - **Próximo passo:** **receitas e orientações ayurvédicas (F3.7)**, que andam junto com a aba Cozinha (F1.14, da Fase 1) — vale fazer as duas de uma vez. O editor de pesos (F3.11) fica por último: serve para o Marcos ajustar o motor, e ele ainda não validou os pesos atuais.
-- **Commits locais ainda não enviados:** 18.
+- **Commits locais ainda não enviados:** 19.
 
 ## Esperando resposta
 
@@ -30,6 +30,9 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ## Linha do tempo
 
 ### 06/10/2026 (largura no navegador)
+
+- **A barra de rolagem deixou de reservar coluna.** No Chrome do Windows ela é das clássicas e comia ~17px da direita do conteúdo; como a navegação e a assinatura ocupam a largura inteira, as duas corriam por baixo dessa coluna — a rolagem terminava no meio da tela e o rodapé seguia adiante. Num celular a rolagem é flutuante e isso não acontece; agora fica igual no navegador. Rolar com a roda, o dedo ou o teclado continua funcionando.
+- **Nota:** o `jornada-completa.e2e-spec` falhou uma vez e passou na rodada seguinte, sem mudança no código. Fica anotado como intermitente, para investigar se repetir.
 
 - **No navegador em janela larga o app se esticava de ponta a ponta.** A capa da prática virava uma faixa de quase dois mil pixels, e a navegação e a assinatura iam até a borda da janela, passando por cima da coluna da barra de rolagem. Em tela de 620px para cima ele passa a ocupar a largura de um celular (480px), centralizado, com o fundo da marca em volta. No celular nada muda.
 

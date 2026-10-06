@@ -58,5 +58,25 @@
   }
 }
 
+/*
+ * A rolagem não reserva coluna.
+ *
+ * No Chrome do Windows a barra de rolagem é das clássicas: ela comia uns 17px
+ * da direita do conteúdo, e como a navegação e a assinatura ocupam a largura
+ * inteira, as duas corriam por baixo dessa coluna — a barra de rolagem acabava
+ * no meio da tela e o rodapé seguia adiante. Num celular a rolagem é flutuante
+ * e isso não acontece; aqui ela fica igual. Rolar com a roda, o dedo ou o
+ * teclado continua funcionando.
+ */
+ion-content::part(scroll) {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+ion-content::part(scroll)::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
 /* For information on how to create your own theme, please refer to:
 http://ionicframework.com/docs/theming/ */
