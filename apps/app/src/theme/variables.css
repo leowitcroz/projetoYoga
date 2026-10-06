@@ -30,5 +30,33 @@
   --life-atencao-borda: #e0c9a8;
 }
 
+/*
+ * O LIFE é um app de celular que também abre no navegador.
+ *
+ * Numa janela larga ele se esticava de ponta a ponta: a capa da prática virava
+ * uma faixa de quase dois metros de pixels, e a navegação e a assinatura iam
+ * até a borda, passando por cima da coluna da barra de rolagem. Em tela grande
+ * ele passa a ocupar a largura de um celular, centralizado, com o fundo da
+ * marca em volta.
+ *
+ * O limite é em `ion-app`, que é `position: absolute` esticado nos dois lados.
+ * `margin: auto` não centraliza nesse caso, e o `left` do Ionic ganha do nosso
+ * na folha de estilo — então a centralização é feita com margem (que soma ao
+ * `left: 0` dele) mais o recuo de metade da própria largura.
+ */
+@media (min-width: 620px) {
+  body {
+    background: #dde8ed;
+  }
+
+  ion-app {
+    width: 100%;
+    max-width: 480px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 24px rgba(14, 48, 80, 0.12);
+  }
+}
+
 /* For information on how to create your own theme, please refer to:
 http://ionicframework.com/docs/theming/ */
