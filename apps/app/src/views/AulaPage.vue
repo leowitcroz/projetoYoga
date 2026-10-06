@@ -106,10 +106,6 @@
             </ul>
           </section>
 
-          <footer class="rodape">
-            <img :src="lotus" alt="" class="lotus" />
-            <p class="lema">Prática · Conhecimento · Equilíbrio para a vida</p>
-          </footer>
         </template>
       </div>
     </ion-content>
@@ -121,7 +117,6 @@ import { IonContent, IonIcon, IonPage } from '@ionic/vue';
 import { arrowForwardOutline, bulbOutline, chevronBackOutline, playSharp } from 'ionicons/icons';
 import { computed, onMounted, ref } from 'vue';
 import CapaDaPratica from '@/components/CapaDaPratica.vue';
-import lotus from '@/assets/lotus.png';
 import { useRoute, useRouter } from 'vue-router';
 import { recomendacao } from '@/servicos/pratica-de-hoje';
 import { montarEstrutura, porqueDaPratica } from '@/dados/blocos-da-pratica';
@@ -473,29 +468,6 @@ function voltar() {
 
 .recado {
   padding: 40px 0;
-  text-align: center;
-  color: var(--life-texto-suave);
-}
-
-.rodape {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 18px 0 4px;
-  border-top: 1px solid var(--life-borda);
-}
-
-.lotus {
-  width: 26px;
-  opacity: 0.55;
-}
-
-.lema {
-  margin: 0;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   text-align: center;
   color: var(--life-texto-suave);
 }

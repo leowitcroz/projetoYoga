@@ -11,7 +11,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
 - **Falta para fechar a fase 3:** receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11). O **F3.5 está resolvido enquanto for YouTube**: o professor cola o link e digita a duração, como a decisão de 01/10 previu; ele volta a abrir quando a troca pelo Mux acontecer.
 - **Próximo passo:** **receitas e orientações ayurvédicas (F3.7)**, que andam junto com a aba Cozinha (F1.14, da Fase 1) — vale fazer as duas de uma vez. O editor de pesos (F3.11) fica por último: serve para o Marcos ajustar o motor, e ele ainda não validou os pesos atuais.
-- **Commits locais ainda não enviados:** 15.
+- **Commits locais ainda não enviados:** 16.
 
 ## Esperando resposta
 
@@ -28,6 +28,10 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ---
 
 ## Linha do tempo
+
+### 06/10/2026 (rodapé fixo)
+
+- **A assinatura da marca passou a ficar presa embaixo, logo abaixo da navegação**, em vez de no fim do conteúdo de cada tela. Antes ela só aparecia para quem rolasse a página até o fim — e em tela curta não aparecia nunca. Agora é uma faixa só, do app inteiro, e as telas de dentro das abas deixaram de carregar a sua cópia.
 
 ### 06/10/2026 (tela da prática)
 

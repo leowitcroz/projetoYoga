@@ -2,6 +2,7 @@
   <ion-page>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
+
       <ion-tab-bar slot="bottom">
         <ion-tab-button
           v-for="tab in tabs"
@@ -13,6 +14,16 @@
           <ion-label>{{ tab.label }}</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
+
+      <!--
+        A assinatura da marca fica presa embaixo de tudo, abaixo da navegação,
+        e não no fim do conteúdo de cada tela: antes ela só aparecia para quem
+        rolasse a página até o fim, e em tela curta nunca aparecia.
+      -->
+      <footer slot="bottom" class="assinatura">
+        <img :src="lotus" alt="" class="lotus" />
+        <p class="lema">Prática · Conhecimento · Equilíbrio para a vida</p>
+      </footer>
     </ion-tabs>
   </ion-page>
 </template>
@@ -35,6 +46,7 @@ import {
   personOutline,
   restaurantOutline,
 } from 'ionicons/icons';
+import lotus from '@/assets/lotus.png';
 
 const tabs = [
   { path: 'hoje', label: 'Hoje', icon: homeOutline },
@@ -53,12 +65,38 @@ ion-tab-bar {
   --color: var(--life-texto-suave);
   --color-selected: var(--life-verde);
   border-top: 1px solid var(--life-borda);
-  padding-bottom: var(--ion-safe-area-bottom, 0px);
 }
 
 ion-tab-button {
   --padding-top: 7px;
   --padding-bottom: 5px;
   font-size: 0.7rem;
+}
+
+.assinatura {
+  /* O ion-tabs é uma coluna flex e espremia a faixa até o lótus montar em
+     cima do texto. Ela não encolhe: tem a altura do que carrega. */
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 9px 16px calc(9px + var(--ion-safe-area-bottom, 0px));
+  background: var(--life-fundo);
+  border-top: 1px solid var(--life-borda);
+}
+
+.lotus {
+  width: 24px;
+  opacity: 0.55;
+}
+
+.lema {
+  margin: 0;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--life-texto-suave);
 }
 </style>

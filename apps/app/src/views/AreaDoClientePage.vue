@@ -176,10 +176,6 @@
           <figcaption>{{ ditado.fonte }}</figcaption>
         </figure>
 
-        <footer class="rodape">
-          <img :src="lotus" alt="" class="lotus" />
-          <p class="lema">Prática · Conhecimento · Equilíbrio para a vida</p>
-        </footer>
       </div>
     </ion-content>
   </ion-page>
@@ -190,7 +186,6 @@ import { IonContent, IonIcon, IonPage } from '@ionic/vue';
 import { personOutline } from 'ionicons/icons';
 import { computed, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import lotus from '@/assets/lotus.png';
 import CapaDaPratica from '@/components/CapaDaPratica.vue';
 import {
   perguntas,
@@ -726,29 +721,4 @@ function escolherSozinho() {
   color: var(--life-texto-suave);
 }
 
-/* Rodapé */
-
-.rodape {
-  margin-top: auto;
-  padding-top: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-.lotus {
-  width: 26px;
-  height: auto;
-  opacity: 0.75;
-}
-
-.lema {
-  margin: 0;
-  text-align: center;
-  font-size: 0.58rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #8a9aa8;
-}
 </style>
