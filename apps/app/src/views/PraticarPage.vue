@@ -29,7 +29,7 @@
                 :disabled="quantasNaArea(area.valor) === 0"
                 @click="filtrarPorArea(area.valor)"
               >
-                <ion-icon :icon="ICONE_DA_AREA[area.valor]" />
+                <icone-da-area :area="area.valor" />
                 <span class="area-nome">{{ area.nome }}</span>
                 <span v-if="quantasNaArea(area.valor) === 0" class="area-aviso">em breve</span>
               </button>
@@ -136,20 +136,11 @@
 
 <script setup lang="ts">
 import { IonContent, IonIcon, IonPage } from '@ionic/vue';
-import {
-  bodyOutline,
-  chevronBackOutline,
-  flowerOutline,
-  leafOutline,
-  moonOutline,
-  playCircleOutline,
-  searchOutline,
-  sparklesOutline,
-  waterOutline,
-} from 'ionicons/icons';
+import { chevronBackOutline, playCircleOutline, searchOutline } from 'ionicons/icons';
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import CapaDaPratica from '@/components/CapaDaPratica.vue';
+import IconeDaArea from '@/components/IconeDaArea.vue';
 import {
   AREAS_DA_BIBLIOTECA,
   buscarBiblioteca,
@@ -164,15 +155,6 @@ import {
 } from '@/servicos/catalogo';
 
 const router = useRouter();
-
-const ICONE_DA_AREA: Record<string, string> = {
-  asanas: bodyOutline,
-  pranayama: waterOutline,
-  meditacao: sparklesOutline,
-  nidra: moonOutline,
-  relaxamento: leafOutline,
-  kriyas: flowerOutline,
-};
 
 const biblioteca = ref<Biblioteca | null>(null);
 const paraVoce = ref<AulaDaLista[]>([]);
@@ -338,7 +320,7 @@ function abrir(id: string) {
   border: 1px solid var(--life-borda);
   border-radius: 12px;
   color: var(--life-azul-profundo);
-  font-size: 1.35rem;
+  font-size: 1.9rem;
   cursor: pointer;
 }
 

@@ -11,7 +11,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
 - **Falta para fechar a fase 3:** receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11). O **F3.5 está resolvido enquanto for YouTube**: o professor cola o link e digita a duração, como a decisão de 01/10 previu; ele volta a abrir quando a troca pelo Mux acontecer.
 - **Próximo passo:** **receitas e orientações ayurvédicas (F3.7)**, que andam junto com a aba Cozinha (F1.14, da Fase 1) — vale fazer as duas de uma vez. O editor de pesos (F3.11) fica por último: serve para o Marcos ajustar o motor, e ele ainda não validou os pesos atuais.
-- **Commits locais ainda não enviados:** 20.
+- **Commits locais ainda não enviados:** 21.
 
 ## Esperando resposta
 
@@ -35,6 +35,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Relaxamento era uma porta sem nada atrás.** O PRA-01 lista as seis áreas da biblioteca e essa é uma delas, mas ela nunca entrou na lista de áreas da ficha: nenhuma prática podia ser cadastrada como relaxamento. Entrou na API e no painel.
 - **O "Para você" usa o objetivo que a pessoa declarou no cadastro**, com o principal pesando o dobro dos secundários. Quem não preencheu o perfil não recebe uma lista genérica com nome de personalizada: a faixa some.
 - **Área e objetivo oferecidos saem do catálogo.** Área sem aula nenhuma aparece marcada como "em breve" e não abre — atalho que leva a lista vazia é pior do que atalho nenhum.
+- **Símbolos próprios para as seis áreas**, desenhados em SVG: guerreiro para os āsanas, o sopro irradiando para o prāṇāyāma, o sentado para a meditação, o deitado com a lua para o Yoga Nidra, o deitado com as ondas para o relaxamento e a espiral para os kriyās. O pacote do Ionic não tem nada parecido — o que mais chegava perto eram símbolos genéricos que não diziam nada a quem pratica.
 - 8 testes novos; 113 ponta a ponta na API.
 
 ### 06/10/2026 (largura no navegador)
