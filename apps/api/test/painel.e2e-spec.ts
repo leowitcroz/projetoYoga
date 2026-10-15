@@ -290,10 +290,38 @@ describe('Painel (e2e)', () => {
 
     expect(Array.isArray(resposta.body)).toBe(true);
 
-    const texto = JSON.stringify(resposta.body);
-    for (const proibido of ['condicoes', 'regiaoDaDor', 'dor', 'humor', 'estresse', 'senhaHash']) {
-      expect(texto).not.toContain(proibido);
+    // A verificação é pelos campos, e não procurando as palavras no JSON
+    // inteiro: "dor" aparece dentro de Isadora e Salvador, e a lista traz nomes
+    // de alunos. Procurando no texto, o teste acusaria vazamento no dia em que
+    // uma aluna chamada Isadora se cadastrasse.
+    const proibidos = [
+      'condicoes',
+      'regiaoDaDor',
+      'dor',
+      'humor',
+      'estresse',
+      'sono',
+      'energia',
+      'digestao',
+      'observacoes',
+      'senhaHash',
+      'saude',
+    ];
+
+    function conferir(valor: unknown, caminho = 'resposta'): void {
+      if (Array.isArray(valor)) {
+        valor.forEach((item, indice) => conferir(item, `${caminho}[${indice}]`));
+        return;
+      }
+      if (valor === null || typeof valor !== 'object') return;
+
+      for (const [campo, dentro] of Object.entries(valor)) {
+        expect(proibidos, `${caminho}.${campo} não devia sair do painel`).not.toContain(campo);
+        conferir(dentro, `${caminho}.${campo}`);
+      }
     }
+
+    conferir(resposta.body);
   });
 
   it('ADM-10: professor não vê a lista de alunos', async () => {

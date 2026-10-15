@@ -11,7 +11,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
 - **Falta para fechar a fase 3:** receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11). O **F3.5 está resolvido enquanto for YouTube**: o professor cola o link e digita a duração, como a decisão de 01/10 previu; ele volta a abrir quando a troca pelo Mux acontecer.
 - **Próximo passo:** **receitas e orientações ayurvédicas (F3.7)**, que andam junto com a aba Cozinha (F1.14, da Fase 1) — vale fazer as duas de uma vez. O editor de pesos (F3.11) fica por último: serve para o Marcos ajustar o motor, e ele ainda não validou os pesos atuais.
-- **Commits locais ainda não enviados:** 23.
+- **Commits locais ainda não enviados:** 24.
 
 ## Esperando resposta
 
@@ -28,6 +28,17 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ---
 
 ## Linha do tempo
+
+### 15/10/2026 (aba Aprender)
+
+- **A aba Aprender saiu do nada (F5.1, EDU-01 a EDU-06),** antecipada da Fase 5: "Aprenda hoje" com uma aula escolhida para o dia, "Continue estudando" com a próxima aula do curso em andamento, carrossel de cursos recomendados, dica rápida e "Ver todos os cursos" com filtros por tema, nível e tipo.
+- **Curso e aula viraram entidades próprias.** A ficha de prática não servia: ela exige modalidade, cargas de segurança e objetivos do motor, que não dizem nada sobre uma aula de filosofia. Com isso o progresso por aluno (`LessonEvent`) é de conhecimento, separado do histórico de prática.
+- **A aula do dia é sorteada, mas presa ao par pessoa + dia.** Sorteio a cada abertura faria o conteúdo trocar enquanto a pessoa olha a tela — não pareceria sorteio, pareceria defeito.
+- **Os cursos recomendados saem dos temas que a pessoa marcou no cadastro.** Quem não marcou nenhum recebe os mais curtos, e a tela diz qual dos dois casos é.
+- **O motor não entra aqui.** Ninguém se machuca assistindo a uma aula de filosofia, então não há filtro de segurança nem estado do dia: o que manda é onde a pessoa parou.
+- **O arraste do carrossel virou peça compartilhada** entre Praticar e Aprender, em vez de duas cópias.
+- **Teste de privacidade que daria alarme falso:** o `ADM-10` procurava as palavras proibidas como texto no JSON inteiro da lista de alunos — e "dor" aparece dentro de *Isadora* e *Salvador*. Uma aluna com esse nome quebraria o teste. Agora ele confere os campos, que é o que a regra diz.
+- 28 testes novos; 135 ponta a ponta na API.
 
 ### 06/10/2026 (carrossel do "Para você")
 

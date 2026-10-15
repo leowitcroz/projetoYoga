@@ -3,6 +3,7 @@ import 'dotenv/config';
 import { CATALOGO_DE_TESTE } from '@life/motor';
 import { PrismaService } from './prisma/prisma.service.js';
 import { paraLinha } from './hoje/tradutor.js';
+import { CURSOS_DE_TESTE } from './aprender/cursos-de-teste.js';
 
 /**
  * Popula o banco com o catálogo de teste da Fase 1 (F2.2).
@@ -104,9 +105,30 @@ async function main(): Promise<void> {
       };
       await prisma.content.upsert({ where: { id: linha.id }, create: linha, update: linha });
     }
+    // Cursos do Aprender (EDU-01). Mesma natureza: material de desenvolvimento.
+    for (const curso of CURSOS_DE_TESTE) {
+      const { aulas, ...dados } = curso;
+      await prisma.course.upsert({
+        where: { id: curso.id },
+        create: { ...dados, status: 'APROVADO' },
+        update: { ...dados, status: 'APROVADO' },
+      });
+
+      for (const [posicao, aula] of aulas.entries()) {
+        const id = `${curso.id}-A${String(posicao + 1).padStart(2, '0')}`;
+        const linha = { ...aula, cursoId: curso.id, ordem: posicao + 1 };
+        await prisma.lesson.upsert({ where: { id }, create: { id, ...linha }, update: linha });
+      }
+    }
+
     const total = await prisma.content.count();
     const trilhas = await prisma.track.count();
-    console.log(`Catálogo de teste no banco: ${total} conteúdos em ${trilhas} trilha(s).`);
+    const cursos = await prisma.course.count();
+    const aulas = await prisma.lesson.count();
+    console.log(
+      `Catálogo de teste no banco: ${total} conteúdos em ${trilhas} trilha(s), ` +
+        `${cursos} curso(s) com ${aulas} aulas.`,
+    );
   } finally {
     await prisma.$disconnect();
   }

@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { OnboardingModule } from './onboarding/onboarding.module.js';
 import { HojeModule } from './hoje/hoje.module.js';
 import { CatalogoModule } from './catalogo/catalogo.module.js';
+import { AprenderModule } from './aprender/aprender.module.js';
 import { PainelModule } from './painel/painel.module.js';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -28,6 +29,7 @@ import { RegistroDeAcessoInterceptor } from './privacidade/registro-de-acesso.in
     OnboardingModule,
     HojeModule,
     CatalogoModule,
+    AprenderModule,
     PainelModule,
   ],
   controllers: [HealthController],

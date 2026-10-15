@@ -142,6 +142,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import CapaDaPratica from '@/components/CapaDaPratica.vue';
 import IconeDaArea from '@/components/IconeDaArea.vue';
+import { usarArrasteDaFaixa } from '@/composicoes/arraste-da-faixa';
 import {
   AREAS_DA_BIBLIOTECA,
   buscarBiblioteca,
@@ -166,6 +167,9 @@ const carregando = ref(false);
 const erro = ref('');
 
 /** O que está filtrando agora. Nulo nos três = a tela mostra a biblioteca. */
+/** A faixa do "Para você" se arrasta com o ponteiro, como a do Aprender. */
+const { faixa, aoPressionar, aoArrastar, aoSoltar, aoClicar } = usarArrasteDaFaixa();
+
 const filtro = ref<{ area?: string; objetivo?: string; busca?: string }>({});
 const temFiltro = computed(() => Object.keys(filtro.value).length > 0);
 
@@ -234,69 +238,6 @@ function limparFiltro() {
   filtro.value = {};
   aulas.value = [];
   termo.value = '';
-}
-
-/**
- * Arrastar a faixa com o mouse.
- *
- * No celular o navegador já rola a faixa com o dedo, mas no computador não
- * existe arrastar área de rolagem: só a roda. Quem olha um carrossel tenta
- * puxar, não dá certo, e a tela parece quebrada. Aqui o ponteiro passa a
- * puxar — e no toque saímos do caminho, porque o navegador faz melhor.
- */
-const faixa = ref<HTMLElement | null>(null);
-/** Quanto o ponteiro precisa andar para ser arraste, e não clique trêmulo. */
-const LIMIAR = 6;
-
-let pressionado = false;
-let arrastando = false;
-let partiuDe = 0;
-let rolagemInicial = 0;
-let andou = 0;
-
-function aoPressionar(evento: PointerEvent) {
-  if (evento.pointerType === 'touch' || !faixa.value) return;
-
-  pressionado = true;
-  arrastando = false;
-  andou = 0;
-  partiuDe = evento.clientX;
-  rolagemInicial = faixa.value.scrollLeft;
-}
-
-function aoArrastar(evento: PointerEvent) {
-  if (!pressionado || !faixa.value) return;
-
-  const distancia = evento.clientX - partiuDe;
-  andou = Math.abs(distancia);
-
-  // A captura do ponteiro só entra depois que vira arraste: capturada no
-  // apertar, ela faz o clique seguinte chegar na faixa em vez do cartão, e
-  // tocar numa aula deixa de abrir a aula.
-  if (!arrastando && andou > LIMIAR) {
-    arrastando = true;
-    faixa.value.setPointerCapture(evento.pointerId);
-  }
-  if (!arrastando) return;
-
-  faixa.value.scrollLeft = rolagemInicial - distancia;
-  evento.preventDefault();
-}
-
-function aoSoltar(evento: PointerEvent) {
-  if (arrastando && faixa.value?.hasPointerCapture(evento.pointerId)) {
-    faixa.value.releasePointerCapture(evento.pointerId);
-  }
-  pressionado = false;
-  arrastando = false;
-}
-
-/** Puxar a faixa não pode abrir a aula que estava debaixo do dedo. */
-function aoClicar(evento: MouseEvent) {
-  if (andou > LIMIAR) {
-    evento.preventDefault();
-    evento.stopPropagation();
-  }
 }
 
 function abrir(id: string) {

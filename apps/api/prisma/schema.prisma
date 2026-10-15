@@ -35,6 +35,8 @@ model User {
   tokens         AuthToken[]
   eventos        PracticeEvent[]
   trilhas        Track[]
+  cursos         Course[]
+  aulasConcluidas LessonEvent[]
 }
 
 /// O que a pessoa fez com a prática (F2.18).
@@ -296,6 +298,83 @@ model Track {
 
   @@index([autorId])
   @@index([preRequisitoId])
+}
+
+/// Curso do Aprender (EDU-01, EDU-04).
+///
+/// É conhecimento, não prática: por isso não reaproveita o `Content`, que
+/// exige modalidade, cargas de segurança e objetivos do motor — nada disso
+/// diz coisa alguma sobre uma aula de filosofia. Uma formação é só um curso
+/// com muitas aulas (EDU-04), sem campo próprio.
+model Course {
+  id        String  @id
+  titulo    String
+  descricao String?
+
+  /// Fisiologia, Filosofia, Yoga, Ayurveda ou Clássicos (EDU-01).
+  tema   String
+  /// 1 introdutório → 5 especializado.
+  nivel  Int    @default(1)
+  capaUrl   String?
+  professor String?
+
+  status  ContentStatus @default(RASCUNHO)
+  autorId String?
+  comentarioRevisao String?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  autor User?    @relation(fields: [autorId], references: [id], onDelete: SetNull)
+  aulas Lesson[]
+
+  @@index([status])
+  @@index([tema])
+}
+
+/// Aula de um curso (EDU-02).
+model Lesson {
+  id        String  @id
+  cursoId   String
+  titulo    String
+  descricao String?
+
+  /// Posição no curso, de 1 em diante. Quem manda nela é o curso.
+  ordem Int
+
+  /// `video`, `audio` ou `texto` (EDU-02).
+  tipo       String @default("video")
+  duracaoMin Int    @default(10)
+
+  videoProvedor String?
+  videoId       String?
+  /// Corpo da aula quando ela é de leitura.
+  texto         String?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  curso   Course        @relation(fields: [cursoId], references: [id], onDelete: Cascade)
+  eventos LessonEvent[]
+
+  @@index([cursoId, ordem])
+}
+
+/// O que a pessoa já concluiu (EDU-02, EDU-03).
+///
+/// É o que faz o "Continue estudando" saber onde ela parou. Uma linha por
+/// pessoa e aula: refazer a aula não cria outra.
+model LessonEvent {
+  id       String   @id @default(uuid())
+  userId   String
+  lessonId String
+  concluidaEm DateTime @default(now())
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  aula  Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@index([userId])
 }
 
 /// Fluxo de aprovação do conteúdo (ADM-06).
