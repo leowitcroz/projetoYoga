@@ -63,7 +63,7 @@
             <ul class="partes">
               <li v-for="parte in estrutura" :key="parte.tipo" class="parte">
                 <span class="simbolo" :class="parte.tom">
-                  <ion-icon :icon="parte.icone" />
+                  <img :src="parte.icone" alt="" />
                 </span>
                 <span class="sobre">
                   <strong>{{ parte.nome }} – {{ parte.minutos }} min</strong>
@@ -196,9 +196,8 @@ function voltar() {
 </script>
 
 <style scoped>
-.tela {
-  --background: var(--life-fundo);
-}
+/* O fundo (luz do alto + folhas) vem da regra de `ion-content.tela` no tema:
+   é uma atmosfera só, igual em todas as abas. */
 
 .conteudo {
   box-sizing: border-box;
@@ -356,8 +355,16 @@ function voltar() {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  font-size: 1.15rem;
-  color: #fff;
+}
+
+/* Os desenhos da marca são traço azul-marinho; dentro do círculo colorido
+   eles precisam ser brancos, e o filtro faz isso sem uma segunda cópia de
+   cada arquivo. */
+.simbolo img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
 }
 
 .simbolo.rosa {
@@ -411,9 +418,8 @@ function voltar() {
   display: flex;
   gap: 12px;
   margin-bottom: 22px;
-  padding: 14px 16px;
-  background: var(--life-atencao-fundo);
-  border: 1px solid var(--life-atencao-borda);
+  padding: 15px 16px;
+  background: var(--life-apoio);
   border-radius: 14px;
 }
 
@@ -421,7 +427,7 @@ function voltar() {
   flex: none;
   margin-top: 2px;
   font-size: 1.2rem;
-  color: #a9792f;
+  color: var(--life-verde);
 }
 
 .porque-titulo {

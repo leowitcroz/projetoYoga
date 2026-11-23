@@ -11,7 +11,7 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 - **Falta para fechar a fase 1:** Aprenda/Ayurveda/Cozinha Hoje (F1.14), pergunta adaptativa (F1.15) e jornada (F1.16).
 - **Falta para fechar a fase 3:** receitas e orientações ayurvédicas (F3.7) e o editor de pesos do motor (F3.11). O **F3.5 está resolvido enquanto for YouTube**: o professor cola o link e digita a duração, como a decisão de 01/10 previu; ele volta a abrir quando a troca pelo Mux acontecer.
 - **Próximo passo:** **receitas e orientações ayurvédicas (F3.7)**, que andam junto com a aba Cozinha (F1.14, da Fase 1) — vale fazer as duas de uma vez. O editor de pesos (F3.11) fica por último: serve para o Marcos ajustar o motor, e ele ainda não validou os pesos atuais.
-- **Commits locais ainda não enviados:** 24.
+- **Commits locais ainda não enviados:** 25.
 
 ## Esperando resposta
 
@@ -28,6 +28,15 @@ O plano completo está em [plano-de-desenvolvimento.md](plano-de-desenvolvimento
 ---
 
 ## Linha do tempo
+
+### 23/11/2026 (auditoria de identidade visual)
+
+- **Confronto das telas com as 15 referências de `docs/midias de flow/`,** com as cores amostradas dos arquivos em vez de estimadas no olho. Cinco divergências reais, todas corrigidas.
+- **O verde das ações estava errado:** `#35705f` contra `#42624d` da referência — mais vivo e mais perto do ciano do que o desenho pede. Aparecia em todo botão principal, em toda opção marcada e na aba ativa.
+- **As abas perderam a atmosfera da marca.** As telas de pergunta sempre tiveram paisagem, degradê e folhas; Hoje, Praticar, Aprender e Eu eram chapadas, e o app ficava genérico depois do cadastro. Agora têm a luz do alto e as folhas no canto, numa regra só. *Adaptação: sem a coluna de foto da referência, que ocuparia metade de um celular de 393px.*
+- **Cartões de apoio** ("Por que esta prática?", "Dica rápida", ditado) saíram do creme alaranjado com borda para o cinza de areia sem borda. O creme ficou só nos avisos de segurança, onde chamar atenção é o objetivo.
+- **Ícones dos blocos da prática** trocados pelos desenhos da marca, que já estavam em `assets/icones/praticas/` — eu vinha usando ionicons genéricos.
+- **Regra de cor esclarecida no `decisoes.md`:** azul fora da conta (boas-vindas, login, cadastro), verde dentro do app. O documento dizia só "ações principais são azul sólido", que dava para ler das duas maneiras — e foi por isso que a aba Hoje ficou com dois botões azuis enquanto o resto do app usava verde.
 
 ### 15/10/2026 (aba Aprender)
 

@@ -178,9 +178,8 @@ function abrirCurso(id: string) {
 </script>
 
 <style scoped>
-.tela {
-  --background: var(--life-fundo);
-}
+/* O fundo (luz do alto + folhas) vem da regra de `ion-content.tela` no tema:
+   é uma atmosfera só, igual em todas as abas. */
 
 .conteudo {
   box-sizing: border-box;
@@ -446,9 +445,8 @@ function abrirCurso(id: string) {
   display: flex;
   gap: 12px;
   margin-bottom: 18px;
-  padding: 14px 16px;
-  background: var(--life-atencao-fundo);
-  border: 1px solid var(--life-atencao-borda);
+  padding: 15px 16px;
+  background: var(--life-apoio);
   border-radius: 14px;
 }
 
@@ -456,7 +454,7 @@ function abrirCurso(id: string) {
   flex: none;
   margin-top: 2px;
   font-size: 1.2rem;
-  color: #a9792f;
+  color: var(--life-verde);
 }
 
 .dica-titulo {

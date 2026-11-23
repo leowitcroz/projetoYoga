@@ -169,9 +169,8 @@ function limpar() {
 </script>
 
 <style scoped>
-.tela {
-  --background: var(--life-fundo);
-}
+/* O fundo (luz do alto + folhas) vem da regra de `ion-content.tela` no tema:
+   é uma atmosfera só, igual em todas as abas. */
 
 .conteudo {
   box-sizing: border-box;

@@ -327,9 +327,8 @@ function escolherSozinho() {
 </script>
 
 <style scoped>
-.tela {
-  --background: var(--life-fundo);
-}
+/* O fundo (luz do alto + folhas) vem da regra de `ion-content.tela` no tema:
+   é uma atmosfera só, igual em todas as abas. */
 
 .conteudo {
   box-sizing: border-box;
@@ -399,7 +398,7 @@ function escolherSozinho() {
   font-family: var(--life-serif);
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--life-texto);
+  color: var(--life-azul-profundo);
 }
 
 /* Carrossel de perguntas */
@@ -464,7 +463,7 @@ function escolherSozinho() {
   margin-top: 14px;
   width: 100%;
   padding: 13px;
-  background: var(--life-azul);
+  background: var(--life-verde);
   color: #fff;
   font-size: 0.95rem;
   font-weight: 600;
@@ -601,7 +600,7 @@ function escolherSozinho() {
   margin-top: 14px;
   width: 100%;
   padding: 14px;
-  background: var(--life-azul);
+  background: var(--life-verde);
   color: #fff;
   font-size: 0.95rem;
   font-weight: 600;
@@ -699,7 +698,7 @@ function escolherSozinho() {
 .ditado {
   margin: 0;
   padding: 18px 16px;
-  background: #f3eee4;
+  background: var(--life-creme);
   border-radius: 16px;
   text-align: center;
 }

@@ -14,9 +14,18 @@
   --life-azul: #1c5b80;
   --life-azul-claro: #3890b0;
 
-  --life-verde: #35705f;
-  --life-verde-claro: #5b9382;
-  --life-verde-suave: #e6efea;
+  /*
+   * Verde conferido nas telas de referência (`docs/midias de flow/`) em
+   * 23/11: o botão de ação e a opção marcada são `#42624d` e `#4b6854`.
+   *
+   * Antes era `#35705f`, escolhido "puxado para o frio" em 29/09 — mais vivo
+   * e mais perto do ciano do que o desenho pede. O da referência é um verde
+   * de musgo, sóbrio, que recua atrás do azul da marca em vez de disputar
+   * com ele. A intenção de 29/09 continua valendo; o tom é que estava longe.
+   */
+  --life-verde: #42624d;
+  --life-verde-claro: #5e7d68;
+  --life-verde-suave: #e9eeea;
 
   /* Textos, do mais forte ao mais discreto. */
   --life-texto: #14304f;
@@ -35,8 +44,42 @@
   --life-cartao: #f1f3ee;
   --life-ficha: #ecf1ed;
   --life-borda: rgba(20, 48, 79, 0.08);
+
+  /*
+   * Superfícies de apoio, também conferidas nas referências.
+   *
+   * `--life-apoio` é o cartão que explica alguma coisa ("Por que esta
+   * prática?", "Dica rápida"): cinza de areia, sem borda. `--life-creme` é a
+   * faixa do ditado. Os dois eram um creme alaranjado com contorno, que
+   * puxava o olho para o aviso em vez de para a prática.
+   */
+  --life-apoio: #ebeae5;
+  --life-creme: #eeeadf;
+
+  /* Mantidos para o aviso de segurança, onde chamar atenção é o objetivo. */
   --life-atencao-fundo: #fbf3ea;
   --life-atencao-borda: #e0c9a8;
+}
+
+/*
+ * A atmosfera da marca nas telas de dentro do app.
+ *
+ * As telas de pergunta sempre tiveram o fundo com paisagem, degradê e folhas
+ * (`fundo-perguntas.jpg`); as abas não tinham nada, e ficavam chapadas depois
+ * do cadastro — era o que mais afastava o app das telas de referência.
+ *
+ * **Adaptação:** a referência põe a paisagem numa coluna à esquerda, ocupando
+ * mais de um terço da largura. Num celular de 393px isso come metade da tela,
+ * então aqui fica só a atmosfera: a luz azulada vindo do alto e as folhas no
+ * canto de baixo. O recorte da foto não entra.
+ *
+ * A decoração é pintada no fundo do `ion-content`, que não rola junto com o
+ * conteúdo — as folhas ficam onde estão enquanto a tela anda, como no desenho.
+ */
+ion-content.tela {
+  --background:
+    url('../assets/folhas-rodape.png') right bottom / 124px auto no-repeat,
+    linear-gradient(180deg, #e8f1f7 0%, var(--life-fundo) 46%);
 }
 
 /*

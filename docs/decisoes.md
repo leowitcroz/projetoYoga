@@ -38,6 +38,8 @@ Registro das decisões tomadas. Atualize sempre que algo mudar.
 - **Fonte dos títulos:** Playfair Display (Google Fonts), que é a serifada das telas de referência. Hoje carrega pela internet; antes de publicar nas lojas precisa ser embutida no app, para funcionar sem conexão.
 - **Cores:** azul-marinho `#14304f` (texto e botões), azul `#2f7ea6` (links), verde `#3c6a4c` (ações dentro do app).
 - **Fundo das telas de perguntas:** uma imagem pronta (`src/assets/fundo-perguntas.jpg`), montada a partir da referência: paisagem à esquerda, degradê para o branco e folhas no rodapé, tudo numa imagem só. Antes eram três camadas em CSS, o que criava emendas e manchas.
+- **Fundo das telas de dentro do app (23/11):** luz azulada vindo do alto e folhas no canto de baixo, numa regra só (`ion-content.tela` no tema). Antes as abas eram chapadas, e o app ficava genérico depois do cadastro. **Adaptação consciente:** a referência põe a paisagem numa coluna à esquerda ocupando mais de um terço da largura — num celular de 393px isso come metade da tela, então aqui ficou a atmosfera, sem o recorte da foto.
+- **Superfícies de apoio (23/11):** o cartão que explica algo ("Por que esta prática?", "Dica rápida") é cinza de areia `#ebeae5`, sem borda, e a faixa do ditado é `#eeeadf`. Eram um creme alaranjado com contorno, que puxava o olho para o aviso em vez de para a prática. O creme com borda ficou só onde chamar atenção é o objetivo: os avisos de segurança.
 
 ## Conteúdo e catálogo
 
@@ -67,8 +69,27 @@ Decidida em 29/09/2026, com as cores tiradas da própria logo.
 | `--life-verde-claro` | `#5b9382` | fim dos gradientes |
 
 - **O azul manda.** É a cor da logo e a identidade do app.
-- **O verde apoia**, e é um verde puxado para o frio de propósito, para conversar com o azul em vez de brigar com ele.
-- **Ações principais são azul sólido.** Sem degradê: Leonardo pediu para tirar em 29/09.
+- **O verde apoia**, e recua atrás do azul em vez de brigar com ele.
+- **Nada de degradê nas ações.** Leonardo pediu para tirar em 29/09.
+
+### Onde entra cada uma (esclarecido em 23/11)
+
+A regra anterior dizia apenas "ações principais são azul sólido", e dava para
+ler de duas maneiras. As telas de referência (`docs/midias de flow/`) mostram
+uma divisão clara, e é ela que vale:
+
+| Onde | Cor da ação | Exemplos nas referências |
+|---|---|---|
+| **Fora da conta** — boas-vindas, login, cadastro, perguntas do onboarding | **azul** `#1c5b80` | "Começar", "Continuar" |
+| **Dentro do app** — abas e telas de prática e curso | **verde** `#42624d` | "Atualizar minha prática", "Iniciar prática", "Assistir agora" |
+| Seleções (opção do check-in, tempo, filtro ativo) | verde | as caixas marcadas |
+
+A leitura: o azul é a marca, e aparece enquanto a pessoa ainda está chegando;
+o verde é o app trabalhando, e toma conta depois que ela entra.
+
+**Tom do verde corrigido em 23/11:** era `#35705f`, escolhido "puxado para o
+frio"; nas referências é `#42624d`, um verde de musgo mais escuro e menos
+saturado. O frio continua — o que estava longe era o tom.
 - As capas desenhadas das práticas partem todas do azul e caminham para a cor da modalidade: variedade sem perder a identidade.
 
 ## Painel sem PrimeVue
